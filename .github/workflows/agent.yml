@@ -1,0 +1,74 @@
+name: Social listening agent
+
+on:
+  schedule:
+    - cron: '15 */2 * * *' # Alert, every two hours (UTC)
+    - cron: '25 0 * * *'   # Briefing, 07:25 Asia/Bangkok
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Run mode
+        required: true
+        type: choice
+        options: [alert, briefing]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: agent-state-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Validate state before run
+        run: python -c 'from src.state import load_state; load_state("seen_posts.json")'
+      - name: Run agent
+        id: agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '25 0 * * *' && 'briefing' || 'alert') }}
+        shell: bash
+        run: |
+          set +e
+          python -m src.main --mode "$RUN_MODE"
+          agent_exit=$?
+          echo "exit_code=$agent_exit" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Persist state
+        id: persist
+        run: bash scripts/persist_state.sh
+      - name: Preserve state for reconciliation
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: state-for-reconciliation-${{ github.run_id }}
+          path: seen_posts.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Report agent failure
+        if: always()
+        env:
+          AGENT_EXIT: ${{ steps.agent.outputs.exit_code }}
+        shell: bash
+        run: |
+          if [[ "$AGENT_EXIT" != "0" ]]; then
+            echo "Agent exited with status $AGENT_EXIT" >&2
+            exit 1
+          fi
