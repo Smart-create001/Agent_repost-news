@@ -82,6 +82,7 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                 continue
             results = analyze(topic, posts, threshold=config.alert.relevance_threshold,
                               model=config.app.default_model, max_retries=config.app.max_retries,
+                              max_output_tokens=config.app.max_output_tokens,
                               timeout_seconds=config.app.request_timeout_seconds,
                               api_key=os.environ.get("GEMINI_API_KEY"))
             if not results:

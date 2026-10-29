@@ -13,6 +13,7 @@ class AppSettings(StrictModel):
     timezone: str = "Asia/Bangkok"
     default_model: str = "gemini-2.5-flash"
     max_posts_per_topic: int = Field(default=20, ge=1)
+    max_output_tokens: int = Field(default=8192, ge=256, le=16384)
     request_timeout_seconds: int = Field(default=20, ge=1)
     max_retries: int = Field(default=3, ge=0)
 

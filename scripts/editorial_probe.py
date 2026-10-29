@@ -36,7 +36,8 @@ for topic in config.topics:
             client = SimpleNamespace(models=SimpleNamespace(generate_content=capture))
             articles = analyze_topic(topic, selected, client=client,
                                      model=config.app.default_model, threshold=0,
-                                     max_retries=0, timeout_seconds=60, max_output_tokens=1024)
+                                     max_retries=0, timeout_seconds=60,
+                                     max_output_tokens=config.app.max_output_tokens)
         results.append({"topic": topic.id, "status": "VALIDATED" if articles else "NOT_RELEVANT",
                         "source": source,
                         "articles": [a.model_dump(mode="json") for a in articles],

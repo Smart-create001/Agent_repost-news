@@ -93,3 +93,10 @@ def test_repository_config_is_valid_offline():
 def test_model_configuration_is_overridable(tmp_path):
     config = load_config(write_yaml(tmp_path, sample_yaml() + "\napp:\n  default_model: custom-model\n"))
     assert config.app.default_model == "custom-model"
+
+
+def test_editorial_output_token_limit_is_validated(tmp_path):
+    config = load_config(write_yaml(tmp_path, sample_yaml() + "\napp:\n  max_output_tokens: 4096\n"))
+    assert config.app.max_output_tokens == 4096
+    with pytest.raises(ConfigError):
+        load_config(write_yaml(tmp_path, sample_yaml() + "\napp:\n  max_output_tokens: 20000\n"))
