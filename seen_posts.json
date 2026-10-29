@@ -20,8 +20,8 @@
             "message_id": null
           },
           "audio_required": true,
-          "last_attempt_at": "2026-10-29T18:44:57.594541+00:00",
-          "retry_count": 2,
+          "last_attempt_at": "2026-10-29T18:48:58.528725+00:00",
+          "retry_count": 3,
           "last_error": "Thai TTS generation failed",
           "summary_text": "ราคาทองคำในประเทศปรับตัวลดลง 400 บาท โดยมีการปรับราคาถึง 15 ครั้ง ส่งผลให้ราคาทองคำแท่งขายออกอยู่ที่ 64,400 บาท\nhttps://news.google.com/rss/articles/CBMiWkFVX3lxTFA4ZFlHVWxmUWE5akJ1SDl2c3JDQk43NksweTYwejhYYnpBSVRDMlVmZlI3UklaVlhmWXJpZFBmcVI2X3ZNMXNaUlJUSXVkdDZZVThZS1Q0b05UUQ?oc=5"
         }
