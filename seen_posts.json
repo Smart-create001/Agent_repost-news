@@ -26,6 +26,25 @@
           "summary_text": "ราคาทองคำในประเทศปรับตัวลดลง 400 บาท โดยมีการปรับราคาถึง 15 ครั้ง ส่งผลให้ราคาทองคำแท่งขายออกอยู่ที่ 64,400 บาท\nhttps://news.google.com/rss/articles/CBMiWkFVX3lxTFA4ZFlHVWxmUWE5akJ1SDl2c3JDQk43NksweTYwejhYYnpBSVRDMlVmZlI3UklaVlhmWXJpZFBmcVI2X3ZNMXNaUlJUSXVkdDZZVThZS1Q0b05UUQ?oc=5"
         }
       }
+    },
+    "ai_tech": {
+      "posts": {
+        "b193ceb70a51be2cf507c3d8c52aaf86fd7d1b2ced97db49783a5d5d2b967411": {
+          "id": "b193ceb70a51be2cf507c3d8c52aaf86fd7d1b2ced97db49783a5d5d2b967411",
+          "source_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNLXQyWUp5N0QwdVRZWXFkd1M5b2RrcExtNVBJS0JKaDdhaG1DQThXeEVlUWVWQUNPTjNOak9ZSnZlQjhDUkNIT2oxSlJrSjlJSkVSMVZFMW5acXV1N0l5bWxKTU1CNmtzZVM3U2dZVE5RbHlrZ2k5LTljM2FnNDVLM3NFbGI4N1hSMVIyQ2FNZXZYY0ZuNV9KR0lQYzdxT2RGdzkxamkzLXloVUVmLUhmdUZ3?oc=5",
+          "first_seen_at": "2026-10-29T18:53:31.883397+00:00",
+          "last_attempt_at": "2026-10-29T18:53:31.883397+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 17
+          },
+          "last_error": null,
+          "title": "Google launches Gemini 4 Carbon AI model with cybersecurity focus - Reuters"
+        }
+      },
+      "briefings": {}
     }
   }
 }
