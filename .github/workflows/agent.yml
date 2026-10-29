@@ -23,8 +23,8 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
       - name: Offline regression
-        run: python -m pytest tests/test_brain.py -q
-      - name: Compare minimal, original and fixed Gemini requests
+        run: python -m pytest tests/test_brain.py tests/test_diagnose_rest.py -q
+      - name: Direct REST request and response diagnostics
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python -m scripts.diagnose_gemini
+        run: python -m scripts.diagnose_gemini_rest
