@@ -28,11 +28,8 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - name: Offline regression
         run: python -m pytest tests/test_brain.py tests/test_diagnose_rest.py tests/test_pipeline.py tests/test_notifier.py -q
-      - name: Gemini 2.5 Flash direct API test
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          DIAGNOSTIC_MODEL: gemini-2.5-flash
-        run: python -m scripts.diagnose_gemini_rest
+      - name: TTS-only failure diagnosis
+        run: python -m scripts.phase6_tts_probe
       - name: Preserve diagnostic delivery state
         if: always()
         uses: actions/upload-artifact@v4
