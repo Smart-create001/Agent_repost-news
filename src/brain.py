@@ -27,7 +27,8 @@ SYSTEM_INSTRUCTION = (
     "Feed publication time and retrieval time are metadata, not event time; do not use those "
     "metadata timestamps as facts in the article. "
     "Conflicting claims must remain attributed and separate. "
-    "Write Thai and use only supplied source URLs."
+    "Only list uncertainties that are genuinely absent; do not claim currency is missing "
+    "when the source states baht or another currency. Write Thai and use only supplied source URLs."
 )
 
 
@@ -148,6 +149,16 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                 output = " ".join([result.headline, result.lead, *result.body, result.background, *result.uncertainties])
                 if re.search(r"https?://", output, re.IGNORECASE):
                     raise BrainError("AI response must not include URLs in editorial fields")
+                if ("บาท" in evidence and re.search(r"(?:ไม่ระบุ|ไม่มี|ไม่ชัดเจน).{0,30}(?:สกุลเงิน|หน่วยเงินตรา)",
+                                                   " ".join(result.uncertainties))):
+                    raise BrainError("AI response incorrectly claims the source has no currency")
+                down = r"(?:ลดลง|ปรับลด|ร่วง|ตกลง|ดิ่งลง|\b(?:fell|falls?|drops?|declines?)\b)"
+                up = r"(?:เพิ่มขึ้น|ปรับขึ้น|พุ่งขึ้น|สูงขึ้น|\b(?:rose|rises?|gains?|increases?)\b)"
+                if ((re.search(down, evidence, re.IGNORECASE) and not re.search(up, evidence, re.IGNORECASE)
+                     and re.search(up, output, re.IGNORECASE)) or
+                    (re.search(up, evidence, re.IGNORECASE) and not re.search(down, evidence, re.IGNORECASE)
+                     and re.search(down, output, re.IGNORECASE))):
+                    raise BrainError("AI response contradicts the source direction")
                 numbers = lambda text: set(re.findall(r"[0-9๐-๙]+(?:[.,][0-9๐-๙]+)*", text))
                 if not numbers(output).issubset(numbers(evidence)):
                     raise BrainError("AI response contains numbers absent from cited input")

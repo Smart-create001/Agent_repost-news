@@ -111,6 +111,16 @@ def test_urls_in_editorial_fields_are_rejected():
         run_analysis(item(lead="อ่านเพิ่มเติม https://fake.example.org/news"))
 
 
+def test_rejects_false_currency_uncertainty_and_reversed_direction():
+    post = SimpleNamespace(title="ราคาทองปรับลด 400 บาท", description="ราคาทองปรับลด 400 บาท",
+                           url="https://example.org/news")
+    with pytest.raises(BrainError, match="no currency"):
+        run_analysis(item(headline="ราคาทองลด 400 บาท", lead="ราคาทองปรับลด 400 บาท",
+                          uncertainties=["ไม่ระบุหน่วยเงินตราที่ชัดเจน"]), post)
+    with pytest.raises(BrainError, match="source direction"):
+        run_analysis(item(headline="ราคาทองปรับขึ้น 400 บาท", lead="ราคาทองปรับขึ้น 400 บาท"), post)
+
+
 def test_feed_description_is_plain_text_and_script_is_not_input():
     xml = b'''<rss version="2.0"><channel><title>x</title><item><title>News</title>
     <link>https://example.org/news</link><description><![CDATA[<p>Fact <b>one</b></p><script>bad()</script>]]></description>

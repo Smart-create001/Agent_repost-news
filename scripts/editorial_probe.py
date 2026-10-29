@@ -22,10 +22,11 @@ for topic in config.topics:
         if not posts:
             results.append({"topic": topic.id, "status": "NO_FEED_POSTS", "feed_error_count": len(errors)})
             continue
-        post = next((p for p in posts if p.description), posts[0])
-        source = {"title": post.title, "description": post.description,
-                  "url": post.url, "date_inferred": post.date_inferred,
-                  "published_at": None if post.date_inferred else post.published_at.isoformat()}
+        selected = posts[:5]
+        source = [{"title": post.title, "description": post.description,
+                   "url": post.url, "date_inferred": post.date_inferred,
+                   "published_at": None if post.date_inferred else post.published_at.isoformat()}
+                  for post in selected]
         with genai.Client(api_key=os.environ.get("GEMINI_API_KEY"),
                           http_options=types.HttpOptions(timeout=60000)) as sdk:
             def capture(**kwargs):
@@ -33,7 +34,7 @@ for topic in config.topics:
                 captured.append((response.text or "")[:30000])
                 return response
             client = SimpleNamespace(models=SimpleNamespace(generate_content=capture))
-            articles = analyze_topic(topic, [post], client=client,
+            articles = analyze_topic(topic, selected, client=client,
                                      model=config.app.default_model, threshold=0,
                                      max_retries=0, timeout_seconds=60, max_output_tokens=1024)
         results.append({"topic": topic.id, "status": "VALIDATED" if articles else "NOT_RELEVANT",
