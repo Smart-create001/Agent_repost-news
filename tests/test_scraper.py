@@ -52,3 +52,14 @@ def test_tc2_07_timeout_is_bounded(monkeypatch, caplog):
         posts, errors = fetch_topic(SimpleNamespace(rss_urls=[URL]), client=client, max_retries=2)
     assert posts == [] and len(errors) == 1 and len(calls) == 3
     assert "after 3 attempts" in caplog.text
+
+
+def test_rate_limit_waits_and_auth_failure_does_not_retry(monkeypatch):
+    waits, calls = [], []
+    monkeypatch.setattr("src.scraper.time.sleep", waits.append)
+    def handler(request):
+        calls.append(request)
+        return httpx.Response(429, headers={"Retry-After": "6"}) if len(calls) == 1 else httpx.Response(403)
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        _, errors = fetch_topic(SimpleNamespace(rss_urls=[URL]), client=client, max_retries=3)
+    assert waits == [6] and len(calls) == 2 and len(errors) == 1

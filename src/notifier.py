@@ -10,6 +10,7 @@ import edge_tts
 import httpx
 
 from src.sanitizer import split_telegram, spoken_thai
+from src.retry import retry_delay
 
 
 MAX_AUDIO_BYTES = 50 * 1024 * 1024
@@ -88,11 +89,18 @@ class TelegramNotifier:
                 status = exc.response.status_code if isinstance(exc, httpx.HTTPStatusError) else None
                 # A timeout or transport break may follow accepted delivery.
                 # Retrying that request can duplicate a message.
-                if attempt < self.max_retries and status in (429, 500, 502, 503, 504):
-                    time.sleep(min(2 ** attempt, 4))
-                    continue
+                if status == 429 and attempt < self.max_retries:
+                    try:
+                        body = exc.response.json()
+                        provider_delay = body.get("parameters", {}).get("retry_after")
+                    except (ValueError, AttributeError, TypeError):
+                        provider_delay = None
+                    delay = retry_delay(attempt, exc.response.headers, provider_delay)
+                    if delay is not None:
+                        time.sleep(delay)
+                        continue
                 raise DeliveryError(f"Telegram request failed: {type(exc).__name__}",
-                                    uncertain=status is None) from exc
+                                    uncertain=status is None or (status is not None and 500 <= status <= 599)) from exc
             except (ValueError, TypeError) as exc:
                 raise DeliveryError("Invalid Telegram response") from exc
         raise DeliveryError("Telegram retry limit exceeded")

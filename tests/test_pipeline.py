@@ -56,6 +56,23 @@ def test_tc5_01_sequential_and_tc5_10_isolation(tmp_path, monkeypatch):
                       ("gold_price", "fetch"), ("gold_price", "analyze"), (102, "send")]
 
 
+def test_three_topics_route_and_isolate_data(tmp_path, monkeypatch):
+    cfg = settings()
+    third = cfg.topics[0].model_copy(update={"id": "third", "name": "Third",
+        "telegram": cfg.topics[0].telegram.model_copy(update={"message_thread_id": 103})})
+    cfg = cfg.model_copy(update={"topics": [*cfg.topics, third]})
+    sent = []
+    monkeypatch.setattr("src.main.deliver", lambda notifier, thread_id, text, **kw:
+                        (sent.append((thread_id, text)) or DeliveryResult(text_message_ids=[thread_id])))
+    assert run(cfg, mode="alert", state_path=tmp_path / "state.json",
+               fetch=lambda topic, **kw: ([post(topic)], []),
+               analyze=lambda topic, posts, **kw: [analysis(topic)], notifier=object(), now=NOW) == 0
+    assert [thread for thread, _ in sent] == [101, 102, 103]
+    for (thread, text), topic in zip(sent, cfg.topics):
+        assert post(topic).url in text
+        assert all(post(other).url not in text for other in cfg.topics if other.id != topic.id)
+
+
 def test_tc5_02_failure_isolated(tmp_path, monkeypatch):
     seen = []
     def fetch(topic, **kwargs):

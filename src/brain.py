@@ -9,6 +9,7 @@ from google import genai
 from google.genai import types
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, ValidationError, field_validator
 from src.models import AppSettings
+from src.retry import retry_delay
 
 
 LOG = logging.getLogger(__name__)
@@ -55,7 +56,7 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
         if not api_key:
             raise BrainError("GEMINI_API_KEY is required for live analysis")
         client = genai.Client(api_key=api_key, http_options=types.HttpOptions(timeout=timeout_seconds * 1000))
-    sources = {post.url for post in posts}
+    sources = {post.url for post in posts[:20]}
     payload = {
         "topic": {"id": topic.id, "name": topic.name,
                   "context": topic.context[:2000], "keywords": topic.keywords[:30]},
@@ -98,9 +99,11 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
         except Exception as exc:
             status = getattr(exc, "code", getattr(exc, "status_code", None))
             retryable = status in (429, 500, 502, 503, 504) or isinstance(exc, (TimeoutError, httpx.TimeoutException))
-            if retryable and attempt < max_retries:
+            response = getattr(exc, "response", None)
+            delay = retry_delay(attempt, getattr(response, "headers", None))
+            if retryable and delay is not None and attempt < max_retries:
                 LOG.warning("AI request retry %d after %s", attempt + 1, type(exc).__name__)
-                time.sleep(min(2 ** attempt, 4))
+                time.sleep(delay)
                 continue
             raise BrainError(f"AI request failed: {type(exc).__name__}") from exc
     raise BrainError("AI retry limit exceeded")

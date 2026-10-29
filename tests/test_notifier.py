@@ -81,3 +81,24 @@ def test_audio_size_check(tmp_path):
     notifier = TelegramNotifier(token="test-token", chat_id="-42", client=fake_client(ok))
     with pytest.raises(DeliveryError, match="empty"):
         notifier.send_audio(101, path)
+
+
+def test_rate_limit_respects_telegram_retry_after(monkeypatch):
+    waits, calls = [], []
+    monkeypatch.setattr("src.notifier.time.sleep", waits.append)
+    def handler(request):
+        calls.append(request)
+        return httpx.Response(429, json={"ok": False, "parameters": {"retry_after": 7}}) if len(calls) == 1 else ok(request)
+    notifier = TelegramNotifier(token="test-token", chat_id="-42", client=fake_client(handler))
+    assert notifier.send_text(101, "ข่าว") == [77]
+    assert waits == [7] and len(calls) == 2
+
+
+def test_server_error_is_uncertain_and_not_retried():
+    calls = []
+    def handler(request):
+        calls.append(request)
+        return httpx.Response(503)
+    notifier = TelegramNotifier(token="test-token", chat_id="-42", client=fake_client(handler))
+    result = deliver(notifier, 101, "ข่าว")
+    assert result.text_uncertain and len(calls) == 1

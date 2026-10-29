@@ -146,3 +146,19 @@ def test_topic_cannot_cite_other_topic_source():
     other_post = SimpleNamespace(title="ข่าวทอง", url="https://news.example.org/gold")
     with pytest.raises(BrainError, match="absent from input"):
         analyze_topic(topic("gold"), [other_post], client=client(json.dumps([result()])))
+
+
+def test_gemini_retry_after_is_respected(monkeypatch):
+    waits = []
+    monkeypatch.setattr("src.brain.time.sleep", waits.append)
+    error = RateLimit()
+    error.response = SimpleNamespace(headers={"Retry-After": "8"})
+    mock = client(error, json.dumps([result()]))
+    assert len(analyze_topic(topic(), [POST], client=mock, max_retries=1)) == 1
+    assert waits == [8]
+
+
+def test_citation_to_post_omitted_from_prompt_is_rejected():
+    posts = [SimpleNamespace(title=str(i), url=f"https://news.example.org/{i}") for i in range(21)]
+    with pytest.raises(BrainError, match="absent from input"):
+        analyze_topic(topic(), posts, client=client(json.dumps([result(source_urls=[posts[20].url])])))

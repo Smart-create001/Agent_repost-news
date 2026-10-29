@@ -24,7 +24,7 @@ py -m venv .venv
 
 `load_config()` validates YAML and topic settings without credentials or Internet. `validate_live_config()` separately checks the required environment variables. Copy `.env.example` to `.env` and enter credentials locally before a future live run. The current topics are enabled with configured thread IDs. Feed availability and live delivery must be verified separately.
 
-The current `seen_posts.json` is an empty versioned starting document. Phase 2 implements its state format and writes.
+`seen_posts.json` is the versioned production state. Preserve it when deploying; never reset it for tests.
 
 ## Phase 2: RSS and state
 
@@ -45,7 +45,7 @@ PowerShell uses `.venv\Scripts\python.exe` in the same commands. `src.scraper.fe
 .venv/bin/python -m pytest tests/test_brain.py -v
 ```
 
-On PowerShell use `.venv\Scripts\python.exe`. Live Gemini calls require `GEMINI_API_KEY` and may consume quota; they have not been run. The pipeline comes in Phase 5.
+On PowerShell use `.venv\Scripts\python.exe`. Live Gemini calls require `GEMINI_API_KEY` and consume quota. The configured model is `gemini-3.1-flash-lite`; model availability and quota depend on the project.
 
 ## Phase 4: Telegram and Thai audio
 
@@ -55,7 +55,7 @@ On PowerShell use `.venv\Scripts\python.exe`. Live Gemini calls require `GEMINI_
 .venv/bin/python -m pytest tests/test_sanitizer.py tests/test_notifier.py -v
 ```
 
-PowerShell uses `.venv\Scripts\python.exe`. These tests mock Telegram and edge-tts. No live Telegram message or live TTS request has been made; the orchestrator comes in Phase 5.
+PowerShell uses `.venv\Scripts\python.exe`. These tests mock Telegram and edge-tts. Live text delivery to both configured topics has been confirmed. Live audio delivery remains unresolved; see Known limitations below.
 
 ## Phase 5: sequential pipeline
 
@@ -66,17 +66,17 @@ PowerShell uses `.venv\Scripts\python.exe`. These tests mock Telegram and edge-t
 .venv/bin/python -m pytest tests/ -v
 ```
 
-On PowerShell replace `.venv/bin/python` with `.venv\Scripts\python.exe`. The dry-run CLI fetches enabled topics without sending messages or changing state. Live workflow behavior has not been verified here.
+On PowerShell replace `.venv/bin/python` with `.venv\Scripts\python.exe`. The dry-run CLI fetches enabled topics without sending messages or changing state. Production Actions have confirmed text delivery and state push/reload; live audio delivery remains unresolved.
 
 ## Phase 6: GitHub Actions state persistence
 
 `.github/workflows/agent.yml` schedules alert every two hours at minute 15 UTC and briefing daily at 00:25 UTC (07:25 Asia/Bangkok); manual dispatch selects either mode. The workflow serializes runs, installs dependencies, validates `seen_posts.json`, runs the agent, and persists state even when the agent reports a topic error. `scripts/persist_state.sh` commits only changed state. It fetches `main` before pushing and fails on a moved remote instead of overwriting newer state. On workflow failure, the state file is uploaded for manual reconciliation. Local tests use a real temporary bare Git remote to verify push, reload, conflict refusal, and rejected push; they do not establish GitHub repository permissions.
 
-For deployment, place verified feed URLs and forum thread IDs in `config.yaml`, enable the intended topics, configure the three named GitHub Actions secrets, and confirm Actions has permission to write to `main`. Branch protection may reject the state push. Git-based state works for this small single-writer workflow but can hit conflicts or repository policy limits; durable storage is preferable if update frequency or writers grow. GitHub schedule timing is approximate. The workflow has only been tested locally; it has not run on GitHub yet.
+For deployment, place verified feed URLs and forum thread IDs in `config.yaml`, enable the intended topics, configure the three named GitHub Actions secrets, and confirm Actions has permission to write to `main`. Branch protection may reject the state push. Git-based state works for this small single-writer workflow but can hit conflicts or repository policy limits; durable storage is preferable if update frequency or writers grow. GitHub schedule timing is approximate. Production Actions have pushed state and a later run has read it back. The live audio delivery check has not passed.
 
 ### ตั้งค่าสำหรับรันจริงเมื่อพร้อม
 
-`config.yaml` ตั้งหัวข้อ `ai_tech` สำหรับข่าวเปิดตัวโมเดล นโยบาย และข่าวเกี่ยวกับ token/quota reset โดยติดตามชื่อ Tibo กับ Logan Kilpatrick และหัวข้อ `gold_price` สำหรับข่าวราคาทองโลก/ไทยแล้ว RSS ที่ใส่เป็น Google News search feed ซึ่งยังไม่ผ่านการตรวจ endpoint ใน cloud environment นี้เพราะ network policy บล็อก `news.google.com`. ทั้งสองหัวข้อเปิดใช้งานแล้ว โดยตั้ง thread ID เป็น `13` และ `12`; ยังตรวจการส่งจริงและ feed จากสภาพแวดล้อมนี้ไม่ได้. ข้อมูลราคาทองจากข่าวอาจไม่ใช่ราคา ณ เวลาปัจจุบัน.
+`config.yaml` ตั้งหัวข้อ `ai_tech` สำหรับข่าวเปิดตัวโมเดล นโยบาย และข่าวเกี่ยวกับ token/quota reset โดยติดตามชื่อ Tibo กับ Logan Kilpatrick และหัวข้อ `gold_price` สำหรับข่าวราคาทองโลก/ไทยแล้ว RSS ที่ใส่เป็น Google News search feed ซึ่งเคยตรวจ endpoint และส่งข้อความจริงแล้ว ทั้งสองหัวข้อเปิดใช้งาน โดยตั้ง thread ID ของ AI เป็น `5` และทองเป็น `6`. ข้อมูลราคาทองจากข่าวอาจไม่ใช่ราคา ณ เวลาปัจจุบัน.
 
 1. แก้ `config.yaml` ใน repository: สำหรับแต่ละ topic ที่ต้องการใช้ เปลี่ยน `rss_urls` เป็น HTTPS RSS/Atom endpoint ที่เปิดได้จริง, เปลี่ยน `telegram.message_thread_id` เป็นเลข forum topic ของปลายทาง และตั้ง `enabled: true` เฉพาะ topic นั้น ห้ามใช้ URL `example.com` และเลข thread ตัวอย่างสำหรับ live run. ตรวจ feed แต่ละ URL ว่าคืน RSS/Atom จริงก่อนเปิดใช้. Bot ต้องเป็นสมาชิกกลุ่มและส่งข้อความใน topic นั้นได้.
 2. ที่ GitHub repository ไปที่ **Settings → Secrets and variables → Actions → Repository secrets → New repository secret** เพิ่ม `GEMINI_API_KEY` (จาก Google AI Studio), `TELEGRAM_BOT_TOKEN` (จาก BotFather) และ `TELEGRAM_CHAT_ID` (เลข chat ID ของกลุ่ม forum ซึ่งมักเป็นเลขลบ). `TELEGRAM_CHAT_ID` เป็นคนละค่ากับ `message_thread_id`; ใช้ chat ID เดียวใน secrets และกำหนด thread ID แยกใน `config.yaml`. อย่าใส่ค่าเหล่านี้ใน Git, README, issue หรือ chat.
@@ -85,3 +85,12 @@ For deployment, place verified feed URLs and forum thread IDs in `config.yaml`, 
 5. นำไฟล์งานทั้งหมด รวม `.github/workflows/agent.yml`, `scripts/persist_state.sh` และ `seen_posts.json` ขึ้น `main` หลังตรวจทาน. GitHub จะเห็น workflow ในแท็บ **Actions → Social listening agent**. เลือก **Run workflow** และ `mode: alert` หรือ `briefing` เพื่อทดลอง; การกด Run หลังเปิด `AGENT_ENABLED` จะส่งข้อมูลและอาจใช้ Gemini quota. เปิด run ที่จบแล้ว ตรวจขั้น **Run agent**, **Persist state** และ commit ใหม่ของ `seen_posts.json`. ถ้า push ขัดแย้งหรือถูกปฏิเสธ ให้ดาวน์โหลด artifact `state-for-reconciliation-<run_id>` จาก run แล้วเปรียบเทียบ state ก่อนแก้ด้วยมือ. อย่า force push.
 
 CLI สำหรับตรวจแบบไม่ส่งข้อความก่อนเปิด workflow: Linux/macOS ใช้ `.venv/bin/python -m src.main --mode alert --dry-run` และ PowerShell ใช้ `.venv\Scripts\python.exe -m src.main --mode alert --dry-run`. เปลี่ยน `alert` เป็น `briefing` เพื่อทดสอบอีกโหมด. Dry run จะดึง feed ของ topic ที่เปิดใช้ แต่ไม่เรียก Gemini, ไม่ส่ง Telegram และไม่แก้ production state.
+
+
+## Known limitations and verification
+
+- Live audio generation/delivery has failed and is not verified. The scheduled briefing still has `generate_audio: true`; it can retry previously failed audio. Do not treat this release as fully production ready.
+- Manual workflow `phase6_test: true` runs a bounded briefing test (at most one text and one audio request per topic); `mode: alert` runs the bounded text-only AI test. `mode: verify_state` only validates and reports the state hash. The scheduled workflows retain their normal behavior.
+- Retry-After delays greater than 30 seconds or malformed values stop the retry rather than retrying early. Telegram 5xx and transport failures have uncertain delivery and are not blindly retried; reconcile their state manually.
+- Git-based state does not guarantee exactly-once delivery. A conflict or failed push requires reconciliation from the state artifact; never force-push or replace a newer state.
+- Telegram HTTP logs can contain bot tokens if verbose HTTP logging is enabled; avoid enabling it and do not publish raw logs containing credentials.
