@@ -1,6 +1,8 @@
 """Probe Gemini without Telegram, state changes, or raw error logging."""
 import logging
 import os
+import re
+from itertools import islice
 from types import SimpleNamespace
 from google import genai
 from google.genai import types
@@ -14,6 +16,21 @@ if not key:
 model = load_config().app.default_model
 print(f"Model: {model}", flush=True)
 with genai.Client(api_key=key, http_options=types.HttpOptions(timeout=20000)) as client:
+    try:
+        available = []
+        for item in islice(client.models.list(config={"page_size": 100}), 100):
+            name = item.name or ""
+            if re.fullmatch(r"models/[A-Za-z0-9._-]+", name):
+                actions = item.supported_actions or []
+                if "generateContent" in actions:
+                    available.append(name)
+        print("list_models: HTTP_SUCCESS", flush=True)
+        print(f"configured_model_available={('models/' + model) in available}", flush=True)
+        print("generate_content_models=" + ",".join(available), flush=True)
+    except Exception as exc:
+        code = getattr(exc, "code", None)
+        code = code if isinstance(code, int) else "unknown"
+        print(f"list_models: FAIL http_status={code} category={_error_category(exc)}", flush=True)
     for label, schema in (("minimal_no_schema", None), ("original_schema", list[Analysis])):
         try:
             response = client.models.generate_content(
