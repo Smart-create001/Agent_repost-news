@@ -2,7 +2,36 @@
   "schema_version": 1,
   "topics": {
     "gold_price": {
-      "posts": {},
+      "posts": {
+        "8e59e0f6a5d520eed273ec43d4eedc59bf8c6723f02d358810759cbf89eb0f3e": {
+          "id": "8e59e0f6a5d520eed273ec43d4eedc59bf8c6723f02d358810759cbf89eb0f3e",
+          "source_url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFA4ZFlHVWxmUWE5akJ1SDl2c3JDQk43NksweTYwejhYYnpBSVRDMlVmZlI3UklaVlhmWXJpZFBmcVI2X3ZNMXNaUlJUSXVkdDZZVThZS1Q0b05UUQ?oc=5",
+          "first_seen_at": "2026-10-29T21:09:20.731960+00:00",
+          "last_attempt_at": "2026-10-29T21:09:20.731960+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 20
+          },
+          "last_error": null,
+          "title": "ราคาทองคำวันนี้ร่วง 400 บาท! ปรับ 15 ครั้ง ทองแท่งขายออก 64,400 บาท - Thunhoon"
+        },
+        "77bf9984e23260c2cf8075ce033823bf59951a8b9f8d42f6fbb2df131a1ee8b1": {
+          "id": "77bf9984e23260c2cf8075ce033823bf59951a8b9f8d42f6fbb2df131a1ee8b1",
+          "source_url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPTkVadUVFNW9aUUZEM1BhNnZBQ0k3M004YUdlemlZbldkZmN2ZXRaWjNnalI0VzZ3aC0tTERhWWxRR1RWZTlpaGZvTnFndnJxUEk1OUgyU3lKWkE3SVZFeUJNX2NCTWZ3WDA5TS01VTd0dmVIVFJ5akl0UHR4b3BVUzVnbVR4Sl90clRuY3FNdGF4Zmx3SnNpWVU5WHFVRGhqMFE?oc=5",
+          "first_seen_at": "2026-10-29T21:09:20.731960+00:00",
+          "last_attempt_at": "2026-10-29T21:09:20.731960+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 21
+          },
+          "last_error": null,
+          "title": "Gold price drops to $4,035/oz as Fed votes 10-2 in favor of rate hold - Kitco"
+        }
+      },
       "briefings": {
         "gold_price:briefing:2026-10-29T00:00:00+00:00": {
           "id": "gold_price:briefing:2026-10-29T00:00:00+00:00",
@@ -56,6 +85,20 @@
           },
           "last_error": null,
           "title": "Gemini 4 Carbon: our next frontier model - blog.google"
+        },
+        "11dc76958e95691214833923c468d88cefbe93a42d7a08c2dd2f9779f7ebd259": {
+          "id": "11dc76958e95691214833923c468d88cefbe93a42d7a08c2dd2f9779f7ebd259",
+          "source_url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNOGgxY0lxN2VycnNGZW8xT0hBbnVKZDZIY3hteXo1X0lwMkFQSFRDZEdRdEUzRE1IdHNIbVIyVFF3ZldPVkZxZDNUdENlXzlFdG5mUE1HV3d5TGNzbVZvbE5oMm9pbTkwV3JQVmlOaU9nTEFscWJSeXA0WHVGUGMyWWZ5RHpMM3V3MmRz?oc=5",
+          "first_seen_at": "2026-10-29T21:09:20.731960+00:00",
+          "last_attempt_at": "2026-10-29T21:09:20.731960+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 19
+          },
+          "last_error": null,
+          "title": "Google launches Gemini 4 Carbon with a ‘significant leap’ in cybersecurity - The Verge"
         }
       },
       "briefings": {}
