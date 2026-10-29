@@ -23,6 +23,36 @@ class BrainError(ValueError):
     """AI request or response cannot safely be used."""
 
 
+def _error_category(exc: Exception) -> str:
+    """Return fixed diagnostic labels without logging provider-controlled text."""
+    details = getattr(exc, "details", {})
+    error = details.get("error", details) if isinstance(details, dict) else {}
+    reasons = error.get("details", []) if isinstance(error, dict) else []
+    known_reasons = {
+        "API_KEY_INVALID", "API_KEY_EXPIRED", "API_KEY_SERVICE_BLOCKED",
+        "API_KEY_IP_ADDRESS_BLOCKED", "API_KEY_HTTP_REFERRER_BLOCKED",
+        "SERVICE_DISABLED", "BILLING_DISABLED", "CONSUMER_INVALID",
+    }
+    if isinstance(reasons, list):
+        for detail in reasons:
+            reason = detail.get("reason") if isinstance(detail, dict) else None
+            if isinstance(reason, str) and reason in known_reasons:
+                return reason
+    message = str(getattr(exc, "message", "") or "").lower()
+    if "api key not valid" in message or "api key expired" in message:
+        return "API_KEY_INVALID_OR_EXPIRED"
+    if "user location is not supported" in message:
+        return "LOCATION_UNSUPPORTED"
+    if any(term in message for term in ("response_schema", "responseschema", "generation_config", "generationconfig")):
+        return "REQUEST_SCHEMA_OR_GENERATION_CONFIG"
+    status = getattr(exc, "code", getattr(exc, "status_code", None))
+    if isinstance(status, int):
+        return {400: "INVALID_REQUEST", 401: "AUTHENTICATION_FAILED",
+                403: "PERMISSION_DENIED", 404: "MODEL_OR_ENDPOINT_NOT_FOUND",
+                429: "RATE_LIMIT_OR_QUOTA"}.get(status, "PROVIDER_ERROR")
+    return "NETWORK_OR_SDK_ERROR"
+
+
 class Analysis(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     relevant: bool
@@ -65,7 +95,24 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
     config = types.GenerateContentConfig(
         system_instruction=SYSTEM_INSTRUCTION,
         response_mime_type="application/json",
-        response_schema=list[Analysis],
+        # Keep the provider schema to primitive fields supported by Gemini.
+        # Pydantic constraints (URL format, lengths, extra fields) remain local
+        # validation rules rather than provider-specific schema extensions.
+        response_schema=types.Schema(
+            type="ARRAY",
+            items=types.Schema(
+                type="OBJECT",
+                properties={
+                    "relevant": types.Schema(type="BOOLEAN"),
+                    "relevance_score": types.Schema(type="NUMBER"),
+                    "summary_th": types.Schema(type="STRING"),
+                    "reason": types.Schema(type="STRING"),
+                    "source_urls": types.Schema(type="ARRAY", items=types.Schema(type="STRING")),
+                    "confidence": types.Schema(type="NUMBER"),
+                },
+                required=list(Analysis.model_fields),
+            ),
+        ),
         max_output_tokens=max_output_tokens,
         temperature=0,
     )
@@ -91,5 +138,10 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                 LOG.warning("AI request retry %d after %s", attempt + 1, type(exc).__name__)
                 time.sleep(min(2 ** attempt, 4))
                 continue
-            raise BrainError(f"AI request failed: {type(exc).__name__}") from exc
+            # Never log the exception itself: provider errors may echo credentials
+            # or request content. Only a numeric code and fixed labels are safe.
+            safe_status = status if isinstance(status, int) and 100 <= status <= 599 else "unknown"
+            category = _error_category(exc)
+            LOG.error("AI request failed http_status=%s category=%s", safe_status, category)
+            raise BrainError(f"AI request failed: http_status={safe_status} category={category}") from exc
     raise BrainError("AI retry limit exceeded")

@@ -109,3 +109,60 @@ def test_invalid_schema_and_non_thai_rejected():
     for bad in (result(confidence=2), result(summary_th="English only")):
         with pytest.raises(BrainError, match="Malformed"):
             analyze_topic(topic(), [POST], client=client(json.dumps([bad])))
+
+
+@pytest.mark.parametrize(("reason", "message", "category"), [
+    ("API_KEY_INVALID", "secret-value", "API_KEY_INVALID"),
+    ("SERVICE_DISABLED", "secret-value", "SERVICE_DISABLED"),
+    (None, "Invalid response_schema: secret-value", "REQUEST_SCHEMA_OR_GENERATION_CONFIG"),
+    (None, "Bad request: secret-value", "INVALID_REQUEST"),
+    ("secret-value", "Bad request: secret-value", "INVALID_REQUEST"),
+])
+def test_live_error_diagnostic_is_safe_and_permanent_errors_not_retried(reason, message, category, caplog):
+    from google.genai.errors import ClientError
+
+    error = ClientError(400, {"error": {"code": 400, "message": message,
+                        "details": [{"reason": reason, "metadata": {"key": "secret-value"}}]}})
+    mock = client(error)
+    with pytest.raises(BrainError) as caught:
+        analyze_topic(topic(), [POST], client=mock)
+    assert f"http_status=400 category={category}" in str(caught.value)
+    assert f"http_status=400 category={category}" in caplog.text
+    assert "secret-value" not in caplog.text + str(caught.value)
+    assert len(mock.models.calls) == 1
+
+
+def test_actual_sdk_request_uses_portable_schema_without_network():
+    import httpx
+    from google import genai
+    from google.genai import types
+
+    requests = []
+
+    def handler(request):
+        requests.append(json.loads(request.content))
+        return httpx.Response(200, json={"candidates": [{"content": {
+            "parts": [{"text": json.dumps([result()])}], "role": "model"},
+            "finishReason": "STOP"}]})
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as transport:
+        with genai.Client(api_key="offline-dummy-not-a-real-key",
+                          http_options=types.HttpOptions(httpx_client=transport)) as sdk:
+            output = analyze_topic(topic(), [POST], client=sdk)
+    assert len(output) == 1
+    schema = requests[0]["generationConfig"]["responseSchema"]
+    assert schema["type"] == "ARRAY"
+    assert set(schema["items"]["required"]) == set(result())
+    forbidden = {"additional_properties", "additionalProperties", "min_length", "minLength",
+                 "max_length", "maxLength", "format"}
+
+    def check(value):
+        if isinstance(value, dict):
+            assert not forbidden.intersection(value)
+            for child in value.values():
+                check(child)
+        elif isinstance(value, list):
+            for child in value:
+                check(child)
+
+    check(schema)
