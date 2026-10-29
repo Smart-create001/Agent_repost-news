@@ -6,6 +6,7 @@ from types import SimpleNamespace
 
 import httpx
 import pytest
+import yaml
 
 from src.config import load_config
 from src.main import main, run
@@ -20,7 +21,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def settings(two=True):
     config = load_config(ROOT / "config.yaml")
-    topics = [topic.model_copy(update={"enabled": True}) for topic in config.topics]
+    topics = [topic.model_copy(update={
+        "enabled": True,
+        "telegram": topic.telegram.model_copy(update={"message_thread_id": thread_id}),
+    }) for topic, thread_id in zip(config.topics, (101, 102))]
     return config.model_copy(update={"topics": topics if two else topics[:1]})
 
 
@@ -132,7 +136,13 @@ def test_tc5_09_dry_run_does_not_write_or_deliver(tmp_path, monkeypatch):
 
 
 def test_cli_dry_run(tmp_path):
-    assert main(["--mode", "alert", "--dry-run", "--config", str(ROOT / "config.yaml"),
+    config = load_config(ROOT / "config.yaml")
+    offline = config.model_copy(update={
+        "topics": [topic.model_copy(update={"enabled": False}) for topic in config.topics]
+    })
+    offline_path = tmp_path / "offline.yaml"
+    offline_path.write_text(yaml.safe_dump(offline.model_dump(mode="json")), encoding="utf-8")
+    assert main(["--mode", "alert", "--dry-run", "--config", str(offline_path),
                  "--state", str(tmp_path / "state.json")]) == 0
 
 

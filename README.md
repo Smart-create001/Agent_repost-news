@@ -22,7 +22,7 @@ py -m venv .venv
 .venv\Scripts\python.exe -m pytest tests/test_config.py -v
 ```
 
-`load_config()` validates YAML and topic settings without credentials or Internet. `validate_live_config()` separately checks the required environment variables. Copy `.env.example` to `.env` and enter credentials locally before a future live run. The two topics in `config.yaml` are disabled examples; replace their RSS URLs and Telegram thread IDs with verified values before enabling them. No bot runner or live service connection exists in Phase 1.
+`load_config()` validates YAML and topic settings without credentials or Internet. `validate_live_config()` separately checks the required environment variables. Copy `.env.example` to `.env` and enter credentials locally before a future live run. The current topics are enabled with configured thread IDs. Feed availability and live delivery must be verified separately.
 
 The current `seen_posts.json` is an empty versioned starting document. Phase 2 implements its state format and writes.
 
@@ -66,7 +66,7 @@ PowerShell uses `.venv\Scripts\python.exe`. These tests mock Telegram and edge-t
 .venv/bin/python -m pytest tests/ -v
 ```
 
-On PowerShell replace `.venv/bin/python` with `.venv\Scripts\python.exe`. The dry-run CLI currently validates the feed path only for enabled topics; the included example topics are disabled. No live workflow has been run.
+On PowerShell replace `.venv/bin/python` with `.venv\Scripts\python.exe`. The dry-run CLI fetches enabled topics without sending messages or changing state. Live workflow behavior has not been verified here.
 
 ## Phase 6: GitHub Actions state persistence
 
@@ -76,7 +76,7 @@ For deployment, place verified feed URLs and forum thread IDs in `config.yaml`, 
 
 ### ตั้งค่าสำหรับรันจริงเมื่อพร้อม
 
-`config.yaml` ตั้งหัวข้อ `ai_tech` สำหรับข่าวเปิดตัวโมเดล นโยบาย และข่าวเกี่ยวกับ token/quota reset โดยติดตามชื่อ Tibo กับ Logan Kilpatrick และหัวข้อ `gold_price` สำหรับข่าวราคาทองโลก/ไทยแล้ว RSS ที่ใส่เป็น Google News search feed ซึ่งยังไม่ผ่านการตรวจ endpoint ใน cloud environment นี้เพราะ network policy บล็อก `news.google.com`. ทั้งสองหัวข้อยัง `enabled: false` และเลข thread เป็นตัวอย่าง จึงยังไม่ส่งจริง. ข้อมูลราคาทองจากข่าวอาจไม่ใช่ราคา ณ เวลาปัจจุบัน.
+`config.yaml` ตั้งหัวข้อ `ai_tech` สำหรับข่าวเปิดตัวโมเดล นโยบาย และข่าวเกี่ยวกับ token/quota reset โดยติดตามชื่อ Tibo กับ Logan Kilpatrick และหัวข้อ `gold_price` สำหรับข่าวราคาทองโลก/ไทยแล้ว RSS ที่ใส่เป็น Google News search feed ซึ่งยังไม่ผ่านการตรวจ endpoint ใน cloud environment นี้เพราะ network policy บล็อก `news.google.com`. ทั้งสองหัวข้อเปิดใช้งานแล้ว โดยตั้ง thread ID เป็น `13` และ `12`; ยังตรวจการส่งจริงและ feed จากสภาพแวดล้อมนี้ไม่ได้. ข้อมูลราคาทองจากข่าวอาจไม่ใช่ราคา ณ เวลาปัจจุบัน.
 
 1. แก้ `config.yaml` ใน repository: สำหรับแต่ละ topic ที่ต้องการใช้ เปลี่ยน `rss_urls` เป็น HTTPS RSS/Atom endpoint ที่เปิดได้จริง, เปลี่ยน `telegram.message_thread_id` เป็นเลข forum topic ของปลายทาง และตั้ง `enabled: true` เฉพาะ topic นั้น ห้ามใช้ URL `example.com` และเลข thread ตัวอย่างสำหรับ live run. ตรวจ feed แต่ละ URL ว่าคืน RSS/Atom จริงก่อนเปิดใช้. Bot ต้องเป็นสมาชิกกลุ่มและส่งข้อความใน topic นั้นได้.
 2. ที่ GitHub repository ไปที่ **Settings → Secrets and variables → Actions → Repository secrets → New repository secret** เพิ่ม `GEMINI_API_KEY` (จาก Google AI Studio), `TELEGRAM_BOT_TOKEN` (จาก BotFather) และ `TELEGRAM_CHAT_ID` (เลข chat ID ของกลุ่ม forum ซึ่งมักเป็นเลขลบ). `TELEGRAM_CHAT_ID` เป็นคนละค่ากับ `message_thread_id`; ใช้ chat ID เดียวใน secrets และกำหนด thread ID แยกใน `config.yaml`. อย่าใส่ค่าเหล่านี้ใน Git, README, issue หรือ chat.

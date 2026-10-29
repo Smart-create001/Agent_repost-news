@@ -81,7 +81,7 @@ def test_invalid_url(tmp_path):
         load_config(write_yaml(tmp_path, sample_yaml().replace("https://news.example.org/feed.xml", "not-a-url")))
 
 
-def test_repo_example_is_valid_offline():
+def test_repository_config_is_valid_offline():
     config = load_config(ROOT / "config.yaml")
     assert len(config.topics) == 2
-    assert all(not topic.enabled for topic in config.topics)
+    assert {topic.id for topic in config.topics} == {"ai_tech", "gold_price"}
