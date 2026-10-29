@@ -111,6 +111,11 @@ def test_urls_in_editorial_fields_are_rejected():
         run_analysis(item(lead="อ่านเพิ่มเติม https://fake.example.org/news"))
 
 
+def test_multiple_sources_in_single_news_item_are_rejected():
+    with pytest.raises(BrainError, match="Malformed"):
+        run_analysis(item(source_urls=["https://example.org/news", "https://example.org/other"]))
+
+
 def test_rejects_false_currency_uncertainty_and_reversed_direction():
     post = SimpleNamespace(title="ราคาทองปรับลด 400 บาท", description="ราคาทองปรับลด 400 บาท",
                            url="https://example.org/news")

@@ -26,6 +26,8 @@ SYSTEM_INSTRUCTION = (
     "date, currency, unit, market reason or other detail absent from the headline. "
     "Feed publication time and retrieval time are metadata, not event time; do not use those "
     "metadata timestamps as facts in the article. "
+    "Treat each supplied article separately: return at most one item per article, with exactly "
+    "that article's one source URL. Never borrow facts or dates from another article. "
     "Conflicting claims must remain attributed and separate. "
     "Only list uncertainties that are genuinely absent; do not claim currency is missing "
     "when the source states baht or another currency. Write Thai and use only supplied source URLs."
@@ -54,7 +56,7 @@ class Analysis(BaseModel):
     background: str = Field(max_length=1500)
     uncertainties: list[str] = Field(max_length=5)
     reason: str = Field(min_length=1, max_length=1000)
-    source_urls: list[HttpUrl] = Field(min_length=1)
+    source_urls: list[HttpUrl] = Field(min_length=1, max_length=1)
     confidence: float = Field(ge=0, le=1)
 
     @field_validator("headline", "lead")
