@@ -1,6 +1,7 @@
 """Live editorial probe: public RSS + Gemini, no Telegram or production state."""
 import json
 import os
+import httpx
 from pathlib import Path
 from datetime import timedelta
 from types import SimpleNamespace
@@ -12,6 +13,18 @@ from src.scraper import fetch_topic
 
 config = load_config()
 results = []
+# One request first; if the provider is unavailable or rate-limits us,
+# stop instead of repeatedly contacting it or ignoring Retry-After.
+try:
+    with httpx.Client(timeout=20, follow_redirects=True) as probe:
+        response = probe.get(str(config.topics[0].rss_urls[0]))
+        retry_after = response.headers.get("retry-after", "absent")
+        print(f"RSS_PREFLIGHT http_status={response.status_code} retry_after={retry_after[:80]}", flush=True)
+        if not response.is_success:
+            raise SystemExit(1)
+except httpx.TransportError as exc:
+    print(f"RSS_PREFLIGHT transport_error={type(exc).__name__}", flush=True)
+    raise SystemExit(1)
 for topic in config.topics:
     if not topic.enabled:
         continue

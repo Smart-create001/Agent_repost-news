@@ -154,6 +154,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--state", default="seen_posts.json")
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    # httpx INFO logs contain the Telegram bot token in the request URL.
+    logging.getLogger("httpx").setLevel(logging.WARNING)
     notifier = None
     try:
         config = load_config(args.config)

@@ -172,6 +172,25 @@ def test_cli_dry_run(tmp_path):
                  "--state", str(tmp_path / "state.json")]) == 0
 
 
+def test_cli_does_not_log_telegram_token(monkeypatch, caplog):
+    import logging
+    token = "test-token-must-not-be-logged"
+    caplog.set_level(logging.INFO, logger="httpx")
+    monkeypatch.setenv("TELEGRAM_BOT_TOKEN", token)
+    monkeypatch.setenv("TELEGRAM_CHAT_ID", "-42")
+    monkeypatch.setattr("src.main.validate_live_config", lambda config: None)
+    client = httpx.Client(transport=httpx.MockTransport(lambda request: httpx.Response(200, json={
+        "ok": True, "result": {"message_id": 1, "message_thread_id": 101, "chat": {"id": -42}}})))
+    notifier = TelegramNotifier(token=token, chat_id="-42", client=client)
+    monkeypatch.setattr("src.main.TelegramNotifier", lambda **kwargs: notifier)
+    monkeypatch.setattr("src.main.run", lambda config, **kwargs: (notifier.send_text(101, "ข่าว") and 0))
+    try:
+        assert main(["--mode", "alert"]) == 0
+        assert token not in caplog.text
+    finally:
+        client.close()
+
+
 def test_audio_alert_configuration_is_rejected_before_delivery(tmp_path):
     cfg = settings(False)
     cfg = cfg.model_copy(update={"alert": cfg.alert.model_copy(update={"generate_audio": True})})
