@@ -28,7 +28,8 @@ SYSTEM_INSTRUCTION = (
     "metadata timestamps as facts in the article. "
     "Treat each supplied article separately: return at most one item per article, with exactly "
     "that article's one source URL. Never borrow facts or dates from another article. "
-    "Conflicting claims must remain attributed and separate. "
+    "Do not infer a causal relationship between separate facts; state causation only when "
+    "the cited source explicitly supports it. Conflicting claims must remain attributed and separate. "
     "Only list uncertainties that are genuinely absent; do not claim currency is missing "
     "when the source states baht or another currency. Write Thai and use only supplied source URLs."
 )
@@ -137,37 +138,60 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
             if not isinstance(raw, list):
                 raise BrainError("AI response must be a list")
             results = [Analysis.model_validate(item) for item in raw]
+            accepted = []
+            rejected = []
+            accepted_sources = set()
             for result in results:
-                if any(str(url) not in sources for url in result.source_urls):
-                    raise BrainError("AI response cited a URL absent from input")
-                evidence_parts = []
-                for url in result.source_urls:
-                    post = sources[str(url)]
-                    evidence_parts.extend((post.title, getattr(post, "description", "")))
-                evidence = " ".join(evidence_parts)
-                if all(not _has_details(sources[str(url)]) for url in result.source_urls):
-                    if result.body or result.background or not result.uncertainties:
-                        raise BrainError("Headline-only input requires short output and explicit uncertainty")
-                output = " ".join([result.headline, result.lead, *result.body, result.background, *result.uncertainties])
-                if re.search(r"https?://", output, re.IGNORECASE):
-                    raise BrainError("AI response must not include URLs in editorial fields")
-                if ("บาท" in evidence and re.search(r"(?:ไม่ระบุ|ไม่มี|ไม่ชัดเจน).{0,30}(?:สกุลเงิน|หน่วยเงินตรา)",
-                                                   " ".join(result.uncertainties))):
-                    raise BrainError("AI response incorrectly claims the source has no currency")
-                down = r"(?:ลดลง|ปรับลด|ร่วง|ตกลง|ดิ่งลง|\b(?:fell|falls?|drops?|declines?)\b)"
-                up = r"(?:เพิ่มขึ้น|ปรับขึ้น|พุ่งขึ้น|สูงขึ้น|\b(?:rose|rises?|gains?|increases?)\b)"
-                if ((re.search(down, evidence, re.IGNORECASE) and not re.search(up, evidence, re.IGNORECASE)
-                     and re.search(up, output, re.IGNORECASE)) or
-                    (re.search(up, evidence, re.IGNORECASE) and not re.search(down, evidence, re.IGNORECASE)
-                     and re.search(down, output, re.IGNORECASE))):
-                    raise BrainError("AI response contradicts the source direction")
-                numbers = lambda text: set(re.findall(r"[0-9๐-๙]+(?:[.,][0-9๐-๙]+)*", text))
-                if not numbers(output).issubset(numbers(evidence)):
-                    raise BrainError("AI response contains numbers absent from cited input")
-                for quote in re.findall(r'[“"]([^”"]+)[”"]', output):
-                    if quote not in evidence:
-                        raise BrainError("AI response contains a quotation absent from cited input")
-            return [item for item in results if item.relevant and item.relevance_score >= threshold]
+                try:
+                    if any(str(url) not in sources for url in result.source_urls):
+                        raise BrainError("AI response cited a URL absent from input")
+                    evidence_parts = []
+                    for url in result.source_urls:
+                        post = sources[str(url)]
+                        evidence_parts.extend((post.title[:500], getattr(post, "description", "")[:3000]))
+                    evidence = " ".join(evidence_parts)
+                    if all(not _has_details(sources[str(url)]) for url in result.source_urls):
+                        if result.body or result.background or not result.uncertainties:
+                            raise BrainError("Headline-only input requires short output and explicit uncertainty")
+                    output = " ".join([result.headline, result.lead, *result.body, result.background, *result.uncertainties])
+                    if re.search(r"https?://", output, re.IGNORECASE):
+                        raise BrainError("AI response must not include URLs in editorial fields")
+                    if "สมาคมค้าทองคำ" in output and "สมาคมค้าทองคำ" not in evidence:
+                        raise BrainError("AI response attributes a claim to an organization absent from cited input")
+                    causal = r"(?:ส่งผลให้|ทำให้|เนื่องจาก|เป็นผลจาก|เพราะว่า|อันเนื่องมาจาก)"
+                    evidence_causal = causal + r"|\b(?:because|due to|caused by|resulted in)\b"
+                    if re.search(causal, output) and not re.search(evidence_causal, evidence, re.IGNORECASE):
+                        raise BrainError("AI response asserts causation absent from cited input")
+                    if ("บาท" in evidence and re.search(r"(?:ไม่ระบุ|ไม่มี|ไม่ชัดเจน).{0,30}(?:สกุลเงิน|หน่วยเงินตรา)",
+                                                       " ".join(result.uncertainties))):
+                        raise BrainError("AI response incorrectly claims the source has no currency")
+                    down = r"(?:ลดลง|ปรับลด|ร่วง|ตกลง|ดิ่งลง|\b(?:fell|falls?|drops?|declines?)\b)"
+                    up = r"(?:เพิ่มขึ้น|ปรับขึ้น|พุ่งขึ้น|สูงขึ้น|\b(?:rose|rises?|gains?|increases?)\b)"
+                    if ((re.search(down, evidence, re.IGNORECASE) and not re.search(up, evidence, re.IGNORECASE)
+                         and re.search(up, output, re.IGNORECASE)) or
+                        (re.search(up, evidence, re.IGNORECASE) and not re.search(down, evidence, re.IGNORECASE)
+                         and re.search(down, output, re.IGNORECASE))):
+                        raise BrainError("AI response contradicts the source direction")
+                    numbers = lambda text: set(re.findall(r"[0-9๐-๙]+(?:[.,][0-9๐-๙]+)*", text))
+                    if not numbers(output).issubset(numbers(evidence)):
+                        raise BrainError("AI response contains numbers absent from cited input")
+                    for quote in re.findall(r'[“"]([^”"]+)[”"]', output):
+                        if quote not in evidence:
+                            raise BrainError("AI response contains a quotation absent from cited input")
+                except BrainError as exc:
+                    rejected.append(str(exc))
+                    LOG.warning("Editorial item rejected: %s", exc)
+                    continue
+                if result.relevant and result.relevance_score >= threshold:
+                    source = str(result.source_urls[0])
+                    if source in accepted_sources:
+                        LOG.warning("Duplicate editorial source rejected")
+                        continue
+                    accepted_sources.add(source)
+                    accepted.append(result)
+            if rejected and not accepted:
+                raise BrainError(rejected[0])
+            return accepted
         except (json.JSONDecodeError, ValidationError, TypeError) as exc:
             raise BrainError("Malformed AI response; no result is safe to deliver") from exc
         except BrainError:
