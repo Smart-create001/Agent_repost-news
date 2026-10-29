@@ -42,6 +42,14 @@ with genai.Client(api_key=key, http_options=types.HttpOptions(timeout=20000)) as
             code = getattr(exc, "code", None)
             code = code if isinstance(code, int) else "unknown"
             print(f"{label}: FAIL http_status={code} category={_error_category(exc)}", flush=True)
+            if code == 404:
+                # Only these synthetic probes can expose a redacted provider
+                # explanation; production requests never log raw API errors.
+                safe = str(getattr(exc, "message", "") or "").replace(key, "[REDACTED]")
+                safe = re.sub(r"AIza[A-Za-z0-9_-]+", "[REDACTED]", safe)
+                safe = re.sub(r"https?://\S+", "[URL]", safe)
+                safe = " ".join(safe.split())[:600]
+                print(f"{label}: provider_404_explanation={safe}", flush=True)
             message = str(getattr(exc, "message", "") or "").lower()
             if "additional_properties" in message or "additionalproperties" in message:
                 print(f"{label}: provider_mentions_additional_properties=true", flush=True)
