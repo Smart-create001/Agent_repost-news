@@ -10,7 +10,12 @@ on:
         description: Run mode
         required: true
         type: choice
-        options: [alert, briefing]
+        options: [alert, briefing, verify_state]
+      phase6_test:
+        description: Limit live briefing test to one text and one audio per topic
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -45,11 +50,25 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '25 0 * * *' && 'briefing' || 'alert') }}
+          PHASE6_TEST: ${{ github.event_name == 'workflow_dispatch' && inputs.phase6_test || false }}
         shell: bash
         run: |
           set +e
-          python -m src.main --mode "$RUN_MODE"
-          agent_exit=$?
+          if [[ "$RUN_MODE" == "verify_state" ]]; then
+            python -m scripts.phase6_test --verify-state
+            agent_exit=$?
+          elif [[ "$PHASE6_TEST" == "true" ]]; then
+            if [[ "$RUN_MODE" != "briefing" ]]; then
+              echo 'Phase 6 test requires briefing mode' >&2
+              agent_exit=2
+            else
+              python -m scripts.phase6_test
+              agent_exit=$?
+            fi
+          else
+            python -m src.main --mode "$RUN_MODE"
+            agent_exit=$?
+          fi
           echo "exit_code=$agent_exit" >> "$GITHUB_OUTPUT"
           exit 0
       - name: Persist state
