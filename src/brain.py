@@ -166,7 +166,7 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                         r"(?:ระบุ|กล่าว|ยืนยัน|\b(?:says?|said|stated|according|confirmed)\b)", evidence, re.IGNORECASE
                     ):
                         raise BrainError("AI response asserts attribution absent from cited input")
-                    if re.search(r"(?:หลังจาก|ภายหลัง|หลังเฟด)", output) and not re.search(
+                    if re.search(r"(?:หลังจาก|ภายหลัง|หลัง)", output) and not re.search(
                         r"(?:หลังจาก|ภายหลัง|หลัง|\b(?:after|following)\b)", evidence, re.IGNORECASE
                     ):
                         raise BrainError("AI response asserts event ordering absent from cited input")
@@ -187,6 +187,17 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                     numbers = lambda text: set(re.findall(r"[0-9๐-๙]+(?:[.,][0-9๐-๙]+)*", text))
                     if not numbers(output).issubset(numbers(evidence)):
                         raise BrainError("AI response contains numbers absent from cited input")
+                    units = (
+                        r"(?:บาททองคำ|บาททอง|baht[ -]?weight)",
+                        r"(?:บาท|\bbaht\b|\bthb\b)",
+                        r"(?:ดอลลาร์|\busd\b|\bdollars?\b|\$)",
+                        r"(?:ยูโร|\beur\b|\beuros?\b|€)",
+                        r"(?:ออนซ์|\boz\b|\bounces?\b)",
+                        r"(?:เปอร์เซ็นต์|ร้อยละ|\bpercent\b|%)",
+                    )
+                    if any(re.search(unit, output, re.IGNORECASE) and not re.search(unit, evidence, re.IGNORECASE)
+                           for unit in units):
+                        raise BrainError("AI response contains a currency or unit absent from cited input")
                     for quote in re.findall(r'[“"]([^”"]+)[”"]', output):
                         if quote not in evidence:
                             raise BrainError("AI response contains a quotation absent from cited input")

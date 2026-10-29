@@ -98,9 +98,13 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                     record_post(state, topic.id, post, now=now)
                     mark_uncertain(state, topic.id, post.id, mode="alert")
                     _save(state_path, state, dry_run)
+                    def checkpoint_alert(ids):
+                        mark_uncertain(state, topic.id, post.id, mode="alert", message_ids=ids)
+                        _save(state_path, state, dry_run)
                     outcome = deliver(notifier, topic.telegram.message_thread_id, _text(analysis),
                                       audio=False,
-                                      voice=config.tts.voice, rate=config.tts.rate)
+                                      voice=config.tts.voice, rate=config.tts.rate,
+                                      on_text_chunk=checkpoint_alert)
                     if outcome.text_uncertain or (outcome.text_error and outcome.text_message_ids):
                         mark_uncertain(state, topic.id, post.id, mode="alert", message_ids=outcome.text_message_ids)
                     else:
@@ -124,7 +128,11 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                 briefing["summary_text"] = text
                 mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="text")
                 _save(state_path, state, dry_run)
-                outcome = deliver(notifier, topic.telegram.message_thread_id, text, audio=False)
+                def checkpoint_briefing(ids):
+                    mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="text", message_ids=ids)
+                    _save(state_path, state, dry_run)
+                outcome = deliver(notifier, topic.telegram.message_thread_id, text, audio=False,
+                                  on_text_chunk=checkpoint_briefing)
                 if outcome.text_uncertain or (outcome.text_error and outcome.text_message_ids):
                     mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="text", message_ids=outcome.text_message_ids)
                 else:

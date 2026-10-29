@@ -39,3 +39,13 @@ def split_telegram(text: str, *, limit: int = 4096) -> list[str]:
     if remaining:
         chunks.append(remaining)
     return chunks
+
+
+def headline_entities(text: str) -> list[dict]:
+    """Bold editorial headline text using Telegram's UTF-16 offsets."""
+    entities = []
+    for match in re.finditer(r"(?m)^📰 ([^\n]+)", text):
+        offset = len(text[:match.start(1)].encode("utf-16-le")) // 2
+        length = len(match.group(1).encode("utf-16-le")) // 2
+        entities.append({"type": "bold", "offset": offset, "length": length})
+    return entities

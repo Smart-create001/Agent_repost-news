@@ -152,6 +152,30 @@ def test_complete_multichunk_delivery_preserves_all_message_ids(tmp_path, monkey
     assert alert["message_id"] == 32 and alert["message_ids"] == [31, 32]
 
 
+def test_crash_between_chunks_keeps_confirmed_id_and_does_not_resend(tmp_path):
+    requests = []
+    def handler(request):
+        requests.append(request)
+        if len(requests) == 2:
+            raise SystemExit("simulated process interruption")
+        return httpx.Response(200, json={"ok": True, "result": {
+            "message_id": 31, "message_thread_id": 101, "chat": {"id": -42}}})
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    notifier = TelegramNotifier(token="test-token", chat_id="-42", client=client)
+    path = tmp_path / "state.json"
+    kwargs = dict(mode="alert", state_path=path, now=NOW, notifier=notifier,
+                  fetch=lambda topic, **kw: ([post(topic)], []),
+                  analyze=lambda topic, posts, **kw: [SimpleNamespace(
+                      summary_th="ข่าว" * 2000, source_urls=[posts[0].url])])
+    with pytest.raises(SystemExit):
+        run(settings(False), **kwargs)
+    alert = load_state(path)["topics"]["ai_tech"]["posts"]["ai_tech-post"]["alert"]
+    assert alert["uncertain"] and alert["message_ids"] == [31]
+    assert run(settings(False), **kwargs) == 0
+    assert len(requests) == 2
+    client.close()
+
+
 def test_tc5_09_dry_run_does_not_write_or_deliver(tmp_path, monkeypatch):
     path = tmp_path / "state.json"
     monkeypatch.setattr("src.main.deliver", lambda *a, **k: (_ for _ in ()).throw(AssertionError("delivered")))

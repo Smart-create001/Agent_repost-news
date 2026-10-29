@@ -93,6 +93,12 @@ CLI สำหรับตรวจแบบไม่ส่งข้อควา�
 
 The preserved audio interfaces and sanitization are not part of the production execution path. `edge-tts` is optional and listed in `requirements-audio.txt`, not production requirements. Re-enabling audio requires a future implementation, approval, dependency installation and fresh integration tests; setting the flag alone cannot enable it.
 
-Editorial addendum V2.1 remains pending: the current summary format does not yet implement the full newsroom structure. See `Master Prompt สำหรับ AI นักข่าวมืออาชีพ.md` as the editorial reference after editorial implementation is authorized.
+## Editorial reporting
+
+The editorial contract uses Thai headline, lead, body, optional background and uncertainty fields. Each item cites one supplied RSS URL; headline-only evidence must produce a short report with explicit uncertainty. Feed descriptions are sanitized and bounded, and publication and retrieval timestamps are treated separately from event time. Model output is validated after generation; invalid JSON/schema is retried within configured limits, while unsafe editorial items are rejected. Numeric, quotation, attribution and chronology checks are conservative and can reject legitimate paraphrases. They cannot prove all facts or prevent every hallucination: editorial quality requires human review against the source. Telegram renders editorial headlines in bold using escaped-free UTF-16 entity offsets; text is sent without HTML or Markdown parsing.
+
+`app.max_output_tokens` is configurable (default 8192, range 256–16384) to accommodate structured multi-story responses; this can increase token usage and latency. Text-only production remains in effect. `Master Prompt สำหรับ AI นักข่าวมืออาชีพ.md` is the editorial reference. Existing `summary_text` and message IDs remain readable. For new multi-part Telegram deliveries, confirmed IDs are checkpointed after each part while unresolved outcomes remain quarantined. A crash between provider acceptance and the checkpoint can still leave delivery uncertain; do not assume exactly-once delivery.
 
 State is Git-backed and does not guarantee exactly-once delivery. Preserve state and reconcile uncertain delivery manually. Workflow schedules are approximate.
+
+Network retry behavior on this branch has not yet incorporated the separate Phase 7 hardening branch; provider `Retry-After` handling remains a known limitation. Editorial live probes validated samples without Telegram delivery, but this does not establish full production readiness.

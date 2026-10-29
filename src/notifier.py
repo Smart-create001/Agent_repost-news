@@ -1,6 +1,7 @@
 """Telegram topic delivery and temporary Thai MP3 generation."""
 
 import asyncio
+import json
 from dataclasses import dataclass, field
 from pathlib import Path
 import tempfile
@@ -8,7 +9,7 @@ import time
 
 import httpx
 
-from src.sanitizer import split_telegram, spoken_thai
+from src.sanitizer import headline_entities, split_telegram, spoken_thai
 
 
 MAX_AUDIO_BYTES = 50 * 1024 * 1024
@@ -96,11 +97,17 @@ class TelegramNotifier:
                 raise DeliveryError("Invalid Telegram response") from exc
         raise DeliveryError("Telegram retry limit exceeded")
 
-    def send_text(self, thread_id: int, text: str) -> list[int]:
+    def send_text(self, thread_id: int, text: str, *, on_chunk=None) -> list[int]:
         ids = []
         for chunk in split_telegram(text):
             try:
-                ids.append(self._send("sendMessage", thread_id, data={"text": chunk}))
+                data = {"text": chunk}
+                entities = headline_entities(chunk)
+                if entities:
+                    data["entities"] = json.dumps(entities, ensure_ascii=False)
+                ids.append(self._send("sendMessage", thread_id, data=data))
+                if on_chunk is not None:
+                    on_chunk(list(ids))
             except DeliveryError as exc:
                 raise DeliveryError(str(exc), sent_ids=ids, uncertain=exc.uncertain) from exc
         return ids
@@ -131,10 +138,14 @@ async def make_audio(text: str, path: str | Path, *, voice: str = "th-TH-Premwad
 
 
 def deliver(notifier: TelegramNotifier, thread_id: int, text: str, *, audio: bool = False,
-            voice: str = "th-TH-PremwadeeNeural", rate: str = "+0%", tts_factory=None) -> DeliveryResult:
+            voice: str = "th-TH-PremwadeeNeural", rate: str = "+0%", tts_factory=None,
+            on_text_chunk=None) -> DeliveryResult:
     result = DeliveryResult()
     try:
-        result.text_message_ids = notifier.send_text(thread_id, text)
+        if on_text_chunk is None:
+            result.text_message_ids = notifier.send_text(thread_id, text)
+        else:
+            result.text_message_ids = notifier.send_text(thread_id, text, on_chunk=on_text_chunk)
     except DeliveryError as exc:
         result.text_message_ids = exc.sent_ids
         result.text_error = str(exc)

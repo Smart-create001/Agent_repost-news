@@ -56,6 +56,15 @@ def test_known_numbers_and_quotes_can_be_used():
     assert len(results) == 1
 
 
+def test_rejects_fabricated_currency_or_gold_weight_unit():
+    post = SimpleNamespace(title="ราคาทองลด 400 บาท", description="ราคาทองลด 400 บาท",
+                           url="https://example.org/news")
+    with pytest.raises(BrainError, match="currency or unit absent"):
+        run_analysis(item(headline="ราคาทองลด 400 ดอลลาร์", lead="ราคาทองลด 400 ดอลลาร์"), post)
+    with pytest.raises(BrainError, match="currency or unit absent"):
+        run_analysis(item(headline="ราคาทองลด 400 บาทต่อบาททองคำ", lead="ราคาทองลด 400 บาท"), post)
+
+
 def test_missing_editorial_field_and_fabricated_url_are_rejected():
     bad = item()
     del bad["lead"]
@@ -149,6 +158,7 @@ def test_rejects_unsupported_organization_and_causation():
     ("ผู้บริหารจับตามองการเปิดตัว AI", "monitoring"),
     ("บริษัทระบุว่าเปิดตัว AI", "attribution"),
     ("บริษัทเปิดตัว AI หลังจากการประชุม", "event ordering"),
+    ("บริษัทเปิดตัว AI หลังธนาคารประกาศ", "event ordering"),
 ])
 def test_rejects_unsupported_monitoring_attribution_and_order(lead, expected):
     with pytest.raises(BrainError, match=expected):

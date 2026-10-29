@@ -27,6 +27,23 @@ def test_tc4_03_and_06_correct_routing_and_message_id():
     assert b"message_thread_id=101" in requests[0].content
 
 
+def test_headline_bold_entity_uses_utf16_offsets_without_markup_interpretation():
+    import json
+    from urllib.parse import parse_qs
+    requests = []
+    def handler(request):
+        requests.append(request)
+        return ok(request)
+    notifier = TelegramNotifier(token="test-token", chat_id="-42", client=fake_client(handler))
+    text = "📰 ข่าว AI 😀\n\nเนื้อหา <ไม่ใช่มาร์กอัป>"
+    assert notifier.send_text(101, text) == [77]
+    data = parse_qs(requests[0].content.decode())
+    assert data["text"] == [text] and "parse_mode" not in data
+    entity = json.loads(data["entities"][0])[0]
+    assert entity == {"type": "bold", "offset": 3,
+                      "length": len("ข่าว AI 😀".encode("utf-16-le")) // 2}
+
+
 def test_tc4_04_wrong_thread_no_fallback():
     calls = []
     def handler(request):

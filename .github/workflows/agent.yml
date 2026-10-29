@@ -1,44 +1,97 @@
-name: Editorial validation only
+name: Social listening agent
+
 on:
+  schedule:
+    - cron: '15 */2 * * *' # Alert, every two hours (UTC)
+    - cron: '25 0 * * *'   # Briefing, 07:25 Asia/Bangkok
   workflow_dispatch:
     inputs:
       mode:
-        description: Editorial probe only
+        description: Run mode
         required: true
         type: choice
         options: [alert, briefing, verify_state]
       phase6_test:
-        description: Unused by the editorial probe
+        description: Limit live briefing test to one text and one audio per topic
+        required: false
         type: boolean
         default: false
+
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: agent-state-${{ github.repository }}
+  cancel-in-progress: false
+
 jobs:
-  probe:
+  run:
+    if: vars.AGENT_ENABLED == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
+          ref: main
           fetch-depth: 0
-          persist-credentials: false
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -r requirements.txt
-      - name: Restore production workflow for regression tests
-        run: git show 59724d6:.github/workflows/agent.yml > .github/workflows/agent.yml
-      - run: python -m pytest tests/ -q
-      - name: Editorial probe without delivery or state writes
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Validate state before run
+        run: python -c 'from src.state import load_state; load_state("seen_posts.json")'
+      - name: Run agent
+        id: agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python -m scripts.editorial_probe
-      - name: Preserve editorial review evidence
-        if: always()
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '25 0 * * *' && 'briefing' || 'alert') }}
+          PHASE6_TEST: ${{ github.event_name == 'workflow_dispatch' && inputs.phase6_test || false }}
+        shell: bash
+        run: |
+          set +e
+          if [[ "$RUN_MODE" == "verify_state" ]]; then
+            python -m scripts.phase6_test --verify-state
+            agent_exit=$?
+          elif [[ "$PHASE6_TEST" == "true" ]]; then
+            if [[ "$RUN_MODE" == "alert" ]]; then
+              python -m scripts.phase6_test --text-only
+              agent_exit=$?
+            elif [[ "$RUN_MODE" == "briefing" ]]; then
+              python -m scripts.phase6_test
+              agent_exit=$?
+            else
+              echo 'Phase 6 test requires alert or briefing mode' >&2
+              agent_exit=2
+            fi
+          else
+            python -m src.main --mode "$RUN_MODE"
+            agent_exit=$?
+          fi
+          echo "exit_code=$agent_exit" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Persist state
+        id: persist
+        run: bash scripts/persist_state.sh
+      - name: Preserve state for reconciliation
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: editorial-review-${{ github.run_id }}
-          path: editorial-review/
-          if-no-files-found: ignore
-          retention-days: 7
+          name: state-for-reconciliation-${{ github.run_id }}
+          path: seen_posts.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Report agent failure
+        if: always()
+        env:
+          AGENT_EXIT: ${{ steps.agent.outputs.exit_code }}
+        shell: bash
+        run: |
+          if [[ "$AGENT_EXIT" != "0" ]]; then
+            echo "Agent exited with status $AGENT_EXIT" >&2
+            exit 1
+          fi
