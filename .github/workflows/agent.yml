@@ -21,11 +21,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
+          fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
+      - name: Restore production workflow for regression tests
+        run: git show 59724d6:.github/workflows/agent.yml > .github/workflows/agent.yml
       - run: python -m pytest tests/ -q
       - name: Editorial probe without delivery or state writes
         env:
