@@ -20,7 +20,7 @@ tts:
 topics:
   - id: ai_tech
     name: AI Models and Policy
-    enabled: false
+    enabled: true
     keywords:
       - AI model launch
       - OpenAI
@@ -37,13 +37,13 @@ topics:
       ระบุชื่อโมเดล ผู้ให้บริการ วันที่ประกาศ และแหล่งข่าวตามข้อมูลที่พบจริง
       หากคำว่า reset หมายถึงเรื่องอื่นหรือข้อมูลยังไม่ยืนยัน ให้ระบุความไม่แน่นอน
     telegram:
-      message_thread_id: 101
+      message_thread_id: 13
     rss_urls:
       - 'https://news.google.com/rss/search?q=OpenAI%20OR%20Google%20Gemini%20OR%20Anthropic%20AI%20model%20launch%20policy&hl=en-US&gl=US&ceid=US:en'
       - 'https://news.google.com/rss/search?q=%22Tibo%22%20OR%20%22Logan%20Kilpatrick%22%20AI%20token%20reset%20API&hl=en-US&gl=US&ceid=US:en'
   - id: gold_price
     name: Gold Price
-    enabled: false
+    enabled: true
     keywords:
       - ราคาทอง
       - gold price
@@ -55,7 +55,7 @@ topics:
       เวลาและวันที่ของข้อมูลเมื่อมีในแหล่งข่าว ห้ามแต่งราคาปัจจุบัน
       หรือใช้ราคาจากข่าวเก่าแทนราคาล่าสุด
     telegram:
-      message_thread_id: 102
+      message_thread_id: 12
     rss_urls:
       - 'https://news.google.com/rss/search?q=%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%97%E0%B8%AD%E0%B8%87%20OR%20gold%20price%20Thailand&hl=th&gl=TH&ceid=TH:th'
       - 'https://news.google.com/rss/search?q=spot%20gold%20price%20market&hl=en-US&gl=US&ceid=US:en'
