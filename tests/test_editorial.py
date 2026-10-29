@@ -38,7 +38,8 @@ def test_headline_only_is_formatted_with_limitations_and_source():
     assert text.index("เปิดตัว AI รุ่นใหม่") < text.index("บริษัทเปิดตัว AI รุ่นใหม่")
     assert "ข้อจำกัด: ยังไม่มีรายละเอียดเพิ่มเติม" in text
     assert "🔗 แหล่งข่าว: https://example.org/news" in text
-    assert "empty body and background" in calls[0]["config"].system_instruction
+    assert "return body=[]" in calls[0]["config"].system_instruction
+    assert json.loads(calls[0]["contents"])["articles"][0]["headline_only"] is True
 
 
 @pytest.mark.parametrize("bad", [item(lead="เหตุการณ์เกิดขึ้นในปี 2028"),

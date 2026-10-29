@@ -21,8 +21,11 @@ SYSTEM_INSTRUCTION = (
     "then optional body and background. Use only facts in the cited supplied articles. "
     "Never invent numbers, quotes, sources, dates, motives or predictions. "
     "Answer 5W1H only where evidence supports it. If a headline is the only evidence, "
-    "return an empty body and background and disclose uncertainty. "
-    "Feed publication time and retrieval time are not event time; never equate them without evidence. "
+    "if headline_only is true, return body=[], background='', and at least one uncertainty; "
+    "the lead must only restate or translate that headline. Never add an organization, person, "
+    "date, currency, unit, market reason or other detail absent from the headline. "
+    "Feed publication time and retrieval time are metadata, not event time; do not use those "
+    "metadata timestamps as facts in the article. "
     "Conflicting claims must remain attributed and separate. "
     "Write Thai and use only supplied source URLs."
 )
@@ -96,6 +99,7 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
         "topic": {"id": topic.id, "name": topic.name,
                   "context": topic.context[:2000], "keywords": topic.keywords[:30]},
         "articles": [{"title": post.title[:500], "description": getattr(post, "description", "")[:3000],
+                      "headline_only": not _has_details(post),
                       "published_at": None if getattr(post, "date_inferred", True) else post.published_at.isoformat(),
                       "retrieved_at": (post.retrieved_at.isoformat() if getattr(post, "retrieved_at", None) else None),
                       "url": post.url}
