@@ -89,6 +89,7 @@ def test_tc5_04_alert_relevance_and_tc5_06_repeat(tmp_path, monkeypatch):
     assert sent == [1]
 
 
+@pytest.mark.skip(reason="Audio delivery is disabled in the text-only release; preserve test for future audio work")
 def test_tc5_05_briefing_text_audio(tmp_path, monkeypatch):
     monkeypatch.setattr("src.main.deliver", lambda *a, **k: DeliveryResult(text_message_ids=[10]))
     monkeypatch.setattr("src.main.deliver_audio_only", lambda *a, **k: DeliveryResult(audio_message_id=11))
@@ -101,6 +102,7 @@ def test_tc5_05_briefing_text_audio(tmp_path, monkeypatch):
     assert briefing["text"]["message_id"] == 10 and briefing["audio"]["message_id"] == 11
 
 
+@pytest.mark.skip(reason="Audio recovery is disabled in the text-only release; preserve test for future audio work")
 def test_tc5_07_audio_retry_without_text(tmp_path, monkeypatch):
     path = tmp_path / "state.json"
     cfg = settings(False)

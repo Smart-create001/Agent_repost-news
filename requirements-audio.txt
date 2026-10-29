@@ -1,0 +1,2 @@
+# Optional dependency for future audio work; audio is disabled in this release.
+edge-tts>=7,<8

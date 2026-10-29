@@ -78,14 +78,16 @@ def record_post(state: dict, topic_id: str, post, *, now: datetime | None = None
 def record_briefing(state: dict, topic_id: str, briefing_id: str,
                     window_start: datetime, window_end: datetime, post_ids: list[str],
                     *, audio_required: bool = True) -> dict:
-    return ensure_topic(state, topic_id)["briefings"].setdefault(briefing_id, {
+    item = {
         "id": briefing_id, "window_start": window_start.isoformat(),
         "window_end": window_end.isoformat(), "post_ids": list(post_ids),
         "text": {"delivered": False, "message_id": None},
-        "audio": {"delivered": False, "message_id": None},
         "audio_required": audio_required,
         "last_attempt_at": None, "retry_count": 0, "last_error": None,
-    })
+    }
+    if audio_required:
+        item["audio"] = {"delivered": False, "message_id": None}
+    return ensure_topic(state, topic_id)["briefings"].setdefault(briefing_id, item)
 
 
 def record_delivery(state: dict, topic_id: str, item_id: str, *, mode: str,

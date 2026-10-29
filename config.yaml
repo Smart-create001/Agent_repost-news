@@ -1,4 +1,6 @@
 schema_version: 1
+features:
+  audio_enabled: false
 app:
   timezone: Asia/Bangkok
   default_model: gemini-3.1-flash-lite
@@ -12,7 +14,7 @@ alert:
 briefing:
   enabled: true
   reporting_hours: 24
-  generate_audio: true
+  generate_audio: false
   max_summary_words: 500
 tts:
   voice: th-TH-PremwadeeNeural

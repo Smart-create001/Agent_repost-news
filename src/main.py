@@ -9,7 +9,7 @@ from pathlib import Path
 
 from src.brain import analyze_topic
 from src.config import ConfigError, load_config, validate_live_config
-from src.notifier import TelegramNotifier, deliver, deliver_audio_only
+from src.notifier import TelegramNotifier, deliver
 from src.scraper import fetch_topic
 from src.state import (cleanup_state, load_state, mark_uncertain, record_briefing,
                        record_delivery, record_post, save_state)
@@ -38,6 +38,8 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
     """Return 0 on clean processing, 1 for topic errors, 2 for config/state errors."""
     if mode not in {"alert", "briefing"}:
         raise ValueError("mode must be alert or briefing")
+    if config.features.audio_enabled:
+        raise ValueError("audio_enabled=true is not supported in this text-only release")
     if mode == "alert" and config.alert.generate_audio:
         raise ValueError("audio alerts require delivery state support; disable alert.generate_audio")
     now = now or datetime.now(timezone.utc)
@@ -54,24 +56,8 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
             current = state["topics"].get(topic.id, {"posts": {}, "briefings": {}})
             existing_briefing_id = f"{topic.id}:briefing:{start.isoformat()}"
             existing_briefing = current["briefings"].get(existing_briefing_id)
-            # Recover audio without re-sending previously confirmed text.
+            # Preserve existing delivered text and historical audio state; never retry audio.
             if mode == "briefing" and existing_briefing and existing_briefing["text"]["delivered"]:
-                if (config.briefing.generate_audio and not existing_briefing["audio"]["delivered"]
-                        and not existing_briefing["audio"].get("uncertain")):
-                    if not dry_run:
-                        mark_uncertain(state, topic.id, existing_briefing_id, mode="briefing", part="audio")
-                        _save(state_path, state, dry_run)
-                        outcome = deliver_audio_only(notifier, topic.telegram.message_thread_id,
-                                                     existing_briefing["summary_text"],
-                                                     voice=config.tts.voice, rate=config.tts.rate)
-                        if outcome.audio_uncertain:
-                            mark_uncertain(state, topic.id, existing_briefing_id, mode="briefing", part="audio")
-                        else:
-                            record_delivery(state, topic.id, existing_briefing_id, mode="briefing",
-                                            part="audio", success=outcome.audio_delivered,
-                                            message_id=outcome.audio_message_id, error=outcome.audio_error)
-                        _save(state_path, state, dry_run)
-                        failures += not outcome.audio_delivered
                 continue
             posts, errors = fetch(topic, timeout=config.app.request_timeout_seconds,
                                   max_retries=config.app.max_retries,
@@ -130,7 +116,7 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                     continue
                 briefing = record_briefing(state, topic.id, briefing_id, start, end,
                                            [p.id for p in posts],
-                                           audio_required=config.briefing.generate_audio)
+                                           audio_required=False)
                 briefing["summary_text"] = text
                 mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="text")
                 _save(state_path, state, dry_run)
@@ -143,21 +129,7 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                                     message_id=outcome.text_message_ids[-1] if outcome.text_delivered else None,
                                     error=outcome.text_error, now=now)
                 _save(state_path, state, dry_run)
-                audio_ok = True
-                if outcome.text_delivered and config.briefing.generate_audio:
-                    mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="audio")
-                    _save(state_path, state, dry_run)
-                    audio_outcome = deliver_audio_only(notifier, topic.telegram.message_thread_id,
-                                                       text, voice=config.tts.voice, rate=config.tts.rate)
-                    audio_ok = audio_outcome.audio_delivered
-                    if audio_outcome.audio_uncertain:
-                        mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="audio")
-                    else:
-                        record_delivery(state, topic.id, briefing_id, mode="briefing", part="audio",
-                                        success=audio_ok, message_id=audio_outcome.audio_message_id,
-                                        error=audio_outcome.audio_error, now=now)
-                    _save(state_path, state, dry_run)
-                failures += not outcome.text_delivered or not audio_ok
+                failures += not outcome.text_delivered
             LOG.info("topic=%s mode=%s processed=%d", topic.id, mode, len(posts))
         except Exception as exc:
             failures += 1

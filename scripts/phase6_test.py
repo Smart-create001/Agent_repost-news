@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import logging
 import os
+import sys
 from pathlib import Path
 
 from src.config import load_config, validate_live_config
@@ -41,9 +42,12 @@ def main():
     args = parser.parse_args()
     state_path = Path("seen_posts.json")
     if args.verify_state:
+        config = load_config()
+        if config.features.audio_enabled or "edge_tts" in sys.modules:
+            raise RuntimeError("Text-only execution unexpectedly enabled or imported audio")
         state = load_state(state_path)
         digest = hashlib.sha256(state_path.read_bytes()).hexdigest()
-        print(f"state_sha256={digest} topics={len(state['topics'])}")
+        print(f"state_sha256={digest} topics={len(state['topics'])} audio_enabled=false edge_tts_imported=false")
         return 0
     logging.basicConfig(level=logging.INFO)
     logging.getLogger("httpx").setLevel(logging.WARNING)

@@ -6,7 +6,6 @@ from pathlib import Path
 import tempfile
 import time
 
-import edge_tts
 import httpx
 
 from src.sanitizer import split_telegram, spoken_thai
@@ -117,7 +116,11 @@ class TelegramNotifier:
 async def make_audio(text: str, path: str | Path, *, voice: str = "th-TH-PremwadeeNeural",
                      rate: str = "+0%", tts_factory=None) -> None:
     spoken = spoken_thai(text)
-    factory = tts_factory or edge_tts.Communicate
+    if tts_factory is None:
+        import edge_tts
+        factory = edge_tts.Communicate
+    else:
+        factory = tts_factory
     try:
         await factory(spoken, voice=voice, rate=rate).save(str(path))
         if not Path(path).is_file() or Path(path).stat().st_size == 0:

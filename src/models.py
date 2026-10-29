@@ -44,6 +44,17 @@ class TTSSettings(StrictModel):
     rate: str = "+0%"
 
 
+class FeatureSettings(StrictModel):
+    audio_enabled: bool = False
+
+    @field_validator("audio_enabled")
+    @classmethod
+    def audio_not_supported(cls, value: bool) -> bool:
+        if value:
+            raise ValueError("audio_enabled=true is not supported in this text-only release")
+        return value
+
+
 class TelegramTopic(StrictModel):
     message_thread_id: StrictInt = Field(gt=0)
 
@@ -70,6 +81,7 @@ class AgentConfig(StrictModel):
     alert: AlertSettings = Field(default_factory=AlertSettings)
     briefing: BriefingSettings = Field(default_factory=BriefingSettings)
     tts: TTSSettings = Field(default_factory=TTSSettings)
+    features: FeatureSettings = Field(default_factory=FeatureSettings)
     topics: list[Topic] = Field(min_length=1)
 
     @model_validator(mode="after")
