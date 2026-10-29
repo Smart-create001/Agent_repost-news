@@ -63,7 +63,7 @@ def test_tc3_03_and_10_topic_isolation():
 
 def test_tc3_04_malformed_json():
     with pytest.raises(BrainError, match="Malformed"):
-        analyze_topic(topic(), [POST], client=client("{bad"))
+        analyze_topic(topic(), [POST], client=client("{bad"), max_retries=0)
 
 
 def test_tc3_05_fabricated_source_rejected():
@@ -109,7 +109,7 @@ def test_tc3_09_empty_input_does_not_call_api():
 def test_invalid_schema_and_non_thai_rejected():
     for bad in (result(confidence=2), result(headline="English only")):
         with pytest.raises(BrainError, match="Malformed"):
-            analyze_topic(topic(), [POST], client=client(json.dumps([bad])))
+            analyze_topic(topic(), [POST], client=client(json.dumps([bad])), max_retries=0)
 
 
 def test_configured_model_is_sent_to_sdk():
@@ -120,7 +120,19 @@ def test_configured_model_is_sent_to_sdk():
 
 def test_extra_output_field_is_rejected():
     with pytest.raises(BrainError, match="Malformed"):
-        analyze_topic(topic(), [POST], client=client(json.dumps([result(extra_field="invalid")])))
+        analyze_topic(topic(), [POST], client=client(json.dumps([result(extra_field="invalid")])), max_retries=0)
+
+
+def test_malformed_response_retried_with_limit(monkeypatch):
+    waits = []
+    monkeypatch.setattr("src.brain.time.sleep", waits.append)
+    mock = client("{bad", json.dumps([result()]))
+    assert len(analyze_topic(topic(), [POST], client=mock, max_retries=1)) == 1
+    assert len(mock.models.calls) == 2 and waits == [1]
+    mock = client("{bad", "{still bad")
+    with pytest.raises(BrainError, match="Malformed"):
+        analyze_topic(topic(), [POST], client=mock, max_retries=1)
+    assert len(mock.models.calls) == 2
 
 
 def test_actual_sdk_encodes_supported_schema_and_validates_response():

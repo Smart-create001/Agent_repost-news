@@ -193,6 +193,10 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                 raise BrainError(rejected[0])
             return accepted
         except (json.JSONDecodeError, ValidationError, TypeError) as exc:
+            if attempt < max_retries:
+                LOG.warning("Malformed AI response; retry %d", attempt + 1)
+                time.sleep(min(2 ** attempt, 4))
+                continue
             raise BrainError("Malformed AI response; no result is safe to deliver") from exc
         except BrainError:
             raise

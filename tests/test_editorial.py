@@ -28,7 +28,7 @@ def run_analysis(response, post=None):
         calls.append(kwargs)
         return SimpleNamespace(text=json.dumps([response], ensure_ascii=False))
     client = SimpleNamespace(models=SimpleNamespace(generate_content=generate_content))
-    result = analyze_topic(topic, [post], client=client)
+    result = analyze_topic(topic, [post], client=client, max_retries=0)
     return result, calls
 
 
