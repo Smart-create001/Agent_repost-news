@@ -161,6 +161,16 @@ def test_rejects_unsupported_organization_and_causation():
                           lead="ราคาทองลด 400 บาท ส่งผลให้ขายออก 64,400 บาท"), post)
 
 
+def test_rejects_inferred_compound_cause_from_separate_source_clauses():
+    post = SimpleNamespace(title="Gold slips on higher oil; markets assess Warsh comments after Fed holds rates",
+                           description="Gold slips on higher oil; markets assess Warsh comments after Fed holds rates",
+                           url="https://example.org/news", date_inferred=False,
+                           published_at=datetime(2026, 10, 29, tzinfo=timezone.utc))
+    with pytest.raises(BrainError, match="combines causes"):
+        run_analysis(item(headline="ราคาทองลดลงจากราคาน้ำมันและท่าทีของเฟด",
+                          lead="ราคาทองคำปรับตัวลดลง"), post)
+
+
 @pytest.mark.parametrize("lead, expected", [
     ("ผู้บริหารจับตามองการเปิดตัว AI", "monitoring"),
     ("บริษัทระบุว่าเปิดตัว AI", "attribution"),

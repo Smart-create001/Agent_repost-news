@@ -181,6 +181,9 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                     evidence_causal = causal + r"|\b(?:because|due to|caused by|resulted in)\b"
                     if re.search(causal, output) and not re.search(evidence_causal, evidence, re.IGNORECASE):
                         raise BrainError("AI response asserts causation absent from cited input")
+                    if (re.search(r"จาก[^\n]{0,100}และ", result.headline + "\n" + result.lead)
+                            and not re.search(r"(?:และ|&|\band\b)", evidence, re.IGNORECASE)):
+                        raise BrainError("AI response combines causes absent from cited input")
                     if ("บาท" in evidence and re.search(r"(?:ไม่ระบุ|ไม่มี|ไม่ชัดเจน).{0,30}(?:สกุลเงิน|หน่วยเงินตรา)",
                                                        " ".join(result.uncertainties))):
                         raise BrainError("AI response incorrectly claims the source has no currency")
