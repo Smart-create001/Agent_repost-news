@@ -28,13 +28,13 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - name: Offline regression
         run: python -m pytest tests/test_brain.py tests/test_diagnose_rest.py tests/test_pipeline.py tests/test_notifier.py -q
-      - name: Read-only Telegram access diagnosis
+      - name: Labeled live news test in authorized topic
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           EXPECTED_CHAT_ID: ${{ inputs.expected_chat_id }}
-        run: python -m scripts.test_telegram_access
+        run: python -m scripts.test_live_pipeline
       - name: Preserve diagnostic delivery state
         if: always()
         uses: actions/upload-artifact@v4

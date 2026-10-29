@@ -20,6 +20,12 @@ def main():
     config.app.request_timeout_seconds = 60
     config.app.max_retries = 0
     config.app.max_posts_per_topic = 1
+    for topic in config.topics:
+        topic.enabled = topic.id == "ai_tech"
+        if topic.enabled:
+            topic.telegram.message_thread_id = 6
+    if os.environ.get("TELEGRAM_CHAT_ID") != os.environ.get("EXPECTED_CHAT_ID"):
+        raise ValueError("Configured chat does not match the authorized destination")
     validate_live_config(config)
     original = Path("seen_posts.json").read_bytes()
     state_path = Path("diagnostic-output/state.json")
