@@ -145,6 +145,16 @@ def test_rejects_unsupported_organization_and_causation():
                           lead="ราคาทองลด 400 บาท ส่งผลให้ขายออก 64,400 บาท"), post)
 
 
+@pytest.mark.parametrize("lead, expected", [
+    ("ผู้บริหารจับตามองการเปิดตัว AI", "monitoring"),
+    ("บริษัทระบุว่าเปิดตัว AI", "attribution"),
+    ("บริษัทเปิดตัว AI หลังจากการประชุม", "event ordering"),
+])
+def test_rejects_unsupported_monitoring_attribution_and_order(lead, expected):
+    with pytest.raises(BrainError, match=expected):
+        run_analysis(item(lead=lead))
+
+
 def test_mixed_batch_quarantines_unsafe_item_and_keeps_safe_item(caplog):
     posts = [SimpleNamespace(title="บริษัทเปิดตัว AI รุ่นใหม่", description="",
                              url=f"https://example.org/{name}") for name in ("safe", "bad")]

@@ -158,6 +158,18 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                         raise BrainError("AI response must not include URLs in editorial fields")
                     if "สมาคมค้าทองคำ" in output and "สมาคมค้าทองคำ" not in evidence:
                         raise BrainError("AI response attributes a claim to an organization absent from cited input")
+                    if re.search(r"จับตา(?:มอง)?", output) and not re.search(
+                        r"(?:จับตา|จับตามอง|monitor|watch|closely follow)", evidence, re.IGNORECASE
+                    ):
+                        raise BrainError("AI response asserts monitoring absent from cited input")
+                    if re.search(r"(?:ระบุว่า|กล่าวว่า|ยืนยันว่า)", output) and not re.search(
+                        r"(?:ระบุ|กล่าว|ยืนยัน|\b(?:says?|said|stated|according|confirmed)\b)", evidence, re.IGNORECASE
+                    ):
+                        raise BrainError("AI response asserts attribution absent from cited input")
+                    if re.search(r"(?:หลังจาก|ภายหลัง|หลังเฟด)", output) and not re.search(
+                        r"(?:หลังจาก|ภายหลัง|หลัง|\b(?:after|following)\b)", evidence, re.IGNORECASE
+                    ):
+                        raise BrainError("AI response asserts event ordering absent from cited input")
                     causal = r"(?:ส่งผลให้|ทำให้|เนื่องจาก|เป็นผลจาก|เพราะว่า|อันเนื่องมาจาก)"
                     evidence_causal = causal + r"|\b(?:because|due to|caused by|resulted in)\b"
                     if re.search(causal, output) and not re.search(evidence_causal, evidence, re.IGNORECASE):
