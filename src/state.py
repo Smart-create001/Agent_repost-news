@@ -93,11 +93,14 @@ def record_briefing(state: dict, topic_id: str, briefing_id: str,
 def record_delivery(state: dict, topic_id: str, item_id: str, *, mode: str,
                     success: bool, message_id: int | None = None,
                     error: str | None = None, now: datetime | None = None,
-                    part: str = "text") -> None:
+                    part: str = "text", message_ids: list[int] | None = None) -> None:
     if mode not in {"alert", "briefing"} or (mode == "briefing" and part not in {"text", "audio"}):
         raise ValueError("unsupported delivery mode or part")
     if success and message_id is None:
         raise ValueError("successful delivery requires message_id")
+    if message_ids is not None and (not message_ids or any(type(value) is not int for value in message_ids)
+                                    or message_ids[-1] != message_id):
+        raise ValueError("message_ids must contain confirmed IDs ending in message_id")
     now = now or datetime.now(timezone.utc)
     topic = ensure_topic(state, topic_id)
     item = topic["posts"][item_id] if mode == "alert" else topic["briefings"][item_id]
@@ -106,6 +109,8 @@ def record_delivery(state: dict, topic_id: str, item_id: str, *, mode: str,
     item["alert" if mode == "alert" else part].pop("uncertain", None)
     if success:
         item["alert" if mode == "alert" else part] = {"delivered": True, "message_id": message_id}
+        if message_ids is not None:
+            item["alert" if mode == "alert" else part]["message_ids"] = list(message_ids)
         item["last_error"] = None
         if mode == "alert":
             item["status"] = "delivered"
@@ -114,10 +119,14 @@ def record_delivery(state: dict, topic_id: str, item_id: str, *, mode: str,
 
 
 def mark_uncertain(state: dict, topic_id: str, item_id: str, *, mode: str,
-                   part: str = "text") -> None:
+                   part: str = "text", message_ids: list[int] | None = None) -> None:
     topic = ensure_topic(state, topic_id)
     item = topic["posts"][item_id] if mode == "alert" else topic["briefings"][item_id]
     item["alert" if mode == "alert" else part]["uncertain"] = True
+    if message_ids:
+        if any(type(value) is not int for value in message_ids):
+            raise ValueError("message_ids must be confirmed integer IDs")
+        item["alert" if mode == "alert" else part]["message_ids"] = list(message_ids)
     item["last_error"] = "delivery outcome unknown; manual reconciliation required"
 
 

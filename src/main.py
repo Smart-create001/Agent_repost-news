@@ -25,7 +25,7 @@ def _window(now: datetime, hours: int) -> tuple[datetime, datetime]:
 
 
 def _text(analysis) -> str:
-    return analysis.summary_th + "\n" + "\n".join(map(str, analysis.source_urls))
+    return analysis.summary_th + "\n\n🔗 แหล่งข่าว: " + "\n".join(map(str, analysis.source_urls))
 
 
 def _save(state_path: Path, state: dict, dry_run: bool) -> None:
@@ -101,17 +101,20 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                                       audio=False,
                                       voice=config.tts.voice, rate=config.tts.rate)
                     if outcome.text_uncertain or (outcome.text_error and outcome.text_message_ids):
-                        mark_uncertain(state, topic.id, post.id, mode="alert")
+                        mark_uncertain(state, topic.id, post.id, mode="alert", message_ids=outcome.text_message_ids)
                     else:
                         record_delivery(state, topic.id, post.id, mode="alert",
                                         success=outcome.text_delivered,
                                         message_id=outcome.text_message_ids[-1] if outcome.text_delivered else None,
-                                        error=outcome.text_error, now=now)
+                                        error=outcome.text_error, now=now,
+                                        message_ids=outcome.text_message_ids if outcome.text_delivered else None)
                     _save(state_path, state, dry_run)
                     failures += not outcome.text_delivered
             else:
                 briefing_id = existing_briefing_id
-                text = "\n\n".join(_text(item) for item in results)
+                text = (f"สรุปข่าวประจำรอบ — {topic.name}\nช่วงเวลารายงาน: "
+                        f"{start.isoformat()} ถึง {end.isoformat()}\n\n" +
+                        "\n\n".join(f"ข่าวที่ {i}\n{_text(item)}" for i, item in enumerate(results, 1)))
                 if dry_run:
                     continue
                 briefing = record_briefing(state, topic.id, briefing_id, start, end,
@@ -122,12 +125,13 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                 _save(state_path, state, dry_run)
                 outcome = deliver(notifier, topic.telegram.message_thread_id, text, audio=False)
                 if outcome.text_uncertain or (outcome.text_error and outcome.text_message_ids):
-                    mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="text")
+                    mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="text", message_ids=outcome.text_message_ids)
                 else:
                     record_delivery(state, topic.id, briefing_id, mode="briefing", part="text",
                                     success=outcome.text_delivered,
                                     message_id=outcome.text_message_ids[-1] if outcome.text_delivered else None,
-                                    error=outcome.text_error, now=now)
+                                    error=outcome.text_error, now=now,
+                                    message_ids=outcome.text_message_ids if outcome.text_delivered else None)
                 _save(state_path, state, dry_run)
                 failures += not outcome.text_delivered
             LOG.info("topic=%s mode=%s processed=%d", topic.id, mode, len(posts))

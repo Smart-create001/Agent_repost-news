@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from hashlib import sha256
+from html.parser import HTMLParser
 import logging
 import time
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
@@ -21,6 +22,34 @@ class Post:
     published_at: datetime
     source_url: str
     date_inferred: bool = False
+    description: str = ""
+    retrieved_at: datetime | None = None
+
+
+class _PlainText(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.parts = []
+        self.hidden = 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag in {"script", "style"}:
+            self.hidden += 1
+
+    def handle_endtag(self, tag):
+        if tag in {"script", "style"} and self.hidden:
+            self.hidden -= 1
+        self.parts.append(" ")
+
+    def handle_data(self, data):
+        if not self.hidden:
+            self.parts.append(data)
+
+
+def _description(value):
+    parser = _PlainText()
+    parser.feed(str(value or "")[:12000])
+    return " ".join(" ".join(parser.parts).split())[:3000]
 
 
 def canonical_url(url: str) -> str:
@@ -57,7 +86,8 @@ def parse_feed(data: bytes, source_url: str, *, now: datetime | None = None,
             continue
         posts.append(Post(id=sha256(url.encode()).hexdigest(), url=url,
                           title=entry.get("title", "").strip(), published_at=published,
-                          source_url=source_url, date_inferred=stamp is None))
+                          source_url=source_url, date_inferred=stamp is None,
+                          description=_description(entry.get("summary", "")), retrieved_at=now))
     return posts
 
 

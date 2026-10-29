@@ -128,6 +128,30 @@ def test_tc5_08_unknown_delivery_not_retried(tmp_path, monkeypatch):
     assert sent == [1]
 
 
+def test_partial_text_delivery_preserves_confirmed_chunk_ids_and_does_not_retry(tmp_path, monkeypatch):
+    path = tmp_path / "state.json"
+    sent = []
+    monkeypatch.setattr("src.main.deliver", lambda *a, **k: (sent.append(1) or
+                        DeliveryResult(text_message_ids=[31], text_error="later chunk failed")))
+    kwargs = dict(mode="alert", state_path=path, fetch=lambda topic, **kw: ([post(topic)], []),
+                  analyze=lambda topic, posts, **kw: [analysis(topic)], notifier=object(), now=NOW)
+    assert run(settings(False), **kwargs) == 1
+    alert = load_state(path)["topics"]["ai_tech"]["posts"]["ai_tech-post"]["alert"]
+    assert alert["uncertain"] and alert["message_ids"] == [31]
+    assert run(settings(False), **kwargs) == 0
+    assert sent == [1]
+
+
+def test_complete_multichunk_delivery_preserves_all_message_ids(tmp_path, monkeypatch):
+    path = tmp_path / "state.json"
+    monkeypatch.setattr("src.main.deliver", lambda *a, **k: DeliveryResult(text_message_ids=[31, 32]))
+    assert run(settings(False), mode="alert", state_path=path, now=NOW, notifier=object(),
+               fetch=lambda topic, **kw: ([post(topic)], []),
+               analyze=lambda topic, posts, **kw: [analysis(topic)]) == 0
+    alert = load_state(path)["topics"]["ai_tech"]["posts"]["ai_tech-post"]["alert"]
+    assert alert["message_id"] == 32 and alert["message_ids"] == [31, 32]
+
+
 def test_tc5_09_dry_run_does_not_write_or_deliver(tmp_path, monkeypatch):
     path = tmp_path / "state.json"
     monkeypatch.setattr("src.main.deliver", lambda *a, **k: (_ for _ in ()).throw(AssertionError("delivered")))
