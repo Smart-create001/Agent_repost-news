@@ -32,6 +32,14 @@ class BrainError(ValueError):
     """AI request or response cannot safely be used."""
 
 
+def _has_details(post) -> bool:
+    description = getattr(post, "description", "").strip()
+    if not description:
+        return False
+    normalize = lambda value: re.sub(r"[\W_]+", "", value.casefold())
+    return normalize(description) != normalize(post.title)
+
+
 class Analysis(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     relevant: bool
@@ -128,10 +136,9 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                 evidence_parts = []
                 for url in result.source_urls:
                     post = sources[str(url)]
-                    date = "" if getattr(post, "date_inferred", True) else post.published_at.isoformat()
-                    evidence_parts.extend((post.title, getattr(post, "description", ""), date))
+                    evidence_parts.extend((post.title, getattr(post, "description", "")))
                 evidence = " ".join(evidence_parts)
-                if all(not getattr(sources[str(url)], "description", "").strip() for url in result.source_urls):
+                if all(not _has_details(sources[str(url)]) for url in result.source_urls):
                     if result.body or result.background or not result.uncertainties:
                         raise BrainError("Headline-only input requires short output and explicit uncertainty")
                 output = " ".join([result.headline, result.lead, *result.body, result.background, *result.uncertainties])

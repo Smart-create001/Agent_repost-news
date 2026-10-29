@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+from datetime import timedelta
 from types import SimpleNamespace
 from google import genai
 from google.genai import types
@@ -17,7 +18,7 @@ for topic in config.topics:
     source = None
     captured = []
     try:
-        posts, errors = fetch_topic(topic, timeout=20, max_retries=0)
+        posts, errors = fetch_topic(topic, timeout=20, max_retries=0, max_age=timedelta(days=2))
         if not posts:
             results.append({"topic": topic.id, "status": "NO_FEED_POSTS", "feed_error_count": len(errors)})
             continue
@@ -34,7 +35,7 @@ for topic in config.topics:
             client = SimpleNamespace(models=SimpleNamespace(generate_content=capture))
             articles = analyze_topic(topic, [post], client=client,
                                      model=config.app.default_model, threshold=0,
-                                     max_retries=0, timeout_seconds=60, max_output_tokens=4096)
+                                     max_retries=0, timeout_seconds=60, max_output_tokens=1024)
         results.append({"topic": topic.id, "status": "VALIDATED" if articles else "NOT_RELEVANT",
                         "source": source,
                         "articles": [a.model_dump(mode="json") for a in articles],
@@ -47,5 +48,5 @@ Path("editorial-review").mkdir(exist_ok=True)
 Path("editorial-review/results.json").write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
 for result in results:
     print(f"topic={result['topic']} status={result['status']} feed_errors={result.get('feed_error_count', 'unknown')}")
-if any(result["status"] == "FAIL" for result in results):
+if any(result["status"] != "VALIDATED" for result in results):
     raise SystemExit(1)

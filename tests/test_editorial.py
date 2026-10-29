@@ -69,6 +69,22 @@ def test_headline_only_rejects_unsupported_expansion():
         run_analysis(item(body=["รายละเอียดที่ไม่มีหลักฐาน"]))
 
 
+def test_description_repeating_title_does_not_count_as_extra_evidence():
+    post = SimpleNamespace(title="บริษัทเปิดตัว AI รุ่นใหม่ - Reuters",
+                           description="บริษัทเปิดตัว AI รุ่นใหม่ Reuters",
+                           url="https://example.org/news")
+    with pytest.raises(BrainError, match="Headline-only"):
+        run_analysis(item(body=["รายละเอียดที่ไม่มีหลักฐาน"]), post)
+
+
+def test_publication_timestamp_does_not_authorize_invented_event_date():
+    post = SimpleNamespace(title="ข่าวทอง", description="ราคาทองปรับลด",
+                           url="https://example.org/news", date_inferred=False,
+                           published_at=datetime(2026, 9, 10, tzinfo=timezone.utc))
+    with pytest.raises(BrainError, match="numbers absent"):
+        run_analysis(item(lead="ราคาทองปรับลดเมื่อปี 2026"), post)
+
+
 def test_citation_to_article_outside_prompt_is_rejected():
     posts = [SimpleNamespace(title="ข่าว", description="ข้อมูล",
                              url=f"https://example.org/{i}") for i in range(21)]
