@@ -27,4 +27,5 @@ jobs:
       - name: Direct REST request and response diagnostics
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DIAGNOSTIC_MODEL: gemini-3.1-flash-lite
         run: python -m scripts.diagnose_gemini_rest
