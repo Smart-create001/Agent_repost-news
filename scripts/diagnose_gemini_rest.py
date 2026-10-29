@@ -8,7 +8,7 @@ import time
 import httpx
 
 MODEL = os.environ.get("DIAGNOSTIC_MODEL", "gemini-3.8-flash")
-if MODEL not in {"gemini-3.8-flash", "gemini-3.1-flash-lite"}:
+if MODEL not in {"gemini-3.8-flash", "gemini-3.1-flash-lite", "gemini-2.5-flash"}:
     raise ValueError("Unsupported diagnostic model")
 URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent"
 
