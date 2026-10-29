@@ -13,7 +13,9 @@ logging.basicConfig(level=logging.WARNING)
 key = os.environ.get("GEMINI_API_KEY")
 if not key:
     raise SystemExit("BLOCKED: GEMINI_API_KEY is missing")
-model = load_config().app.default_model
+# Explicitly authorized diagnostic override; production config stays unchanged.
+model = "gemini-3.8-flash"
+print(f"Production model unchanged: {load_config().app.default_model}", flush=True)
 print(f"Model: {model}", flush=True)
 with genai.Client(api_key=key, http_options=types.HttpOptions(timeout=20000)) as client:
     try:
