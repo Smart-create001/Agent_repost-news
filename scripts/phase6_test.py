@@ -37,6 +37,7 @@ class BoundedNotifier(TelegramNotifier):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--verify-state", action="store_true")
+    parser.add_argument("--text-only", action="store_true")
     args = parser.parse_args()
     state_path = Path("seen_posts.json")
     if args.verify_state:
@@ -48,11 +49,14 @@ def main():
     logging.getLogger("httpx").setLevel(logging.WARNING)
     config = load_config().model_copy(deep=True)
     config.app.max_posts_per_topic = 1
+    if args.text_only:
+        for topic in config.topics:
+            topic.enabled = topic.enabled and topic.id == "ai_tech"
     validate_live_config(config)
     notifier = BoundedNotifier(token=os.environ["TELEGRAM_BOT_TOKEN"],
                                chat_id=os.environ["TELEGRAM_CHAT_ID"], max_retries=0)
     try:
-        return run(config, mode="briefing", state_path=state_path, notifier=notifier)
+        return run(config, mode="alert" if args.text_only else "briefing", state_path=state_path, notifier=notifier)
     finally:
         notifier.close()
 

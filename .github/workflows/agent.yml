@@ -58,12 +58,15 @@ jobs:
             python -m scripts.phase6_test --verify-state
             agent_exit=$?
           elif [[ "$PHASE6_TEST" == "true" ]]; then
-            if [[ "$RUN_MODE" != "briefing" ]]; then
-              echo 'Phase 6 test requires briefing mode' >&2
-              agent_exit=2
-            else
+            if [[ "$RUN_MODE" == "alert" ]]; then
+              python -m scripts.phase6_test --text-only
+              agent_exit=$?
+            elif [[ "$RUN_MODE" == "briefing" ]]; then
               python -m scripts.phase6_test
               agent_exit=$?
+            else
+              echo 'Phase 6 test requires alert or briefing mode' >&2
+              agent_exit=2
             fi
           else
             python -m src.main --mode "$RUN_MODE"
