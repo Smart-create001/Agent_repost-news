@@ -8,6 +8,12 @@ import httpx
 def main():
     token = os.environ["TELEGRAM_BOT_TOKEN"]
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
+    expected_chat_id = os.environ.get("EXPECTED_CHAT_ID", "").strip()
+    if expected_chat_id:
+        if not re.fullmatch(r"-?\d+", expected_chat_id):
+            raise ValueError("Expected Chat ID must be numeric")
+        print(f"configured_chat_matches_link={chat_id == expected_chat_id}", flush=True)
+        print(f"configured_chat_has_outer_whitespace={chat_id != chat_id.strip()}", flush=True)
 
     def safe(value):
         text = str(value).replace(token, "[TOKEN]").replace(chat_id, "[CHAT_ID]")
@@ -30,6 +36,9 @@ def main():
         chat = request("getChat", {"chat_id": chat_id})
         if chat is None:
             return 1
+        print(f"returned_chat_matches_config={str(chat.get('id')) == chat_id}", flush=True)
+        if expected_chat_id:
+            print(f"returned_chat_matches_link={str(chat.get('id')) == expected_chat_id}", flush=True)
         print(f"chat_type={chat.get('type')} is_forum={chat.get('is_forum', False)}", flush=True)
         member = request("getChatMember", {"chat_id": chat_id, "user_id": bot["id"]})
         if member is None:

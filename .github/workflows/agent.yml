@@ -7,6 +7,10 @@ on:
         required: true
         type: choice
         options: [alert, briefing]
+      expected_chat_id:
+        description: Optional chat ID from the user-supplied link for a boolean comparison only
+        required: false
+        type: string
 permissions:
   contents: read
 jobs:
@@ -29,6 +33,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          EXPECTED_CHAT_ID: ${{ inputs.expected_chat_id }}
         run: python -m scripts.test_telegram_access
       - name: Preserve diagnostic delivery state
         if: always()
