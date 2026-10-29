@@ -13,7 +13,7 @@ from src.scraper import parse_feed
 def item(**changes):
     result = {"relevant": True, "relevance_score": 0.9, "headline": "เปิดตัว AI รุ่นใหม่",
               "lead": "บริษัทเปิดตัว AI รุ่นใหม่", "body": [], "background": "",
-              "uncertainties": ["ยังไม่มีรายละเอียดเพิ่มเติม"], "reason": "ตรงหัวข้อ",
+              "uncertainties": ["ยังไม่มีรายละเอียดเพิ่มเติม", "วันที่เผยแพร่ไม่ชัดเจน"], "reason": "ตรงหัวข้อ",
               "source_urls": ["https://example.org/news"], "confidence": 0.8}
     result.update(changes)
     return result
@@ -122,6 +122,13 @@ def test_inferred_date_is_not_presented_as_publication_time():
     assert article["published_at"] is None and article["retrieved_at"].startswith("2026-10-29")
 
 
+def test_unknown_date_requires_disclosure_and_relative_time_is_rejected():
+    with pytest.raises(BrainError, match="date must be disclosed"):
+        run_analysis(item(uncertainties=["รายละเอียดจำกัด"]))
+    with pytest.raises(BrainError, match="relative time"):
+        run_analysis(item(lead="บริษัทเปิดตัว AI วันนี้"))
+
+
 def test_urls_in_editorial_fields_are_rejected():
     with pytest.raises(BrainError, match="URLs in editorial fields"):
         run_analysis(item(lead="อ่านเพิ่มเติม https://fake.example.org/news"))
@@ -137,7 +144,7 @@ def test_rejects_false_currency_uncertainty_and_reversed_direction():
                            url="https://example.org/news")
     with pytest.raises(BrainError, match="no currency"):
         run_analysis(item(headline="ราคาทองลด 400 บาท", lead="ราคาทองปรับลด 400 บาท",
-                          uncertainties=["ไม่ระบุหน่วยเงินตราที่ชัดเจน"]), post)
+                          uncertainties=["ไม่ระบุหน่วยเงินตราที่ชัดเจน", "วันที่เผยแพร่ไม่ชัดเจน"]), post)
     with pytest.raises(BrainError, match="source direction"):
         run_analysis(item(headline="ราคาทองปรับขึ้น 400 บาท", lead="ราคาทองปรับขึ้น 400 บาท"), post)
 

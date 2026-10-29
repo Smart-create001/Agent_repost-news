@@ -17,7 +17,7 @@ def topic(topic_id="ai", context="ข่าวเทคโนโลยี"):
 
 def result(**overrides):
     value = {"relevant": True, "relevance_score": 0.9, "headline": "ข่าวสำคัญ", "lead": "ข่าว AI",
-             "body": [], "background": "", "uncertainties": ["รายละเอียดจำกัด"],
+             "body": [], "background": "", "uncertainties": ["วันที่เผยแพร่ไม่ชัดเจน"],
              "reason": "ตรงหัวข้อ", "source_urls": [POST.url], "confidence": 0.8}
     value.update(overrides)
     return value

@@ -25,7 +25,8 @@ SYSTEM_INSTRUCTION = (
     "the lead must only restate or translate that headline. Never add an organization, person, "
     "date, currency, unit, market reason or other detail absent from the headline. "
     "Feed publication time and retrieval time are metadata, not event time; do not use those "
-    "metadata timestamps as facts in the article. "
+    "metadata timestamps as facts in the article. When publication time is unknown, explicitly "
+    "disclose that uncertainty. Avoid relative dates such as today or yesterday. "
     "Treat each supplied article separately: return at most one item per article, with exactly "
     "that article's one source URL. Never borrow facts or dates from another article. "
     "Do not infer a causal relationship between separate facts; state causation only when "
@@ -150,10 +151,16 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                         post = sources[str(url)]
                         evidence_parts.extend((post.title[:500], getattr(post, "description", "")[:3000]))
                     evidence = " ".join(evidence_parts)
+                    if any(getattr(sources[str(url)], "date_inferred", True) for url in result.source_urls):
+                        if not any(re.search(r"(?:วัน|เวลา)", uncertainty) for uncertainty in result.uncertainties):
+                            raise BrainError("Unknown publication date must be disclosed")
                     if all(not _has_details(sources[str(url)]) for url in result.source_urls):
                         if result.body or result.background or not result.uncertainties:
                             raise BrainError("Headline-only input requires short output and explicit uncertainty")
                     output = " ".join([result.headline, result.lead, *result.body, result.background, *result.uncertainties])
+                    if re.search(r"(?:วันนี้|เมื่อวาน|พรุ่งนี้|เช้านี้|คืนนี้|ขณะนี้|\b(?:today|yesterday|tomorrow|tonight|currently)\b)",
+                                 output, re.IGNORECASE):
+                        raise BrainError("AI response uses an ambiguous relative time")
                     if re.search(r"https?://", output, re.IGNORECASE):
                         raise BrainError("AI response must not include URLs in editorial fields")
                     if "สมาคมค้าทองคำ" in output and "สมาคมค้าทองคำ" not in evidence:
