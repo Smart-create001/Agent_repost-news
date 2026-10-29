@@ -43,6 +43,7 @@ def test_tc6_01_02_03_workflow_and_triggers():
 
 def test_tc6_04_05_06_secrets_permissions_concurrency():
     config = workflow()
+    assert config["jobs"]["run"]["if"] == "vars.AGENT_ENABLED == 'true'"
     assert config["permissions"] == {"contents": "write"}
     assert config["concurrency"]["cancel-in-progress"] == "false"
     assert "github.repository" in config["concurrency"]["group"]
