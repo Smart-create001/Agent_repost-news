@@ -42,6 +42,20 @@
           },
           "last_error": null,
           "title": "Google launches Gemini 4 Carbon AI model with cybersecurity focus - Reuters"
+        },
+        "03f4012760c87a3eb22d14f8f32573952e7d12c1352af3c6635b0759624b694f": {
+          "id": "03f4012760c87a3eb22d14f8f32573952e7d12c1352af3c6635b0759624b694f",
+          "source_url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQTHJxLU9oeW51ZGg2aG8xbWpXWjlhazdlbnJHSEZhdHhmQklFRnpKUkpPM1Vubk52TkNOMDRHM0ZWVmdlbGs0UHF5ZFY2QUpMT29DUUpFcXUxb084eGFWWXBpY0poZThuZ2NFbmVjempGam0za085ZHAxLXVuNFp4WkNvXzlhdTZsZWIyS3FXaEhFckliUzNialNtNW1sOS1MLUE?oc=5",
+          "first_seen_at": "2026-10-29T19:33:04.953696+00:00",
+          "last_attempt_at": "2026-10-29T19:33:04.953696+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 18
+          },
+          "last_error": null,
+          "title": "Gemini 4 Carbon: our next frontier model - blog.google"
         }
       },
       "briefings": {}
