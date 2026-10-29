@@ -85,3 +85,11 @@ def test_repository_config_is_valid_offline():
     config = load_config(ROOT / "config.yaml")
     assert len(config.topics) == 2
     assert {topic.id for topic in config.topics} == {"ai_tech", "gold_price"}
+    assert config.app.default_model == "gemini-3.1-flash-lite"
+    assert {topic.id: topic.telegram.message_thread_id for topic in config.topics} == {
+        "ai_tech": 5, "gold_price": 6}
+
+
+def test_model_configuration_is_overridable(tmp_path):
+    config = load_config(write_yaml(tmp_path, sample_yaml() + "\napp:\n  default_model: custom-model\n"))
+    assert config.app.default_model == "custom-model"

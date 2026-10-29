@@ -8,6 +8,7 @@ import httpx
 from google import genai
 from google.genai import types
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, ValidationError, field_validator
+from src.models import AppSettings
 
 
 LOG = logging.getLogger(__name__)
@@ -41,7 +42,7 @@ class Analysis(BaseModel):
 
 
 def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
-                  model: str = "gemini-2.5-flash", threshold: float = 0.75,
+                  model: str | None = None, threshold: float = 0.75,
                   max_retries: int = 3, timeout_seconds: int = 20,
                   max_output_tokens: int = 1024) -> list[Analysis]:
     """Analyze one topic at a time. Empty input makes no SDK call."""
@@ -49,6 +50,7 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
         return []
     if not 0 <= threshold <= 1 or max_retries < 0 or timeout_seconds <= 0:
         raise ValueError("invalid AI limits")
+    model = model if model is not None else AppSettings().default_model
     if client is None:
         if not api_key:
             raise BrainError("GEMINI_API_KEY is required for live analysis")
@@ -65,7 +67,16 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
     config = types.GenerateContentConfig(
         system_instruction=SYSTEM_INSTRUCTION,
         response_mime_type="application/json",
-        response_schema=list[Analysis],
+        response_schema=types.Schema(
+            type="ARRAY", items=types.Schema(
+                type="OBJECT", properties={
+                    "relevant": types.Schema(type="BOOLEAN"),
+                    "relevance_score": types.Schema(type="NUMBER"),
+                    "summary_th": types.Schema(type="STRING"),
+                    "reason": types.Schema(type="STRING"),
+                    "source_urls": types.Schema(type="ARRAY", items=types.Schema(type="STRING")),
+                    "confidence": types.Schema(type="NUMBER"),
+                }, required=list(Analysis.model_fields))),
         max_output_tokens=max_output_tokens,
         temperature=0,
     )

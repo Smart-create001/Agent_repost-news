@@ -1,7 +1,7 @@
 schema_version: 1
 app:
   timezone: Asia/Bangkok
-  default_model: gemini-2.5-flash
+  default_model: gemini-3.1-flash-lite
   max_posts_per_topic: 20
   request_timeout_seconds: 20
   max_retries: 3

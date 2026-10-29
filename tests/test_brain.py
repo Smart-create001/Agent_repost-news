@@ -109,3 +109,40 @@ def test_invalid_schema_and_non_thai_rejected():
     for bad in (result(confidence=2), result(summary_th="English only")):
         with pytest.raises(BrainError, match="Malformed"):
             analyze_topic(topic(), [POST], client=client(json.dumps([bad])))
+
+
+def test_configured_model_is_sent_to_sdk():
+    mock = client(json.dumps([result()]))
+    analyze_topic(topic(), [POST], client=mock, model="configured-model")
+    assert mock.models.calls[0]["model"] == "configured-model"
+
+
+def test_extra_output_field_is_rejected():
+    with pytest.raises(BrainError, match="Malformed"):
+        analyze_topic(topic(), [POST], client=client(json.dumps([result(extra_field="invalid")])))
+
+
+def test_actual_sdk_encodes_supported_schema_and_validates_response():
+    import httpx
+    from google import genai
+    from google.genai import types
+    requests = []
+
+    def handler(request):
+        requests.append(json.loads(request.content))
+        return httpx.Response(200, json={"candidates": [{"content": {
+            "parts": [{"text": json.dumps([result()])}], "role": "model"}, "finishReason": "STOP"}]})
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as transport:
+        with genai.Client(api_key="offline-dummy", http_options=types.HttpOptions(httpx_client=transport)) as sdk:
+            assert len(analyze_topic(topic(), [POST], client=sdk, model="gemini-3.1-flash-lite")) == 1
+    schema = requests[0]["generationConfig"]["responseSchema"]
+    assert schema["type"] == "ARRAY"
+    assert set(schema["items"]["required"]) == set(result())
+    assert "additional_properties" not in schema["items"]
+
+
+def test_topic_cannot_cite_other_topic_source():
+    other_post = SimpleNamespace(title="ข่าวทอง", url="https://news.example.org/gold")
+    with pytest.raises(BrainError, match="absent from input"):
+        analyze_topic(topic("gold"), [other_post], client=client(json.dumps([result()])))
