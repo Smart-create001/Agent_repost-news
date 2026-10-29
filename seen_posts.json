@@ -1,4 +1,31 @@
 {
   "schema_version": 1,
-  "topics": {}
+  "topics": {
+    "gold_price": {
+      "posts": {},
+      "briefings": {
+        "gold_price:briefing:2026-10-29T00:00:00+00:00": {
+          "id": "gold_price:briefing:2026-10-29T00:00:00+00:00",
+          "window_start": "2026-10-29T00:00:00+00:00",
+          "window_end": "2026-10-30T00:00:00+00:00",
+          "post_ids": [
+            "8e59e0f6a5d520eed273ec43d4eedc59bf8c6723f02d358810759cbf89eb0f3e"
+          ],
+          "text": {
+            "delivered": true,
+            "message_id": 16
+          },
+          "audio": {
+            "delivered": false,
+            "message_id": null
+          },
+          "audio_required": true,
+          "last_attempt_at": "2026-10-29T18:44:57.594541+00:00",
+          "retry_count": 2,
+          "last_error": "Thai TTS generation failed",
+          "summary_text": "ราคาทองคำในประเทศปรับตัวลดลง 400 บาท โดยมีการปรับราคาถึง 15 ครั้ง ส่งผลให้ราคาทองคำแท่งขายออกอยู่ที่ 64,400 บาท\nhttps://news.google.com/rss/articles/CBMiWkFVX3lxTFA4ZFlHVWxmUWE5akJ1SDl2c3JDQk43NksweTYwejhYYnpBSVRDMlVmZlI3UklaVlhmWXJpZFBmcVI2X3ZNMXNaUlJUSXVkdDZZVThZS1Q0b05UUQ?oc=5"
+        }
+      }
+    }
+  }
 }
