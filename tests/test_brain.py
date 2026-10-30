@@ -32,7 +32,7 @@ class MockModels:
         reply = next(self.replies)
         if isinstance(reply, Exception):
             raise reply
-        return SimpleNamespace(text=reply)
+        return SimpleNamespace(text=reply, candidates=[SimpleNamespace(finish_reason="STOP")])
 
 
 def client(*replies):
@@ -43,7 +43,7 @@ def test_tc3_01_relevant_article():
     mock = client(json.dumps([result()]))
     assert len(analyze_topic(topic(), [POST], client=mock)) == 1
     assert mock.models.calls[0]["model"] == "gemini-2.5-flash"
-    assert mock.models.calls[0]["config"].max_output_tokens == 1024
+    assert mock.models.calls[0]["config"].max_output_tokens == 8192
 
 
 def test_tc3_02_irrelevant_below_threshold():

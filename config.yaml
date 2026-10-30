@@ -7,6 +7,10 @@ app:
   max_posts_per_topic: 20
   request_timeout_seconds: 20
   max_retries: 3
+ai:
+  max_output_tokens: 8192
+  batch_size: 4
+  max_output_retries: 1
 alert:
   enabled: true
   relevance_threshold: 0.75

@@ -80,10 +80,25 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
             if dry_run:
                 LOG.info("topic=%s mode=%s dry_run_candidates=%d", topic.id, mode, len(posts))
                 continue
-            results = analyze(topic, posts, threshold=config.alert.relevance_threshold,
-                              model=config.app.default_model, max_retries=config.app.max_retries,
-                              timeout_seconds=config.app.request_timeout_seconds,
-                              api_key=os.environ.get("GEMINI_API_KEY"))
+            results = []
+            batch_failed = False
+            for offset in range(0, len(posts), config.ai.batch_size):
+                batch = posts[offset:offset + config.ai.batch_size]
+                try:
+                    results.extend(analyze(topic, batch, threshold=config.alert.relevance_threshold,
+                                           model=config.app.default_model, max_retries=config.app.max_retries,
+                                           timeout_seconds=config.app.request_timeout_seconds,
+                                           max_output_tokens=config.ai.max_output_tokens,
+                                           max_output_retries=config.ai.max_output_retries,
+                                           api_key=os.environ.get("GEMINI_API_KEY")))
+                except Exception as exc:
+                    failures += 1
+                    batch_failed = True
+                    LOG.error("topic=%s mode=%s batch_start=%d batch_size=%d failed=%s",
+                              topic.id, mode, offset, len(batch), type(exc).__name__)
+            # A delivered briefing closes its time window; do not close an incomplete one.
+            if mode == "briefing" and batch_failed:
+                continue
             if not results:
                 continue
             if mode == "alert":

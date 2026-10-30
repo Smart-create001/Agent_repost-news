@@ -8,7 +8,7 @@ import httpx
 from google import genai
 from google.genai import types
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, ValidationError, field_validator
-from src.models import AppSettings
+from src.models import AISettings, AppSettings
 
 
 LOG = logging.getLogger(__name__)
@@ -44,13 +44,17 @@ class Analysis(BaseModel):
 def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                   model: str | None = None, threshold: float = 0.75,
                   max_retries: int = 3, timeout_seconds: int = 20,
-                  max_output_tokens: int = 1024) -> list[Analysis]:
+                  max_output_tokens: int | None = None, max_output_retries: int | None = None) -> list[Analysis]:
     """Analyze one topic at a time. Empty input makes no SDK call."""
     if not posts:
         return []
     if not 0 <= threshold <= 1 or max_retries < 0 or timeout_seconds <= 0:
         raise ValueError("invalid AI limits")
     model = model if model is not None else AppSettings().default_model
+    max_output_tokens = max_output_tokens if max_output_tokens is not None else AISettings().max_output_tokens
+    max_output_retries = max_output_retries if max_output_retries is not None else AISettings().max_output_retries
+    if max_output_retries < 0 or not 256 <= max_output_tokens <= 16384:
+        raise ValueError("invalid AI output limits")
     if client is None:
         if not api_key:
             raise BrainError("GEMINI_API_KEY is required for live analysis")
@@ -80,10 +84,28 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
         max_output_tokens=max_output_tokens,
         temperature=0,
     )
-    for attempt in range(max_retries + 1):
+    attempt = 0
+    output_attempt = 0
+    while True:
         try:
             response = client.models.generate_content(model=model, contents=prompt, config=config)
-            raw = json.loads(response.text or "")
+            candidates = getattr(response, "candidates", None)
+            if not candidates:
+                raise BrainError("AI response missing candidate or blocked")
+            finish = candidates[0].finish_reason
+            finish = getattr(finish, "value", finish)
+            if finish == "MAX_TOKENS":
+                LOG.warning("event=ai_output_truncation topic=%s retry=%d limit=%d", topic.id, output_attempt, max_output_retries)
+                if output_attempt < max_output_retries:
+                    output_attempt += 1
+                    continue
+                raise BrainError("AI output truncated: MAX_TOKENS recovery exhausted")
+            if finish != "STOP":
+                raise BrainError(f"AI response stopped without completion: {finish}")
+            response_text = response.text
+            if not response_text or not response_text.strip():
+                raise BrainError("AI response text missing after STOP")
+            raw = json.loads(response_text)
             if not isinstance(raw, list):
                 raise BrainError("AI response must be a list")
             results = [Analysis.model_validate(item) for item in raw]
@@ -101,6 +123,7 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
             if retryable and attempt < max_retries:
                 LOG.warning("AI request retry %d after %s", attempt + 1, type(exc).__name__)
                 time.sleep(min(2 ** attempt, 4))
+                attempt += 1
                 continue
             raise BrainError(f"AI request failed: {type(exc).__name__}") from exc
     raise BrainError("AI retry limit exceeded")

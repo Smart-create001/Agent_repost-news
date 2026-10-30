@@ -26,6 +26,12 @@ class AppSettings(StrictModel):
         return value
 
 
+class AISettings(StrictModel):
+    max_output_tokens: int = Field(default=8192, ge=256, le=16384, strict=True)
+    batch_size: int = Field(default=4, ge=1, le=20, strict=True)
+    max_output_retries: int = Field(default=1, ge=0, le=3, strict=True)
+
+
 class AlertSettings(StrictModel):
     enabled: bool = True
     relevance_threshold: float = Field(default=0.75, ge=0, le=1)
@@ -78,6 +84,7 @@ class Topic(StrictModel):
 class AgentConfig(StrictModel):
     schema_version: int = Field(ge=1, le=1)
     app: AppSettings = Field(default_factory=AppSettings)
+    ai: AISettings = Field(default_factory=AISettings)
     alert: AlertSettings = Field(default_factory=AlertSettings)
     briefing: BriefingSettings = Field(default_factory=BriefingSettings)
     tts: TTSSettings = Field(default_factory=TTSSettings)
@@ -86,6 +93,8 @@ class AgentConfig(StrictModel):
 
     @model_validator(mode="after")
     def unique_topic_ids(self) -> "AgentConfig":
+        if self.ai.batch_size > self.app.max_posts_per_topic:
+            raise ValueError("ai.batch_size must not exceed app.max_posts_per_topic")
         ids = [topic.id for topic in self.topics]
         if len(ids) != len(set(ids)):
             raise ValueError("topic IDs must be unique")
