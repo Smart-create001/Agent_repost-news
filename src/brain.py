@@ -185,6 +185,14 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                         raise BrainError("AI response must not include URLs in editorial fields")
                     if "สมาคมค้าทองคำ" in output and "สมาคมค้าทองคำ" not in evidence:
                         raise BrainError("AI response attributes a claim to an organization absent from cited input")
+                    if "ดอลลาร์สหรัฐ" in output and not re.search(
+                        r"(?:ดอลลาร์สหรัฐ|\busd\b|\bu\.?s\.?\s+dollars?\b)", evidence, re.IGNORECASE
+                    ):
+                        raise BrainError("AI response specifies US dollars absent from cited input")
+                    if re.search(r"(?:ทองคำโลก|ทองโลก)", output) and not re.search(
+                        r"(?:ทองคำโลก|ทองโลก|\b(?:global|world|spot)\b)", evidence, re.IGNORECASE
+                    ):
+                        raise BrainError("AI response specifies global gold absent from cited input")
                     if re.search(r"จับตา(?:มอง)?", output) and not re.search(
                         r"(?:จับตา|จับตามอง|monitor|watch|closely follow)", evidence, re.IGNORECASE
                     ):
