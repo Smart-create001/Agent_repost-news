@@ -11,6 +11,7 @@ ai:
   max_output_tokens: 8192
   batch_size: 4
   max_output_retries: 1
+  source_only_fallback: true
 alert:
   enabled: true
   relevance_threshold: 0.75

@@ -48,6 +48,12 @@ class AnalysisResults(list):
         self.rejected_count = rejected_count
 
 
+class SourceNotice(BaseModel):
+    """Unmodified source headline used when a generated summary fails checks."""
+    title: str = Field(min_length=1, max_length=500)
+    source_urls: list[HttpUrl] = Field(min_length=1, max_length=1)
+
+
 def _has_details(post) -> bool:
     description = getattr(post, "description", "").strip()
     if not description:
@@ -86,7 +92,8 @@ class Analysis(BaseModel):
 def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                   model: str | None = None, threshold: float = 0.75,
                   max_retries: int = 3, timeout_seconds: int = 20,
-                  max_output_tokens: int | None = None, max_output_retries: int | None = None) -> list[Analysis]:
+                  max_output_tokens: int | None = None, max_output_retries: int | None = None,
+                  source_only_fallback: bool = False) -> list[Analysis | SourceNotice]:
     """Analyze one topic at a time. Empty input makes no SDK call."""
     if not posts:
         return []
@@ -240,6 +247,14 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                         if quote not in evidence:
                             raise BrainError("AI response contains a quotation absent from cited input")
                 except BrainError as exc:
+                    source = str(result.source_urls[0])
+                    post = sources.get(source)
+                    if (source_only_fallback and post and post.title.strip() and
+                            result.relevant and result.relevance_score >= threshold and source not in accepted_sources):
+                        accepted_sources.add(source)
+                        accepted.append(SourceNotice(title=post.title[:500], source_urls=[source]))
+                        LOG.warning("Editorial item rejected; using original source headline: %s", exc)
+                        continue
                     rejected.append(str(exc))
                     LOG.warning("Editorial item rejected: %s", exc)
                     continue
