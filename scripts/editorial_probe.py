@@ -50,7 +50,7 @@ for topic in config.topics:
             articles = analyze_topic(topic, selected, client=client,
                                      model=config.app.default_model, threshold=0,
                                      max_retries=1, timeout_seconds=60,
-                                     max_output_tokens=config.ai.max_output_tokens, max_output_retries=config.ai.max_output_retries)
+                                     max_output_tokens=config.ai.max_output_tokens, max_output_retries=config.ai.max_output_retries, source_only_fallback=config.ai.source_only_fallback)
         results.append({"topic": topic.id, "status": "VALIDATED" if articles else "NOT_RELEVANT",
                         "source": source,
                         "articles": [a.model_dump(mode="json") for a in articles], "quarantined": getattr(articles, "rejected_count", 0),
