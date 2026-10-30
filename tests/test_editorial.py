@@ -65,6 +65,16 @@ def test_rejects_fabricated_currency_or_gold_weight_unit():
         run_analysis(item(headline="ราคาทองลด 400 บาทต่อบาททองคำ", lead="ราคาทองลด 400 บาท"), post)
 
 
+def test_rejects_unsupported_us_dollar_or_world_gold_claims():
+    post = SimpleNamespace(title="ทองคำหลุด 4,000 ดอลลาร์", description="",
+                           url="https://example.org/news")
+    with pytest.raises(BrainError, match="US dollars absent"):
+        run_analysis(item(headline="ทองคำหลุด 4,000 ดอลลาร์", lead="ทองคำลดลง",
+                          uncertainties=["ไม่ระบุวันที่", "ดอลลาร์สหรัฐ"]), post)
+    with pytest.raises(BrainError, match="global gold absent"):
+        run_analysis(item(headline="ทองคำโลกหลุด 4,000 ดอลลาร์", lead="ทองคำลดลง"), post)
+
+
 def test_missing_editorial_field_and_fabricated_url_are_rejected():
     bad = item()
     del bad["lead"]
