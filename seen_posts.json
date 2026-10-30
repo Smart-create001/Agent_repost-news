@@ -30,6 +30,20 @@
           },
           "last_error": null,
           "title": "Gold price drops to $4,035/oz as Fed votes 10-2 in favor of rate hold - Kitco"
+        },
+        "f9bba07750f42f4422b543850670ac27e858b266f1e792badd82d445d573bed3": {
+          "id": "f9bba07750f42f4422b543850670ac27e858b266f1e792badd82d445d573bed3",
+          "source_url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPVWNkSGdWbmFDcG14eDQ0bWxnb1V5aTJoZEMxQ0xaaU9ldXhpUW9lQ2t2Q21hdFU5ZWg4U3JBN1BfR05PMWVsdHRSMXRvNExoUjU1QllhVm1DT0VqUENydmlyblJKZmpOX0I5WUdTN29RNnJtVl8tdmh6ejBva0VJVFloUGNidk9hUE5uTzZBWWRBS0VDaWExa01VZHFFTzFybmpsU19XMTg4ZG9Gc1pXT3lVM0xlWmJRVENfYg?oc=5",
+          "first_seen_at": "2026-10-30T01:58:50.186429+00:00",
+          "last_attempt_at": "2026-10-30T01:58:50.186429+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 22
+          },
+          "last_error": null,
+          "title": "Global Gold Prices Fall to US$4,039 Today, Markets Anxious Awaiting The Fed's Decision - Aktualita.co"
         }
       },
       "briefings": {
