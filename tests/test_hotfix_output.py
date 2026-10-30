@@ -5,7 +5,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from src.brain import BrainError, analyze_topic
+from src.brain import AnalysisResults, BrainError, analyze_topic
 from src.config import ConfigError, load_config
 from src.main import run
 from src.notifier import DeliveryResult
@@ -102,6 +102,22 @@ def test_briefing_batch_failure_never_delivers_partial(tmp_path, monkeypatch):
     path = tmp_path / 'state.json'
     assert run(cfg, mode='briefing', state_path=path, fetch=lambda *a, **k: (posts, []), analyze=analyze, now=now) == 1
     assert not path.exists()
+
+
+def test_quarantined_item_is_reported_and_success_is_preserved(tmp_path, monkeypatch):
+    cfg = settings(False)
+    now = datetime(2026, 10, 26, 12, tzinfo=timezone.utc)
+    posts = [SimpleNamespace(id=str(i), url=f'https://news.example.org/{i}', title='ข่าว', published_at=now) for i in range(2)]
+    sent = []
+    def analyze(topic, batch, **kwargs):
+        return AnalysisResults([SimpleNamespace(summary_th='ข่าว', source_urls=[batch[0].url])], rejected_count=1)
+    monkeypatch.setattr('src.main.deliver', lambda *a, **kw: (sent.append(1) or DeliveryResult(text_message_ids=[1])))
+    path = tmp_path / 'state.json'
+    assert run(cfg, mode='alert', state_path=path, fetch=lambda *a, **kw: (posts, []),
+               analyze=analyze, notifier=object(), now=now) == 1
+    assert sent == [1]
+    saved = load_state(path)['topics']['ai_tech']['posts']
+    assert '0' in saved and '1' not in saved
 
 
 @pytest.mark.parametrize('ai', [

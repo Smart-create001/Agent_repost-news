@@ -7,8 +7,9 @@ import logging
 import os
 from pathlib import Path
 
-from src.brain import analyze_topic
+from src.brain import Analysis, analyze_topic
 from src.config import ConfigError, load_config, validate_live_config
+from src.editorial import render_news
 from src.notifier import TelegramNotifier, deliver
 from src.scraper import fetch_topic
 from src.state import (cleanup_state, load_state, mark_uncertain, record_briefing,
@@ -25,6 +26,8 @@ def _window(now: datetime, hours: int) -> tuple[datetime, datetime]:
 
 
 def _text(analysis) -> str:
+    if isinstance(analysis, Analysis):
+        return render_news(analysis)
     return analysis.summary_th + "\n" + "\n".join(map(str, analysis.source_urls))
 
 
@@ -85,12 +88,18 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
             for offset in range(0, len(posts), config.ai.batch_size):
                 batch = posts[offset:offset + config.ai.batch_size]
                 try:
-                    results.extend(analyze(topic, batch, threshold=config.alert.relevance_threshold,
-                                           model=config.app.default_model, max_retries=config.app.max_retries,
-                                           timeout_seconds=config.app.request_timeout_seconds,
-                                           max_output_tokens=config.ai.max_output_tokens,
-                                           max_output_retries=config.ai.max_output_retries,
-                                           api_key=os.environ.get("GEMINI_API_KEY")))
+                    batch_results = analyze(topic, batch, threshold=config.alert.relevance_threshold,
+                                            model=config.app.default_model, max_retries=config.app.max_retries,
+                                            timeout_seconds=config.app.request_timeout_seconds,
+                                            max_output_tokens=config.ai.max_output_tokens,
+                                            max_output_retries=config.ai.max_output_retries,
+                                            api_key=os.environ.get("GEMINI_API_KEY"))
+                    results.extend(batch_results)
+                    if getattr(batch_results, "rejected_count", 0):
+                        failures += 1
+                        batch_failed = True
+                        LOG.error("topic=%s mode=%s batch_start=%d quarantined=%d",
+                                  topic.id, mode, offset, batch_results.rejected_count)
                 except Exception as exc:
                     failures += 1
                     batch_failed = True
@@ -164,6 +173,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--state", default="seen_posts.json")
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    # HTTP request URLs can contain Telegram bot credentials.
+    logging.getLogger("httpx").setLevel(logging.WARNING)
     notifier = None
     try:
         config = load_config(args.config)

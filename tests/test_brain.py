@@ -16,7 +16,8 @@ def topic(topic_id="ai", context="ข่าวเทคโนโลยี"):
 
 
 def result(**overrides):
-    value = {"relevant": True, "relevance_score": 0.9, "summary_th": "ข่าวสำคัญ",
+    value = {"relevant": True, "relevance_score": 0.9, "headline": "ข่าวสำคัญ", "lead": "ข่าว AI",
+             "body": [], "background": "", "uncertainties": ["วันที่เผยแพร่ไม่ชัดเจน"],
              "reason": "ตรงหัวข้อ", "source_urls": [POST.url], "confidence": 0.8}
     value.update(overrides)
     return value
@@ -106,7 +107,7 @@ def test_tc3_09_empty_input_does_not_call_api():
 
 
 def test_invalid_schema_and_non_thai_rejected():
-    for bad in (result(confidence=2), result(summary_th="English only")):
+    for bad in (result(confidence=2), result(headline="English only")):
         with pytest.raises(BrainError, match="Malformed"):
             analyze_topic(topic(), [POST], client=client(json.dumps([bad])))
 
