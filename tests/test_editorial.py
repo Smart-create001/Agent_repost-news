@@ -206,6 +206,32 @@ def test_mixed_batch_quarantines_unsafe_item_and_keeps_safe_item(caplog):
     assert "Editorial item rejected" in caplog.text
 
 
+def test_unsupported_summary_falls_back_to_original_headline():
+    original = "ราคาทองลด 400 บาท - สำนักข่าว"
+    post = SimpleNamespace(title=original, description="", url="https://example.org/news")
+    topic = SimpleNamespace(id="gold", name="Gold", context="", keywords=[])
+    bad = item(headline="ราคาทองลด 400 ดอลลาร์", lead="ราคาทองลด 400 ดอลลาร์")
+    client = SimpleNamespace(models=SimpleNamespace(generate_content=lambda **kw:
+        SimpleNamespace(text=json.dumps([bad], ensure_ascii=False),
+                        candidates=[SimpleNamespace(finish_reason="STOP")])))
+    result = analyze_topic(topic, [post], client=client, source_only_fallback=True)
+    assert len(result) == 1 and result.rejected_count == 0
+    rendered = _text(result[0])
+    assert original in rendered and "สรุปอัตโนมัติไม่ผ่าน" in rendered
+    assert "400 ดอลลาร์" not in rendered and post.url in rendered
+
+
+def test_source_only_fallback_never_uses_fabricated_url():
+    post = SimpleNamespace(title="ข่าวทอง", description="", url="https://example.org/news")
+    topic = SimpleNamespace(id="gold", name="Gold", context="", keywords=[])
+    bad = item(source_urls=["https://example.org/fake"])
+    client = SimpleNamespace(models=SimpleNamespace(generate_content=lambda **kw:
+        SimpleNamespace(text=json.dumps([bad], ensure_ascii=False),
+                        candidates=[SimpleNamespace(finish_reason="STOP")])))
+    with pytest.raises(BrainError, match="absent from input"):
+        analyze_topic(topic, [post], client=client, source_only_fallback=True)
+
+
 def test_feed_description_is_plain_text_and_script_is_not_input():
     xml = b'''<rss version="2.0"><channel><title>x</title><item><title>News</title>
     <link>https://example.org/news</link><description><![CDATA[<p>Fact <b>one</b></p><script>bad()</script>]]></description>

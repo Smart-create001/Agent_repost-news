@@ -7,7 +7,7 @@ import logging
 import os
 from pathlib import Path
 
-from src.brain import Analysis, analyze_topic
+from src.brain import Analysis, SourceNotice, analyze_topic
 from src.config import ConfigError, load_config, validate_live_config
 from src.editorial import render_news
 from src.notifier import TelegramNotifier, deliver
@@ -26,7 +26,7 @@ def _window(now: datetime, hours: int) -> tuple[datetime, datetime]:
 
 
 def _text(analysis) -> str:
-    if isinstance(analysis, Analysis):
+    if isinstance(analysis, (Analysis, SourceNotice)):
         return render_news(analysis)
     return analysis.summary_th + "\n" + "\n".join(map(str, analysis.source_urls))
 
@@ -93,6 +93,7 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                                             timeout_seconds=config.app.request_timeout_seconds,
                                             max_output_tokens=config.ai.max_output_tokens,
                                             max_output_retries=config.ai.max_output_retries,
+                                            source_only_fallback=config.ai.source_only_fallback,
                                             api_key=os.environ.get("GEMINI_API_KEY"))
                     results.extend(batch_results)
                     if getattr(batch_results, "rejected_count", 0):

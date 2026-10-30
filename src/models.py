@@ -30,6 +30,7 @@ class AISettings(StrictModel):
     max_output_tokens: int = Field(default=8192, ge=256, le=16384, strict=True)
     batch_size: int = Field(default=4, ge=1, le=20, strict=True)
     max_output_retries: int = Field(default=1, ge=0, le=3, strict=True)
+    source_only_fallback: bool = False
 
 
 class AlertSettings(StrictModel):
