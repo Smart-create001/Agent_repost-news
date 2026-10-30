@@ -15,8 +15,12 @@ state = load_state('seen_posts.json')
 posts, errors = fetch_topic(topic, timeout=config.app.request_timeout_seconds,
                             max_retries=config.app.max_retries, max_age=timedelta(days=2))
 known = state['topics'].get(topic.id, {}).get('posts', {})
+all_posts = posts
 posts = [p for p in posts if not known.get(p.id, {}).get('alert', {}).get('delivered')
          and not known.get(p.id, {}).get('alert', {}).get('uncertain')]
+if not posts:
+    print('No pending posts; using current RSS items only for analysis, no delivery.', flush=True)
+    posts = all_posts
 posts = posts[:config.app.max_posts_per_topic]
 print(f'candidate_count={len(posts)} feed_error_count={len(errors)}', flush=True)
 if errors or not posts:
