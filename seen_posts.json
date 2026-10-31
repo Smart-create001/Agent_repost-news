@@ -434,6 +434,23 @@
           "retry_count": 1,
           "last_error": null,
           "summary_text": "ราคาทองคำในตลาดโลกปรับตัวลดลง โดยรายงานจาก VnExpress International ระบุถึงแนวโน้มราคาที่ลดลง แต่ไม่ได้ระบุตัวเลขราคาปัจจุบัน วันที่ หรือเวลาที่แน่ชัด\nhttps://news.google.com/rss/articles/CBMigAFBVV95cUxOcWZOV01rZ1gxeWZxV1oxeVBkb1FXVmRFNlY0aU1ndS1qc0ZFelNrWlFOVk5uS25iQ3RiRnlaOWtlYzFmR05RSUp1S0pQaDhjWXNoY0Z3LTA2am9sWW4yRW5XN0ZPZE96X0NCYmxGd3lpMGZ4Q1VYYk9sSEVwY1V4LQ?oc=5"
+        },
+        "gold_price:briefing:2026-10-31T00:00:00+00:00": {
+          "id": "gold_price:briefing:2026-10-31T00:00:00+00:00",
+          "window_start": "2026-10-31T00:00:00+00:00",
+          "window_end": "2026-11-01T00:00:00+00:00",
+          "post_ids": [
+            "d1674417a84b7b3d48655d80eda5ace9aa1d437b9f3253cbac457932c3ed89a1"
+          ],
+          "text": {
+            "delivered": true,
+            "message_id": 53
+          },
+          "audio_required": false,
+          "last_attempt_at": "2026-10-31T05:36:59.308643+00:00",
+          "retry_count": 1,
+          "last_error": null,
+          "summary_text": "📰 พาดหัวจากแหล่งข่าว (ข้อความต้นฉบับ)\ngold-price-trend-today-30-oct-2026-uptrend-resistance-4600 - InterGold\n\nสรุปอัตโนมัติไม่ผ่านการตรวจสอบ กรุณาอ่านรายละเอียดจากต้นทาง\n🔗 แหล่งข่าว: https://news.google.com/rss/articles/CBMivAFBVV95cUxPemRwaGJ3eXNDQS12ckxudWM4anVqRUtqSmNkdWpGSFFucVp3bS1KVnRJT0VqZDJaY3p4a3dVeE1wYnVRNXE2Q3FEa0lMLWRYdzJjOEpoYTVWQVdySU1aVUJzSVlNZUVHMWg2cVBFSjVWSi00VWUzcnZJd1NyN081dWY3ZG5SSDd4blFiMmZ1UExXajN6WVg1bXBQODZ2UzlmcElWNGNqZnhLLTZKUWRlOEJRMHhCaUp5bFNhYg?oc=5"
         }
       }
     },
