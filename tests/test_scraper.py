@@ -52,3 +52,15 @@ def test_tc2_07_timeout_is_bounded(monkeypatch, caplog):
         posts, errors = fetch_topic(SimpleNamespace(rss_urls=[URL]), client=client, max_retries=2)
     assert posts == [] and len(errors) == 1 and len(calls) == 3
     assert "after 3 attempts" in caplog.text
+
+
+def test_feeds_are_interleaved_before_pipeline_limit():
+    def handler(request):
+        prefix = request.url.path.strip("/")
+        items = "".join(f"<item><title>{prefix}{i}</title><link>https://news.example.org/{prefix}{i}</link></item>" for i in range(25))
+        return httpx.Response(200, text=f'<rss version="2.0"><channel><title>x</title>{items}</channel></rss>')
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        posts, errors = fetch_topic(SimpleNamespace(rss_urls=["https://feeds.example.org/first", "https://feeds.example.org/second"]), client=client, now=NOW)
+    assert not errors
+    assert [post.title for post in posts[:4]] == ["first0", "second0", "first1", "second1"]
+    assert sum(post.title.startswith("second") for post in posts[:20]) == 10

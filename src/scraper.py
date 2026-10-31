@@ -99,16 +99,21 @@ def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
     own_client = client is None
     client = client or httpx.Client(timeout=timeout, follow_redirects=True)
     posts: dict[str, Post] = {}
+    feed_posts: list[list[Post]] = []
     errors: list[str] = []
     try:
         for feed_url in topic.rss_urls:
             url = str(feed_url)
+            current_feed: list[Post] = []
+            feed_posts.append(current_feed)
             for attempt in range(max_retries + 1):
                 try:
                     response = client.get(url, timeout=timeout)
                     response.raise_for_status()
                     for post in parse_feed(response.content, url, now=now, max_age=max_age):
-                        posts.setdefault(post.id, post)
+                        if post.id not in posts:
+                            posts[post.id] = post
+                            current_feed.append(post)
                     break
                 except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
                     if attempt < max_retries:
@@ -123,4 +128,8 @@ def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
     finally:
         if own_client:
             client.close()
-    return list(posts.values()), errors
+    # Interleave feeds so a large first feed cannot monopolize the pipeline's cap.
+    interleaved = []
+    for index in range(max((len(feed) for feed in feed_posts), default=0)):
+        interleaved.extend(feed[index] for feed in feed_posts if index < len(feed))
+    return interleaved, errors
