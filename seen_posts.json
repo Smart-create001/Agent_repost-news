@@ -716,6 +716,20 @@
           },
           "last_error": null,
           "title": "Gold and Silver Prices Plummet Amid Equity Market Selloff and Geopolitical Tensions - SSBCrack"
+        },
+        "d65da5181714ea7a7d079a00714c3edf88588fa189ffef540bc37061d4ed1f2d": {
+          "id": "d65da5181714ea7a7d079a00714c3edf88588fa189ffef540bc37061d4ed1f2d",
+          "source_url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPUnZtSHo2Y2IzMDJEeU12U3VQUGhoaGwtbFpJUjVlM01LYUUxaWEycThFU2RQbXVKMWtuSGNSMWhQXzlCUnVJOVItVHk4Z045QnNSM0RjMVJQRGd0LTBxTWhCcnNoNWxhMlkyNHBXajF5T012bDI3anpKX2YwX1EtZ2EzcF9VblRJcDVKZnZKU1h6OF9uenI3Q20tVkZrYms?oc=5",
+          "first_seen_at": "2026-11-01T23:37:59.597763+00:00",
+          "last_attempt_at": "2026-11-01T23:37:59.597763+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 80
+          },
+          "last_error": null,
+          "title": "Here’s the Real Reason Gold Price Is Crashing Despite War and Inflation - CaptainAltcoin"
         }
       },
       "briefings": {
