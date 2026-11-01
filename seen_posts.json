@@ -632,6 +632,34 @@
           },
           "last_error": null,
           "title": "Gold prices next week: Downtrend prevails after a sharp drop last week. - Vietnam.vn"
+        },
+        "0cca82cdf430f2383b90785ad735a398a9df404ee3a621615b9a1b51ba15b2cd": {
+          "id": "0cca82cdf430f2383b90785ad735a398a9df404ee3a621615b9a1b51ba15b2cd",
+          "source_url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBHblhvS1JrdFAxamMyRk9Sb2ZOb2ZBd01ESFdQYzVFbEk4RzFHcnFEZDFENlNQbmsyajhEMDhfSDZESWhXaEUzQ0dtaDVJRXh3OXFQRTZsaUVGdkYzVWhr?oc=5",
+          "first_seen_at": "2026-11-01T13:29:20.948120+00:00",
+          "last_attempt_at": "2026-11-01T13:29:20.948120+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 73
+          },
+          "last_error": null,
+          "title": "Gold price risks next week - Vietnam.vn"
+        },
+        "ec4501cc8038edad56eeafda86873a6b8721ab8b80f9a0fc91ac4d39523110d0": {
+          "id": "ec4501cc8038edad56eeafda86873a6b8721ab8b80f9a0fc91ac4d39523110d0",
+          "source_url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNVV9sRU83T0IxUWNjcWdld2UtN05GQU1mMUk4ZnA2LWgwbjNOekt0UF80UUtCRnI3cTZENTg2NEJYQjF6cVJoWFJRQU01YmE0RERSeXdWWmFnMGpFVzJUcUtvWkYzbDdaUTd1M2U5cWxwWDRlRjhJV1NRRnZWLUU4blN4cGMwd28zbTRvTWlLbnRSemh1RjVuS1ktcVJud1o2emNYT1FORUdram8?oc=5",
+          "first_seen_at": "2026-11-01T13:29:20.948120+00:00",
+          "last_attempt_at": "2026-11-01T13:29:20.948120+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 74
+          },
+          "last_error": null,
+          "title": "World gold prices fall sharply, next week will continue to be under pressure - Laodong.vn"
         }
       },
       "briefings": {
