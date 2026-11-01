@@ -604,6 +604,34 @@
           },
           "last_error": null,
           "title": "ประชาชนแห่ซื้อทองรูปพรรณแทนเงินสด หลังราคาปรับลดหนัก - Head Topics"
+        },
+        "acb38b4c298b16a472305236885df11dc84242460f411f7b2f86c47a2b41ce98": {
+          "id": "acb38b4c298b16a472305236885df11dc84242460f411f7b2f86c47a2b41ce98",
+          "source_url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxNY25NS2xTUEJER0V5UEZrcnFQNEppelBXcHdQSjBmNk83OGtjNVJueGI4TThPZ2RfWGlfNXM2Mk9NUnpTbVEwbXI1UjQxNVM5aUR1R3E5TGsyUkxoMG12VWhRR1VPM1RlWXRQcGp5TGtlbFpHUDZPczBiQ29YeWRQWFNYQUhBQ2ZNNmUxaWdsRkh4SEhvQU9uUjR4OHFtX0EwYy1VOW1tVVlXTkZVQU1OMmFmSWpya2s2RkRUTkNZMF8xTkRvZkdFTVNyMklQTFl6X1FrQ0EzYVJ3S09WNWxPVmlFR2prY0tkbGE4ZmhJRWxWZ9IB9wFBVV95cUxPQzAzc2dCODNJVEdnMmZmSWNNTlFTamVpX0pLYTNVc1dTZkNqUlRndWRoeW5iclE2RllYMHBrb2dQaklYMmgwQXF3TjF1d0JzRTZxZmFFTWt6QXhKNTh3NGRnT1lqUzRYUHN4WXFJX09jYXc0d2xkTHNPUTV4UjdwUGxpOUgtZ1J3UlBZTnBOakQ3eHhGV21jcVRZVW02NXMtRkd5QVdNV1ZMWkU0dUhsVGF3OEdpVVdSV284dXhPNmpiajRIUzJSS1A4Um5PYVZDaWNBUjdVbWdnRS1kSnQ1RTEwWWJRVXRvTWlfQ1c3cTZqZGZxQjdr?oc=5",
+          "first_seen_at": "2026-11-01T06:10:35.069427+00:00",
+          "last_attempt_at": "2026-11-01T06:10:35.069427+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 70
+          },
+          "last_error": null,
+          "title": "Gold, Silver rates crash: What happened with precious metal rates? What didn't go in favour and brought them down? - Livemint"
+        },
+        "7a58132ed6c59f49791617701926286039625d83ae5aaf19909e774e28c03a6b": {
+          "id": "7a58132ed6c59f49791617701926286039625d83ae5aaf19909e774e28c03a6b",
+          "source_url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPX1ZWbE5UelpzUXlzdXpzM1hHanJTYVpkalhtNjRWWWFzUjdYS0k0enVlbWJNb0s0WTNEZVhSMS1MX1REenlRYXVyNXFVRmFYU01VVzRKeE5RbFRIa1JxR1E0OUZrNUpvSUpBOWxYenh1enZQbUd5UzUtS0FIM2lyYU5kMnhqcjVKMlBDZl9Hdm1QU083QjNr?oc=5",
+          "first_seen_at": "2026-11-01T06:10:35.069427+00:00",
+          "last_attempt_at": "2026-11-01T06:10:35.069427+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 71
+          },
+          "last_error": null,
+          "title": "Gold prices next week: Downtrend prevails after a sharp drop last week. - Vietnam.vn"
         }
       },
       "briefings": {
@@ -721,6 +749,20 @@
           },
           "last_error": null,
           "title": "Google Launches Gemini 4 Carbon and Genie 4 AI Models With Native Audio and Photorealistic Simulations - Brave New Coin"
+        },
+        "5e05de243db72a120507ff79ebdddbe9f41c8b7d4a398a8186f328ea179517fd": {
+          "id": "5e05de243db72a120507ff79ebdddbe9f41c8b7d4a398a8186f328ea179517fd",
+          "source_url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFB2aTNiejdCUW45NDE1Vmp5OWt2VHptYnA5dnlYUHdRczh4Y0lPLVBwV0tyeFhjOXlkN2FqTWFESzFnVVQ1aGVnRWFycDZDSy0xeVFRUURWRmtwZ3JqX0NDc09ZVHd0d1dxTmx6Zm1B?oc=5",
+          "first_seen_at": "2026-11-01T06:10:35.069427+00:00",
+          "last_attempt_at": "2026-11-01T06:10:35.069427+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 69
+          },
+          "last_error": null,
+          "title": "Where is Gemini 3.5 Pro? The case of the missing AI model. - Mashable"
         }
       },
       "briefings": {}
