@@ -689,6 +689,23 @@
           "retry_count": 1,
           "last_error": null,
           "summary_text": "📰 พาดหัวจากแหล่งข่าว (ข้อความต้นฉบับ)\ngold-price-trend-today-30-oct-2026-uptrend-resistance-4600 - InterGold\n\nสรุปอัตโนมัติไม่ผ่านการตรวจสอบ กรุณาอ่านรายละเอียดจากต้นทาง\n🔗 แหล่งข่าว: https://news.google.com/rss/articles/CBMivAFBVV95cUxPemRwaGJ3eXNDQS12ckxudWM4anVqRUtqSmNkdWpGSFFucVp3bS1KVnRJT0VqZDJaY3p4a3dVeE1wYnVRNXE2Q3FEa0lMLWRYdzJjOEpoYTVWQVdySU1aVUJzSVlNZUVHMWg2cVBFSjVWSi00VWUzcnZJd1NyN081dWY3ZG5SSDd4blFiMmZ1UExXajN6WVg1bXBQODZ2UzlmcElWNGNqZnhLLTZKUWRlOEJRMHhCaUp5bFNhYg?oc=5"
+        },
+        "gold_price:briefing:2026-11-01T00:00:00+00:00": {
+          "id": "gold_price:briefing:2026-11-01T00:00:00+00:00",
+          "window_start": "2026-11-01T00:00:00+00:00",
+          "window_end": "2026-11-02T00:00:00+00:00",
+          "post_ids": [
+            "7a58132ed6c59f49791617701926286039625d83ae5aaf19909e774e28c03a6b"
+          ],
+          "text": {
+            "delivered": true,
+            "message_id": 72
+          },
+          "audio_required": false,
+          "last_attempt_at": "2026-11-01T06:29:11.316598+00:00",
+          "retry_count": 1,
+          "last_error": null,
+          "summary_text": "📰 พาดหัวจากแหล่งข่าว (ข้อความต้นฉบับ)\nGold prices next week: Downtrend prevails after a sharp drop last week. - Vietnam.vn\n\nสรุปอัตโนมัติไม่ผ่านการตรวจสอบ กรุณาอ่านรายละเอียดจากต้นทาง\n🔗 แหล่งข่าว: https://news.google.com/rss/articles/CBMilwFBVV95cUxPX1ZWbE5UelpzUXlzdXpzM1hHanJTYVpkalhtNjRWWWFzUjdYS0k0enVlbWJNb0s0WTNEZVhSMS1MX1REenlRYXVyNXFVRmFYU01VVzRKeE5RbFRIa1JxR1E0OUZrNUpvSUpBOWxYenh1enZQbUd5UzUtS0FIM2lyYU5kMnhqcjVKMlBDZl9Hdm1QU083QjNr?oc=5"
         }
       }
     },
