@@ -786,6 +786,62 @@
           },
           "last_error": null,
           "title": "Gold prices recover after deep decline, the 4,000 USD mark becomes a test - Laodong.vn"
+        },
+        "71c1a7ce9146847d108578468ad16edd7e9ea2f7d65ea0eff4880ab3edebfbe2": {
+          "id": "71c1a7ce9146847d108578468ad16edd7e9ea2f7d65ea0eff4880ab3edebfbe2",
+          "source_url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5WclJ1U3JmTURHbWNZYUxUS0UxXzVYX0dqUjhWd2pyOGVjemFvVVdZMmVqeEloQXp0ZTdYVmt3dnZ6SXdBdXhZZ25OUGlwOFRWX0dZNG01dG12QQ?oc=5",
+          "first_seen_at": "2026-11-03T06:51:46.634890+00:00",
+          "last_attempt_at": "2026-11-03T06:51:46.634890+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 86
+          },
+          "last_error": null,
+          "title": "ราคาทองคำขยับบวก 150 บาท! ปรับเป้า 25 ครั้งทองแท่งแตะ 62,400 บาท - Thunhoon"
+        },
+        "b72e37d3066ffa895b7ecb407e9d8681bb198e74b728d0340aa16534e663e245": {
+          "id": "b72e37d3066ffa895b7ecb407e9d8681bb198e74b728d0340aa16534e663e245",
+          "source_url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxNWmw0N1kyZk96NzBTeWlXTENwYWVQTW5QcEpTWlBiOVljejB4SEtpMElJeG9xLThHLTdwLURTSnVTWW13eVM0R1VXSDlhWnk3T2hZbzVvMkxXTWxLcmJBX3BWOVZqQ3dRbjlQSkprcjdZd0d5X091VnptUGE4ZnhjSi1tNzM2ZE1TVDhNa3R5TFVPQVEtc3p3Z21oVWlVQkZEbTNlRUhjWld4by1oaXBNSGJrN0tvZHhnZ0M4aTdIN1cwQWU5RDFxdHdoeHBvUDF2cmlVekRyUVRVeHBwU3ZTNkM5ZFJPZzRmbVJyMVRVbHdBTkdFM1NYSS1leWd3YmRTZk5maWFLLXhRanRn?oc=5",
+          "first_seen_at": "2026-11-03T06:51:46.634890+00:00",
+          "last_attempt_at": "2026-11-03T06:51:46.634890+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 87
+          },
+          "last_error": null,
+          "title": "Gold prices today, Monday, November 2, 2026: Gold opens at its lowest point in over a year ahead of midterms - Yahoo Finance"
+        },
+        "549c694b9146b4c435a947acea9555a6519dca59fa4ee883f0c8e419860a9d3f": {
+          "id": "549c694b9146b4c435a947acea9555a6519dca59fa4ee883f0c8e419860a9d3f",
+          "source_url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPNk9fVWtMYl8tbWN6eU5ZTUJEVTR5cmxJa0t3eEJtNVJMQ25HRko3TTRuLW1zSG13MGZKUzJpcTQyemNkdjA4MUc1T0t2b2VpOE1qQmw5NkltN3J4TEdMd2J0aGxYSi1uMmNKTy1kSlBzaXdHR19GWW9zODNhSURUYnVZbmN5Wl9HTlFBQkxTZXRCTDhkWnFOanI0QUo3LXBkMFF4R1JtM29NMjdWWFhfdkZXVTlzREVQc0ttSXUtREhJYVlKc1kwLW95SQ?oc=5",
+          "first_seen_at": "2026-11-03T06:51:46.634890+00:00",
+          "last_attempt_at": "2026-11-03T06:51:46.634890+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 88
+          },
+          "last_error": null,
+          "title": "Gold price jumps nearly 2% to $3,950 as bullion extends recovery after heavy selloff - Business Upturn"
+        },
+        "9842a20cb3e741b61563d58d7017a1d995684a161010a3531b6b31306a8c9573": {
+          "id": "9842a20cb3e741b61563d58d7017a1d995684a161010a3531b6b31306a8c9573",
+          "source_url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPMUdFMHpmUEctWnVrODlINURERi1nY2xQMkxuNnVfU295MWRfOG9kVElheEpBNWw4ZlRxcnJHLUdjRGEtVW9aSFJKMElnSlRac3N4TkhIaE14a2JyRkJET0puODUzbzdWSEsyaTk2bWttUjAzV0Z4d0hRaHhGclBIeU42RzBFY3hhM1MtRGJrZEx4Y3hKXzF2bGhZcW5mNmJnZ1ZUNXpwVnpHOGJuazV0M0pNQ19faGFM?oc=5",
+          "first_seen_at": "2026-11-03T06:51:46.634890+00:00",
+          "last_attempt_at": "2026-11-03T06:51:46.634890+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 89
+          },
+          "last_error": null,
+          "title": "Gold prices rebound in Pakistan after three-day drop as international market gains - Daily Times"
         }
       },
       "briefings": {
@@ -948,6 +1004,20 @@
           },
           "last_error": null,
           "title": "Google Launches Gemini 4 Carbon for Cybersecurity and Long-Horizon Coding - Business Upturn"
+        },
+        "f5d2829e65642fb5a7648fd92a4d4f7bf9dd5d54f031de5becb6352b4866428c": {
+          "id": "f5d2829e65642fb5a7648fd92a4d4f7bf9dd5d54f031de5becb6352b4866428c",
+          "source_url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOaUl4WGhmRGF0d25WQ2V5Z1lYT2wzcVFQU1BjdFRSNnoxQjhZS3NReDVqSUY0TWF3OEZsOUpQM25ZejQ2UFNZNTM2dkhDbFA3MFB5SVEtbXc2RTBZbEtkeDRNcElDa2h3MUp4cEVMeDlzSGs5ZUZiOE5OZ0xTdTRHQ3hB?oc=5",
+          "first_seen_at": "2026-11-03T06:51:46.634890+00:00",
+          "last_attempt_at": "2026-11-03T06:51:46.634890+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 85
+          },
+          "last_error": null,
+          "title": "Google highlights October AI launches, including Gemini 4 Carbon - Blockchain News"
         }
       },
       "briefings": {}
