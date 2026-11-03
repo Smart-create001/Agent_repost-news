@@ -916,6 +916,24 @@
           "retry_count": 1,
           "last_error": null,
           "summary_text": "📰 พาดหัวจากแหล่งข่าว (ข้อความต้นฉบับ)\nGold prices next week: Downtrend prevails after a sharp drop last week. - Vietnam.vn\n\nสรุปอัตโนมัติไม่ผ่านการตรวจสอบ กรุณาอ่านรายละเอียดจากต้นทาง\n🔗 แหล่งข่าว: https://news.google.com/rss/articles/CBMilwFBVV95cUxPX1ZWbE5UelpzUXlzdXpzM1hHanJTYVpkalhtNjRWWWFzUjdYS0k0enVlbWJNb0s0WTNEZVhSMS1MX1REenlRYXVyNXFVRmFYU01VVzRKeE5RbFRIa1JxR1E0OUZrNUpvSUpBOWxYenh1enZQbUd5UzUtS0FIM2lyYU5kMnhqcjVKMlBDZl9Hdm1QU083QjNr?oc=5"
+        },
+        "gold_price:briefing:2026-11-03T00:00:00+00:00": {
+          "id": "gold_price:briefing:2026-11-03T00:00:00+00:00",
+          "window_start": "2026-11-03T00:00:00+00:00",
+          "window_end": "2026-11-04T00:00:00+00:00",
+          "post_ids": [
+            "2a92e07f45764452376db3b0a94b904f73533315569b0972d516bdc1464010c7",
+            "9cee7518272412db56bcb6c7ea49fc5e50d8c7e829a4d373d43baab3d0abd648"
+          ],
+          "text": {
+            "delivered": true,
+            "message_id": 90
+          },
+          "audio_required": false,
+          "last_attempt_at": "2026-11-03T07:02:03.499222+00:00",
+          "retry_count": 1,
+          "last_error": null,
+          "summary_text": "📰 ราคาทองคำและเงินปรับตัวลดลงจากความคาดหวังเรื่องนโยบายการเงินที่เข้มงวดขึ้น\n\nราคาทองคำและเงินปรับตัวลดลงจากความคาดหวังเรื่องนโยบายการเงินที่เข้มงวดขึ้น\n\nข้อจำกัด: ไม่ระบุตัวเลขราคาทองคำและเงิน; ไม่ระบุหน่วยเงินตรา; ไม่ระบุเวลาที่แน่ชัดของการเปลี่ยนแปลงราคา; ไม่ระบุแหล่งที่มาของนโยบายการเงินที่เข้มงวดขึ้น\n\n🔗 แหล่งข่าว: https://news.google.com/rss/articles/CBMi1wFBVV95cUxPOVJBdVdIc250dVpYZ0l4M2o1SWI2QjR0UHYzWlk3bHVYWXZwdGJQa0VROVVUSEF6bEt0OHU5V3VWX283MGxxeVZtSVRaMFhadDVLU1FjR0RBeEpZOEZ2Z2dnZjIxUDJTb1BYUzFpYjRHOVk2THJqRTBVOXlSREVlNGxiak43SEpWdmtkWTc3QkVPZXRWczlidFBZZUw5VHV3R1ROb1RMWHZ0eExjWnc1RmxKYnoxdjRwck50VzNrejFaenoxd1R4OVR2QllVQkdVQzRUek54Y9IB3AFBVV95cUxPd0x1bEM0TjB6WFR6WnJidGFQSExza3AzRHlLZjdjMU5mXzJxeHc4QUZ2bWpUS0lOZFQ1dUhVZWoxWG5wTnFXdTBydFY1QmZPV0FxZThKM0F5MzdYOFd4S2htb0lNc3RmRUtMdVMxTU9CZmNfQnNOcWFma0YydFRSOUZkWnlWeExzdjJoaENXb3Z5UlhQVVZJc2RtVnZRQ1pZLURXdmZsNnBqX2J5N0JqVWRFWklUV2FaNTl1bi1PX0kwWWlWajg2UlU0UlRfY29qN1hNdGFmTUVWTjBz?oc=5\n\n📰 ราคาทองคำและเงินฟื้นตัว ตลาดยังคงกังวลเรื่องการปรับขึ้นอัตราดอกเบี้ยของธนาคารกลางสหรัฐฯ\n\nราคาทองคำและเงินฟื้นตัว ตลาดยังคงกังวลเรื่องการปรับขึ้นอัตราดอกเบี้ยของธนาคารกลางสหรัฐฯ\n\nข้อจำกัด: ไม่ระบุตัวเลขราคาทองคำและเงิน; ไม่ระบุหน่วยเงินตรา; ไม่ระบุเวลาที่แน่ชัดของการฟื้นตัวของราคา\n\n🔗 แหล่งข่าว: https://news.google.com/rss/articles/CBMiswFBVV95cUxNdGVYT2dCck1fSHZ1bWV4bEY3TENhX0RXcHhMSm96VEpDTkw1Z1M4YmxRTG9MX19iVmo1ekx1cU5HXzZLajhDTFpvckZpSTc2SDdIU09JLXhGaVBuYUJlT1pRd25heHdyVjdqUDVQMU1ELW1kSW95QkJkR0ZMMW9pUzJRblNlTVhSWmNFY1VhZTBOMFRsdnVSdWJ1eUNnMzJjV0ZncnVVQzFYR2taRllNRGFCWQ?oc=5"
         }
       }
     },
