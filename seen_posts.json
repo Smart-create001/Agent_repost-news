@@ -1038,6 +1038,34 @@
           },
           "last_error": null,
           "title": "Gold Price Slightly Rises While Silver Drops As Market Opens Today - TechJuice"
+        },
+        "743c8e53a949ee168fc4af4c7e1267c71ec020f86bf3047f60f249500288fb04": {
+          "id": "743c8e53a949ee168fc4af4c7e1267c71ec020f86bf3047f60f249500288fb04",
+          "source_url": "https://news.google.com/rss/articles/CBMimwJBVV95cUxPaG1DajFOTDlXM2w4MThDajcyXzlZbzVRUkdENGFJOTA3NGxJNGR1R2lmdENwSU00V0ZYLV9TeHpWTjNjNlFGOWc4TnFybkF3SGUzekFoU0pZQ2tzdlkxR0piRldBWThEVUtHRFZvbktIdzFtVzZIaFczbWd6dHVzQm5ncmV2WnA3S1ZYMmFRYk9IZVhGV0djOWwwUUVXTlpBOTV2N2otSnpUbk1WbXNUVUZCSEtuSUdGaEQ2aWRmN2dFUTNaaWdCQzlDR0dxQUI3N1pIcHFGWjFyWm5mWHpmRDJfOFN3QWMzekI2eDlBVDBhUHg3Y2IxckdGZUxMLWVPQmRab3oyOUszRDRIbFhRc2FScC14OWI4N0Jj0gGgAkFVX3lxTE1oMnl2OTBoenJUNGdPQjBpRFVGLWh0TUFpOVJaelhtLVFvVDZzcllFcXlIZjJ2U1pvZWJJc3dLV2FqeE9vWTBIbEFCTzF0S3RCNU5oX2xueHlZOFlnX1hYQmozV21rdzdJN2lDRHE1ZHZYMkp5dmd0YmNRUGRYYllEY3YwSGF5TWhXU2QzV1FPcTd0cnlLRXFDSWZfa3lvckxHbDZjRjVXY1lhMGY2eFZHV1VjMlhtS3ZtbndySUhBT2ZpWDhZbnFFcGJfRmlGVkVVOTBYaXRyM2ExTFprcnh5S1pyUTFITFk0VG1Ocmc5U2psenRleVpZNkFmVk4xeTcxT0kwX0N0WHhYOFgtSDdQTlJ6YjhJMExXeDVha1ZSNw?oc=5",
+          "first_seen_at": "2026-11-03T23:25:32.744078+00:00",
+          "last_attempt_at": "2026-11-03T23:25:32.744078+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 104
+          },
+          "last_error": null,
+          "title": "Gold price crashes on Election Day, Silver drops: Will Gold rate fall further after US midterm elections 2 - The Economic Times"
+        },
+        "7ac8f88688db171033f2eb8393bc16451ff3d03c56c633b7ceb07008dd406667": {
+          "id": "7ac8f88688db171033f2eb8393bc16451ff3d03c56c633b7ceb07008dd406667",
+          "source_url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxPMEZ3VTVPbW9XYjZMUEs3RW1yQmVWZ2hJeWZOTEdQamVaMzZfXzdiMnN2REdGczN2TldULXMxeEFfYThNLWdGbmQ2UXczazFfNUp3YnVDRDdlWGI4UUdUdWRRa1loWGVlOFlDNGJuZ0pVSHk4NC1DU1BOM25LMEx3MzhUY1BocWpKeHpGTGVIWTFiMDJyY0d5ZG5nYUZFVjBkWVJoOHVWekQtVXFGS21MWHZYM3Mya0RjTlVFbV9sTFJZYXFaLUxXYllYZjFkV1VaeTVKcUNvbDhhNFVnT0tkM2ZWSVF2T2pBLTd2ZGZublZKVU0xNXhpdkN0bWx6T010Z1MtNDh30gGLAkFVX3lxTE5nTmRXVi14YUIwNnNyRTB6QW1uMXZLUUU1WnoxdjRXLXRmSGFsN1dvQ2FERm9iT2w2blBZQVRSSHZ1VThHRElvSnNwS3JTZTlxOHdWWUU1bzBhLW1tb1ZObXBHekF1blFwRGJRVlBBWnNWZEM4MHNuMlRXTmhMME1mTEpOSFhRLW5LcW1kWW9oSzBXdmttb0Z3QnZGRTBhY285SGV6NHgxSmZYNmxxZFZQSERRd2FPOUF0WDc4T2FkR1ptWENLczNkZnQ3cTloRzl4dHZkOFZhcWJCYTBWQkNlMkZwT1pFN09qVHFjR29TX2pMMnBaWDVfbDUya09kLTJTUHpvQkJzTEgzMA?oc=5",
+          "first_seen_at": "2026-11-03T23:25:32.744078+00:00",
+          "last_attempt_at": "2026-11-03T23:25:32.744078+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 105
+          },
+          "last_error": null,
+          "title": "Gold rate prediction: Will gold price jump after US Midterm elections results? Check critical factors - The Economic Times"
         }
       },
       "briefings": {
