@@ -987,14 +987,14 @@
           "id": "db0eb503fdd9692445863a2af1455a32542e24c9ea29f39990a39f4ed39db8e8",
           "source_url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxOR3J2RUo2S1I2RkxRcjRQSVBaTEw1TktlM1cwOHRrV0hRVktDR21nREFRS2t0NHdFekNWSjFZM3ZlOGl4TU9PcUdzR1p5dkhjeGRwUXRwVV9kc1ZfOHpkS0dfVDI4VzNxU0dGRUhweDIzTXIwS0JsMUxJTHJtT3NWcHNGaFBaR1oyUy1ydUM2M2FOSnRvWThTS3ZJb2lpVW5yLTkzY3M4ajQ3d2dSMGZaN2FOTldsMWVTNTdhTFprSzFJb1IyYmFkemtpYWRzRkh2eVo1bWgzUEpqN3dPZVB1b004Yk9IZXRnTW9xS1hVcy11NHh5Z3BYTVB3NNIBgAJBVV95cUxNRHM4ZEYxeWljd0dsdnN3cTJ2TVZ1NHA3ZWFjWE5idGtYS05zRmdOR0xfbktleFBocjZ0bjF6QkJKRXA4RFF0WEtNb2tSUTRjSmVZbGxqbWl4RVNNQ3JkZy0zNlI0ZDIxTFFkV1FkZS1jQlRKRTM0RUxlWXdlX3otak4tLXdTNXJGZVBKQ2doOXJJS1lUcHFqSjBxb3lZMG16amRsNE5zb2ZwWlpYZDFCYWxDU2tKQ193ZjVmbE5maXNnQUlNUkxiUVpYZWpNeWVLS3RIbF9Wb2d4T3dVUVVCM3ZoNE5sQWMwenN0WGZZRTZXbTI2dkw5bzZyZDZFRGlQ?oc=5",
           "first_seen_at": "2026-11-03T16:16:53.541640+00:00",
-          "last_attempt_at": "2026-11-03T16:16:53.541640+00:00",
-          "status": "pending",
-          "retry_count": 1,
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 2,
           "alert": {
-            "delivered": false,
-            "message_id": null
+            "delivered": true,
+            "message_id": 114
           },
-          "last_error": "Telegram request failed: HTTPStatusError",
+          "last_error": null,
           "title": "Gold Price Today: Yellow metal extends recovery from 1-year low, climbs to $3,955; US-Iran tensions, Fed outlook in focus - ET Now"
         },
         "f10d4397bbb31a4974dc370153bf0be051337cc836b037887c00d3e38d92659c": {
@@ -1066,6 +1066,132 @@
           },
           "last_error": null,
           "title": "Gold rate prediction: Will gold price jump after US Midterm elections results? Check critical factors - The Economic Times"
+        },
+        "25b8b27d51cb9fe0d47cec53b3dec6c721dc5733ca20302c4a7cc7580e09a27b": {
+          "id": "25b8b27d51cb9fe0d47cec53b3dec6c721dc5733ca20302c4a7cc7580e09a27b",
+          "source_url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBiY1pJS1h6YkVkN2tpVkotU05LcHJaWm5yYnFycTROQnl1dEhNN0U5amthVnVNOVZNRVRpOC1SNFF0eHRqT1ZrT3FnM3ItVENzOXR0RnFKREJGZw?oc=5",
+          "first_seen_at": "2026-11-04T06:27:20.751565+00:00",
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 106
+          },
+          "last_error": null,
+          "title": "ราคาทองคำขยับขึ้น 100 บาท ผันผวนเดือด 22 ครั้งทองแท่งปิด 62,500 บาท - Thunhoon"
+        },
+        "1e2d5da722e4ff35acf37714c1158dc36a72affca3ef47a4ee4ab3b7643407a7": {
+          "id": "1e2d5da722e4ff35acf37714c1158dc36a72affca3ef47a4ee4ab3b7643407a7",
+          "source_url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQd0lHOUFsbExIR3lscDNTRy14T012UWd6UlBSLUtySlpjSTdFaEtYLW1hbnpOTHdrSm1fM1RGU2V0WmxNSWJGU3AxeV9PUDVRVm1BRjBBNXQxZVVacElvaE5IbGJFU2FZbnN1Tmg4dlVTZ3prY0U0SEh5X1VzWmxUYnQ3VWhtZGpGOXloc1R6X3BvNlprVmw0UGppaFE2VFcyYkl3SzJ3?oc=5",
+          "first_seen_at": "2026-11-04T06:27:20.751565+00:00",
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 107
+          },
+          "last_error": null,
+          "title": "Gold rises as dollar weakens; Democrats score early wins in US midterm elections - Reuters"
+        },
+        "2964cd4cc8e4bf110ab234562a54fcf8b77947e4dbe2ef8a7ffe2a345c101b54": {
+          "id": "2964cd4cc8e4bf110ab234562a54fcf8b77947e4dbe2ef8a7ffe2a345c101b54",
+          "source_url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPR19GNG5scmJ3NVFKWjN6MkhNU0xvUU45SDFzdUs4X2wzRE5YMk13cHNsODh5NkprUy1GdDd2UllrdzVtSm5ERHNiX0hNejVLdkNrQjhGWk9rUHlwN0Utd283WExhVUxoOTdoTTNSaWtyZTZfNl94QXlpSzdhby11NDBPaklDSTdKQzBPRk0wVDFoTDJnaU50ckRQalVBc0NpTFRJbklUOE5KVV9RTHAtTGF3MVAxZDE5SVFiYg?oc=5",
+          "first_seen_at": "2026-11-04T06:27:20.751565+00:00",
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 108
+          },
+          "last_error": null,
+          "title": "Gold, silver decline as strong U.S. jobs data lifts yields on election day - Kitco PM Report - Kitco"
+        },
+        "bb6e949721d44f3bebd26c7972e858d65ec89c47a39fee94a5e64e47ace986a6": {
+          "id": "bb6e949721d44f3bebd26c7972e858d65ec89c47a39fee94a5e64e47ace986a6",
+          "source_url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxPTzJyc1d5RVRrOXFNSG5aLW9tejM2YS1vYWtqQW9qQzVRNnNYaDRrSVVWX2tTWm5yOE4td0o4SnQzcmZrSkNyTG9JX2UtbU5MNWU0UlFOVVA4ZVkxM29zcG5nbElDa2J0OWZoWGZCV1FJbWhSR0tQRzhwT3QyZjY5NEFvM3NpdXp4N3Zhel9aSHE5X0NZXzNjZTItbUFhRzd0cGx2dU4zU3U0bHVaUTIwclU2VEV4V2pJdVliUUpQVVFGaGFjZzQyejh3SUo4QVdlUkVjcUxHQUo5SjJzNDhqTDJBZHh3d1l4aFdTaGpxTmxjRHhCNE8w0gH8AUFVX3lxTFBycER3SnRFelQ0dkJLcFNFUnRncUhaaUdSVjExMjB2XzI3dFMtV2ZGdVBhRHRfTUVWWC1RYThET3FPbFZHbVRoYjZScE9qS0o3ZnEyOW9aNjRxNUVvcGNuSVFCTm1tUEduZEM4Zzl6el9yZjhSUHFBNnJVeWZxNE1lQ0JxYTNrRjFaSURBQmNKUlMtQVpDeDFmeV9IUng5X3A0LWthZC05aTNfbHNmVmtHNUprNHhkUEFkLWxrWmpOY2FfTTd6RmJQeFlLWXVId2F4U1p3WXh5YjlWY2JOVnVWeWJreEs0dndqRk1vMDg0cmMyM0praWQ3Z3QyTg?oc=5",
+          "first_seen_at": "2026-11-04T06:27:20.751565+00:00",
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 109
+          },
+          "last_error": null,
+          "title": "Gold price prediction: Will gold bounce back on Wednesday? Check outlook for November 4 - The Economic Times"
+        },
+        "6329e5a8911206356889f42781fe41831804f0c52e74637906229555999b2103": {
+          "id": "6329e5a8911206356889f42781fe41831804f0c52e74637906229555999b2103",
+          "source_url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPOEFXRG45X1RkWTZEOGllNk5FbDlWNWRvUVBfNUdIeW9MWHA5eGhxNFUtQnBUaXhScTg4LWZLbDhsYUZ4SVN0ak5vekhiSUlIY3RJM1RpOW15QzJkYjJPSGZuQWRfYURjcl96TTZkUVpxa0d5RXppbENzWEFnbEs3VVBTRFhpRUdlN0taaXhEdlFoU084Q1FXNms1ZnhlQ01JRlNadlpVQnNPWUV1bEI2UWlkSU9TeW5MWXpNclhuckxWTGpKTTF3X1BoNXBwRHFWalJqRdIB2gFBVV95cUxOZDBMVi1NZ3VCQTVTd2paNFpwMkpuN1RvTG14Wm5tUW1fa2FyNDUyUy03OENDZFVSajQ1ckcteGdubjVJQjN0eGdZdllaUUpPZ3h5RG9wZTV5TVJDOTM3QUd0WW02MVZFc0dhbnZFbGJuclBLcnBhbXUwemlRajdWWmZ3c01lVDdaNTU0c0p6aDNiaHdFdnNPNUN3MExZSzdOdmhHT2JXZ1AwTi1yX1hHQ2FXR3NwXzExWXVVYVpOQjBoN0czd2NFcnZxN0txbmtwa0dWVE1JMEtLUQ?oc=5",
+          "first_seen_at": "2026-11-04T06:27:20.751565+00:00",
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 110
+          },
+          "last_error": null,
+          "title": "Gold prices show mixed trend, falls on MCX, rises in global market - Business Standard"
+        },
+        "b2a686fadaf8f68d2e06e91a330d03b80a35a4a4c6fc84e7952b337c4e6d236c": {
+          "id": "b2a686fadaf8f68d2e06e91a330d03b80a35a4a4c6fc84e7952b337c4e6d236c",
+          "source_url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOOGdLZmdUTTFWRTl5MUpCQUJtaVBheUZTd3J0aFJtS3EyeXRoNS1lc2U4WTJjV1A1aVJwYnR1WDVKUmVSQUZOVDJXc210amF2RExCak9odFFBWUs3X1FpNldHVXdQcXpQTG1JZHBKeHg0dV9yWG54TXg5SFFoLXI1S0lmc0pVbTN5eURjbGNNZ3NfZUtiOXhpNnpRbjBjM25Dc184?oc=5",
+          "first_seen_at": "2026-11-04T06:27:20.751565+00:00",
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 111
+          },
+          "last_error": null,
+          "title": "Gold prices welcome geopolitical instability wave, silver prices fall by nearly 0.5% - Laodong.vn"
+        },
+        "de6183b84b2fb80b5a7c9e127c938fe66e921ee20c3e021574e6c9a60166d57d": {
+          "id": "de6183b84b2fb80b5a7c9e127c938fe66e921ee20c3e021574e6c9a60166d57d",
+          "source_url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNSFhkZjFvTFpWWEJxWHV0eVZRc2l2MGR2MHRFQ1VmUC0wUk53WWQ3a09lSElGT1I2ZEx5ek5yalExM2tjdjVXMEozOUV5X1FsLVN4YmhldGIzZlBHbkpvR0RjUi1oSlNsLU5nSkxSVWpTejUta0p5eGZHM0luenJZbmhPN0E3NHdYQ1J4RkNSd19FSVl5RElpN09LSUpMVmlwRUdBOQ?oc=5",
+          "first_seen_at": "2026-11-04T06:27:20.751565+00:00",
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 112
+          },
+          "last_error": null,
+          "title": "Gold prices recover, new signals appear in the market - Laodong.vn"
+        },
+        "eb85632dc6b6989a6c2cdc982cde661ab0dd2d6bd86033190c744785502abddb": {
+          "id": "eb85632dc6b6989a6c2cdc982cde661ab0dd2d6bd86033190c744785502abddb",
+          "source_url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNS2lIeUNJRWZfNHNWX0pqUmZyaHJXb09fZTFfRFFKekIxdHJtLVV6LTVEaW9QUzhZeXZQRVBLUGFJQlBBN2w2TzBDWm9GWldsMHkyN3NzRGg4UUpzdHQyUkxHaTVrclVDbUN2Q0FyajFSUzdnYWdmTGJPMmN4cDBvVXM3clhJelJJVXdtV19la2ltcDNQNVN0VUxzMmpnam5LNm8yRGNPbl9FYkRldEVYbWQwSHNIM055R2lMS2dyQWNqY2w3TGdOZ0pYUGJ2b0lweHhyaEFjLWFNc0kwaVFtblhB0gHnAUFVX3lxTE12THV3V2hWYzJZbDBvNUNhZFBIRnFnNjljdDVGZ21NLUZSeUt1NjQzNXQzQVBBR2UwQUlvUEk5REEwb1VnTHF2bzRyNkl2OGZQVlNJWVdRd1dCUHNiYjhaS1ltSFVBQnplSTNId3cxNjF4bXBZQ1Q4aXFzR0pWazk4bjc4LXRidWpRSGNveExGbnVvSjNFRkJEUXlyWXRkMTQ4RVZwa2xoWFZtb1ZsQTRUYWNKWFVHNGRTUHBpUzN3Unp1T1FJVkNqT3RzVTFYQ09LUDR5S1FPZHNXdzVfQ3RwN2tFU3Zidw?oc=5",
+          "first_seen_at": "2026-11-04T06:27:20.751565+00:00",
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 113
+          },
+          "last_error": null,
+          "title": "Gold Price Today: Yellow metal rises on weaker US dollar, bond yields; Where could prices head next? - ET Now"
+        },
+        "3483f4d9bbff134935f132bbc923904db8a0dbf8b9a539956bae02fdb1dad780": {
+          "id": "3483f4d9bbff134935f132bbc923904db8a0dbf8b9a539956bae02fdb1dad780",
+          "source_url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNdGk3cDQxREotZGJaaFY1bUQ4SnFZLWxMZVNtUjVUd0FIV0pTOTV6MlpuZ2pQRDlDR3Y0RTJZNUlpeElMcDNWVm5aNUlxTERwMm5SSk5ackVnZDk2WXFPdmQ0QmF0TkMzM3FuaHZmdEtIQXN3TzA5U3NjV1pOX1FpcG91Yw?oc=5",
+          "first_seen_at": "2026-11-04T06:27:20.751565+00:00",
+          "last_attempt_at": "2026-11-04T06:27:20.751565+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 115
+          },
+          "last_error": null,
+          "title": "Gold Price & Silver Prices Rise As Market Opens Today - TechJuice"
         }
       },
       "briefings": {
