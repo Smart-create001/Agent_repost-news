@@ -1192,6 +1192,104 @@
           },
           "last_error": null,
           "title": "Gold Price & Silver Prices Rise As Market Opens Today - TechJuice"
+        },
+        "ce4f5338a0c7c17ef7640547ec151ec24b1f79517089d8b006d1795df9c31363": {
+          "id": "ce4f5338a0c7c17ef7640547ec151ec24b1f79517089d8b006d1795df9c31363",
+          "source_url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE42RGx3NTQyam9zcHNVQXliQjFsMnY5Q3l6SFMzXzVvYWxMNDN6TnVTbk5EaV8wdXZ2SFl4TE80VFFLQTNBOWVMQ0RaaEtLZExWNXRfRHo3Rm9RRmNra0hyTU5UcHhQN1FfT1FFMDZn?oc=5",
+          "first_seen_at": "2026-11-04T16:21:40.413907+00:00",
+          "last_attempt_at": "2026-11-04T16:21:40.413907+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 117
+          },
+          "last_error": null,
+          "title": "Current price of gold as of November 4, 2026 - Fortune"
+        },
+        "b88ba7d67299f19565118b8403dd86b88325df9a2497eb941ca781a6e5bdb96b": {
+          "id": "b88ba7d67299f19565118b8403dd86b88325df9a2497eb941ca781a6e5bdb96b",
+          "source_url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE1vZWlTQ2F2aWtGb012RVY2UHM5WlgtMDhpWU5FVFRtQTQ0Yld1NURka05Zd054LWFveWFJV3JwSThqNzg5NTR5Z0RhTUVDWkhQOXFNNVNJb29vSHFLMmZNUnB4TF9rVldRRG9VQ2MzTEJNRUdrcHZyN014aFNaZ9IBgwFBVV95cUxNUExBejVyMG8zamR1cjA4VXpSbkc1UE41dXMwd1JKLTVpSTRVNDJFUDRFWWc3U1FuT2tPV05qMUlMMDRUNnJwRlBxYXRHLVBLTW44RTc2Vzcta1BHZ19BWnNPY0kzcEp2LW5iMzN3ZUJKM19vRE8wZjVlUEgtb3ZaSENiNA?oc=5",
+          "first_seen_at": "2026-11-04T16:21:40.413907+00:00",
+          "last_attempt_at": "2026-11-04T16:21:40.413907+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 118
+          },
+          "last_error": null,
+          "title": "Gold, silver and precious metals prices jump, dollar dips as Democrats take control of Congress - CNBC"
+        },
+        "7faa670b8af7a0332ac7ac54b3d9d3aec9e4a00b231639f6aaf142a17c7d1bfb": {
+          "id": "7faa670b8af7a0332ac7ac54b3d9d3aec9e4a00b231639f6aaf142a17c7d1bfb",
+          "source_url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQY0NkYXhmd1VDeFZFZUNsQnZlSTZ2WjZzWWRaUWFNdmN6X2dmMVhQZmVhenllUFJBZHA3Zk5tZ2I2MUwwa2I3dTJWejRoVF9kZUpLVHkyVFFnaUgzRjdLTjJ2NGowdTh5eklJa0RhUzZMY2hzeGdRT29aM0pRbFJ5bQ?oc=5",
+          "first_seen_at": "2026-11-04T16:21:40.413907+00:00",
+          "last_attempt_at": "2026-11-04T16:21:40.413907+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 119
+          },
+          "last_error": null,
+          "title": "Gold prices gain - VnExpress International"
+        },
+        "54631e4a97e41efa48604bbec9ce51694cfb10fa67d9ababd915aee98e255934": {
+          "id": "54631e4a97e41efa48604bbec9ce51694cfb10fa67d9ababd915aee98e255934",
+          "source_url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBYSzlTUXZuakh5LXdaZm5TcmtBMHpmMGstT1lwSHhiSDJLZHJnTDFIaUdUdXdmMl9kWnFvUHh0RTFDRUplM2tKRnc5MjVpMmROZUE?oc=5",
+          "first_seen_at": "2026-11-04T16:21:40.413907+00:00",
+          "last_attempt_at": "2026-11-04T16:21:40.413907+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 120
+          },
+          "last_error": null,
+          "title": "Gold climbs further as 22-carat price reaches Tk 224,182 per Bhori - bdnews24.com"
+        },
+        "7179a6b645c4ef157b07070a0fd97124912a7de18834fe24736b65f4b0643b55": {
+          "id": "7179a6b645c4ef157b07070a0fd97124912a7de18834fe24736b65f4b0643b55",
+          "source_url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQQldyNXJnYnNWSjVFRi1HZGJKSjR1TktNa1NsbUJUMVNpQlN6TGR3dXh2dHNvMlRHd190TGJUTUpZVFQ1VjlyOXZtaEcxUldSRkpKUjZxdjE5cTZWdU9GMGJHTVQ4QXZWOHhsdnBtbDY1c1g1dXhpWjhLM2x1dmhkQmkxOU9lR29GOUJuRElB?oc=5",
+          "first_seen_at": "2026-11-04T16:21:40.413907+00:00",
+          "last_attempt_at": "2026-11-04T16:21:40.413907+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 121
+          },
+          "last_error": null,
+          "title": "Gold prices have fallen sharply; will it take another nine years to surpass their previous peak? - Vietnam.vn"
+        },
+        "9d381ee0c4a420060646ad32f28605c87ede5be45179197a7c00abcc608db9a5": {
+          "id": "9d381ee0c4a420060646ad32f28605c87ede5be45179197a7c00abcc608db9a5",
+          "source_url": "https://news.google.com/rss/articles/CBMihwJBVV95cUxNM1dDMkY4TEluN3RXcWtWQkxXSFQ4WmE5dDJSaWRobmNqNXo0UEp6MWc5QUQwYnk0NkNhX2MyekI0aHZDNlFObmdYT3NZNU5XUVhNamlHSFZSSGMwRHprVkUxNXNyV01WckN4TlV3TlRNNmhkOWJ3SVdpNWt2djJFeGhEOF84SUwyUjVyNmowekhsckFsdVdPbmdIeGVTVEtud05xSjRpcFlhUkJzWjdKOTE3aVFGRHc0NWxNdzFtdmFCNXpvSHFWcUM2cHdlQ0hNY1BsSWhzUGg5dGxISm91WFZHQmtRSldxX3piMTBxWWlBTUF1VXNqZU82NDliSi1pUEU1WEcyUdIBjAJBVV95cUxPYnRzcFY1dFBqYXgwcFpvLTVneE5Qd2ZGNU9PLVZKVUNhYmVzTExWcFFSM1pzSmtnc2F0VkVpZUZOeFp4QW1nbmFxYzl2eGp6MlNzaEdDbzFTeHIxTjU5dVdRclNYSVVFZkIydzlVeWdCNGdESnFtemxoa01OOTFQcGlGby1sY0tlSjJQUTZwSEZMd0FBQkQ5Vk5TZ3lzWXFDUXZONlZySGQ0NTZ6V0lxZVhhSkxQQjJpWnpObXJqNHIzT0poS3lQSTk3YmN0Q2JsamVSdVE0eDlQOGt1b0FKVnBzbmtSSzZjR0NkNUhfRzAteXZSY1Ftd0RFNlQ3Tm4zR05tMVVYOElNWEZY?oc=5",
+          "first_seen_at": "2026-11-04T16:21:40.413907+00:00",
+          "last_attempt_at": "2026-11-04T16:21:40.413907+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 122
+          },
+          "last_error": null,
+          "title": "US Midterm Election Results: Gold price falls 22% from peak before Dhanteras; should you buy after setback to Trump? - Livemint"
+        },
+        "5125016b86ecb9e58b331fe4573a64af8b79effc61984f8171fca26f17458345": {
+          "id": "5125016b86ecb9e58b331fe4573a64af8b79effc61984f8171fca26f17458345",
+          "source_url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPbmlBMEMzdUt4RFdqRTZYUlVZMWZxdVhsTmhtNjNQcmgyRGxGUkhaUjRycG1EZHZrSjFjYWc0ZVBFMEpWd2JXdlh4N29vaWxMWVE1UzYwcEFmQnBrMklRdDcyQnVlZktMbVpQVE1IZVZHZDZSdXlHel9wVGZjelJyWERMWmFIaVdFbEo1TTJnMURRekJhczI2LTVXODVfQThGUmJJWl9kb1JSdHVYQlA2NHgzdWVBdmo5Xy1KV1RxQS0?oc=5",
+          "first_seen_at": "2026-11-04T16:21:40.413907+00:00",
+          "last_attempt_at": "2026-11-04T16:21:40.413907+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 123
+          },
+          "last_error": null,
+          "title": "Gold price today: Spot gold climbs 2.74% to $4,035 after US ADP jobs data - Business Upturn"
         }
       },
       "briefings": {
