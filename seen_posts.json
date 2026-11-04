@@ -1290,6 +1290,62 @@
           },
           "last_error": null,
           "title": "Gold price today: Spot gold climbs 2.74% to $4,035 after US ADP jobs data - Business Upturn"
+        },
+        "d75e89a509706689940a1fdedba18a6008c72b40ded82bf9394263e106764a21": {
+          "id": "d75e89a509706689940a1fdedba18a6008c72b40ded82bf9394263e106764a21",
+          "source_url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1OTWVENVBGQWVJSUhGWkEyZWNiSGh5N2w1ajRXR1FLMjRpdk4zdWFpVzRkaVFkTlpaUnp5eFNiUjhMWGI0R21lUlJOMlhsSmhqaEE?oc=5",
+          "first_seen_at": "2026-11-04T23:41:45.445841+00:00",
+          "last_attempt_at": "2026-11-04T23:41:45.445841+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 125
+          },
+          "last_error": null,
+          "title": "ทองคำระเบิดราคาบวก 1,900 บาท! แกว่งสนั่น 46 ครั้ง ทองแท่งแตะ 64,400 บาท - Thunhoon"
+        },
+        "91ac650ac5de6aebbb6e1316a08d58fba1636bf65fbf6a66ed6fa750e0df49a7": {
+          "id": "91ac650ac5de6aebbb6e1316a08d58fba1636bf65fbf6a66ed6fa750e0df49a7",
+          "source_url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQZTIzc1F2ZWpzTG5Va1ZsY0RIMEVabFJBSlY0ZFBDb2RDYW5mNW5iTXZRb0owR2xINi1uNTUxakhDeHdvYjBLSWc2U281RlE4eXlTZVVGLUtTWHAyX2NXMUVEVXhzUzdMdXppUTF4dkRCZzBhREx6YVhtcUd5M1d0Z3M3VzZTRkFOWTRGU0RxWUZpZ3EzaUpwcXZ3UG82NmN4bk5lRzZObDZta2dMS1hfMDRxWUZXWGFFUl9F?oc=5",
+          "first_seen_at": "2026-11-04T23:41:45.445841+00:00",
+          "last_attempt_at": "2026-11-04T23:41:45.445841+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 126
+          },
+          "last_error": null,
+          "title": "Gold and silver surge as Democratic midterm sweep drives dollar, yields lower - Kitco AM Report - Kitco"
+        },
+        "a78dfe793bd6925f48dad30f8164dce55df22825aeb8b0895adb0f2c250e565d": {
+          "id": "a78dfe793bd6925f48dad30f8164dce55df22825aeb8b0895adb0f2c250e565d",
+          "source_url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPcktEU1cyUlJjQ1lWZFVWaGZGaGx6UTRsYlU3b2hvX1BvaXhfLUpvNHN4WmkzQ3J3S0VKaFpLZ19FX1VJeGNybzZsVnJZMDkwaDJZMFhVZjdLbXFKQ3dFMVV1d0ptUVJMSElQbFMyNVQ1cXlOMEt1YjZiSEx2RFo5cW52bF9ZaUHSAY8BQVVfeXFMTU10RHJGZmpnaHpLeWNWZl9JYVEzbUpfdmxmNThZaVJXMHByclltWVN2bWItbzcweVBDV1E5VDY0alg0YUFnME9xaDJnNDc1cTVpWDNqaFNRaDVUaEhDQmJhUzFsWWxOV0xsUVF1MGFOc195aEhwVWFhMFQ1eHlSamVCeVlNSktYWThxQ25WTzQ?oc=5",
+          "first_seen_at": "2026-11-04T23:41:45.445841+00:00",
+          "last_attempt_at": "2026-11-04T23:41:45.445841+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 127
+          },
+          "last_error": null,
+          "title": "Gold soars as dollar weakens after US polls - The Express Tribune"
+        },
+        "99859b1ed4f8caeb0b587222b570c3ef37cb18552f1e4cc0e1e4f1b6d5131646": {
+          "id": "99859b1ed4f8caeb0b587222b570c3ef37cb18552f1e4cc0e1e4f1b6d5131646",
+          "source_url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPVG5EdFM5Vlp6NE9MV3ctM0ZJeEdoVWVhMVQ1MVdlNjlmcGhPT3lKOXNRckc4QVJJXzFTM2FycUtMN2lYSDBKbW5RdlYzVnlKUVd3OUplOV96U2RVU3Y4VWhsVjRRRGg1SmlxM19GY2ZjNnJJMVJWcjJWd1BPM09wczJrTV80Wk5GdFJGUTBkWVRnSGNiWFJrM1dmZ0E4Y1hJZzdZTnZFczdid1FYajNDTWF1UjJ6TGgtS0FoOENMalJDTklxXzF1ajVQNnc4U2NselHSAdcBQVVfeXFMTUEzaVN0Sl9kZndHMHk1WVoyUEc2Vm9pS1l4VU8xbTNwYzUwOG9SdmRTYmtkbHc4WDRUM3pMSHJBUGptNGdFSTV1UU1UQkRnaWprdFFMbmFWVGJ0UEI1RzlOWk5IYWxRMm90TDB5dmJ5eXY5Zmx2LWVyS256Tk94elZxUWE5QW9COWVtalAxSzhBaFNVLVFNMmdTeG9JYU1zUU1DbVFEQ2l3c1YwUTdjZTJtTkxFSFBUdHg4NlFLUW5Ja094eFVmY0VzMy01QjFYd0FQcnJURzQ?oc=5",
+          "first_seen_at": "2026-11-04T23:41:45.445841+00:00",
+          "last_attempt_at": "2026-11-04T23:41:45.445841+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 128
+          },
+          "last_error": null,
+          "title": "Gold up 3%; experts split on whether rally can sustain in coming months - Business Standard"
         }
       },
       "briefings": {
@@ -1505,6 +1561,20 @@
           },
           "last_error": null,
           "title": "Google highlights October AI launches, including Gemini 4 Carbon - Blockchain News"
+        },
+        "68ff8dcc8e17d881d11ee03a95705ff5f8a8fb8e4486d6f42ee4ec2958c4875c": {
+          "id": "68ff8dcc8e17d881d11ee03a95705ff5f8a8fb8e4486d6f42ee4ec2958c4875c",
+          "source_url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNRk1FVGZfZkxEUmtmS1hKMjM4dU1QZ0xyYXMxQmxLU0QwbDl6RTNVNlo1LVl4bVZqS3pOVWt3OGxnQjhsV0l3VHFhX1BaRFZYMmlpXzczQ3BuellfWndLS1YtLWNBWEtHZW9Tc19GMTJrWXZrSFl1cElCbThUM19YSkUzQU1aUmJMcGZURktiQzBDT25aRmlDYVhCYWhRMEV1OVV2MGlSOVk1X19fSkJnNtIBtgFBVV95cUxNNzlrVEYwcjZ6ZVJhOXl3bHFtNWlGVHl6dEpTRS0wZDUtRE1Yc0UxTXU2VW0xWEVzZGU1dVQ0d0VPa3hfUU1XYlJHamlRbzJhS2RSVkFVR1Z2VGt5d2NiMTFhRkJlVmRWbDZWOU1iZng1cFBkQWNoTU5aSk42YW9NVHVSRGNfNWlyZHk2a1BRN0lQZ3QwejlkTzJqQmJhUTZhMFRPelVJWTBrOGpIdWxmUGRHckRFZw?oc=5",
+          "first_seen_at": "2026-11-04T23:41:45.445841+00:00",
+          "last_attempt_at": "2026-11-04T23:41:45.445841+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 124
+          },
+          "last_error": null,
+          "title": "Google Updates Privacy Policy Allowing Search, Gemini to Use Gmail and Google Photos Content for Persona... - Gadgets 360"
         }
       },
       "briefings": {}
