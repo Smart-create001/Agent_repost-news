@@ -1,70 +1,41 @@
-name: Bounded provider rate limit diagnostic
+name: Isolated state collision diagnostic
 on:
   workflow_dispatch:
 permissions:
-  contents: read
-concurrency:
-  group: agent-state-${{ github.repository }}
-  cancel-in-progress: false
+  contents: write
 jobs:
-  check:
+  collision:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: python -m pip install -r requirements.txt
-      - name: Probe providers with bounded requests
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          ref: bd7f0905dc0d70a71f3913300333e23b76bd1159
+          fetch-depth: 0
+      - name: Prepare isolated write
         run: |
-          python - <<'PY'
-          import os
-          import httpx
-          from google import genai
-          from google.genai import types
-          from src.config import load_config
-          config = load_config()
-          def report(name, status, count, retry):
-              retry = str(retry)[:100] if retry is not None else 'none'
-              print(f'::notice::{name}: requests={count} status={status} retry_after={retry}', flush=True)
-          url = str(config.topics[0].rss_urls[0])
-          with httpx.Client(timeout=20, follow_redirects=True) as client:
-              for count in range(1, 4):
-                  try:
-                      response = client.get(url)
-                      if response.status_code != 200 or count == 3:
-                          report('RSS', response.status_code, count, response.headers.get('Retry-After'))
-                          if response.status_code != 200: break
-                  except httpx.HTTPError as exc:
-                      report('RSS', type(exc).__name__, count, None); break
-              for count in range(1, 4):
-                  try:
-                      response = client.get('https://api.telegram.org/bot' + os.environ['TELEGRAM_BOT_TOKEN'] + '/getMe')
-                      if response.status_code != 200 or count == 3:
-                          retry = response.headers.get('Retry-After')
-                          if response.status_code == 429:
-                              try: retry = response.json().get('parameters', {}).get('retry_after', retry)
-                              except ValueError: pass
-                          report('Telegram getMe', response.status_code, count, retry)
-                          if response.status_code != 200: break
-                  except httpx.HTTPError as exc:
-                      report('Telegram getMe', type(exc).__name__, count, None); break
-          client = genai.Client(api_key=os.environ['GEMINI_API_KEY'], http_options=types.HttpOptions(timeout=20000))
-          try:
-              for count in range(1, 4):
-                  try:
-                      client.models.generate_content(model=config.app.default_model, contents='Reply OK.', config=types.GenerateContentConfig(max_output_tokens=32))
-                      if count == 3: report('Gemini', 200, count, None)
-                  except Exception as exc:
-                      response = getattr(exc, 'response', None)
-                      report('Gemini', getattr(exc, 'code', type(exc).__name__), count, getattr(response, 'headers', {}).get('Retry-After') if response is not None else None)
-                      break
-          finally:
-              client.close()
+          python3 - <<'PY'
+          import json, os
+          p='phase7-race-state.json'
+          with open(p) as f: state=json.load(f)
+          state['writers'].append(os.environ['GITHUB_RUN_ID'])
+          with open(p,'w') as f: json.dump(state,f); f.write('\n')
+          original=open('scripts/persist_state.sh').read()
+          replacements={'state_file=seen_posts.json':'state_file=phase7-race-state.json', 'origin main':'origin diagnostic/state-race-data', 'refs/remotes/origin/main':'refs/remotes/origin/diagnostic/state-race-data', 'HEAD:main':'HEAD:diagnostic/state-race-data'}
+          for before,after in replacements.items():
+              if original.count(before) != 1: raise RuntimeError('Unexpected persistence script structure')
+              original=original.replace(before,after)
+          open('/tmp/phase7-race-persist.sh','w').write(original)
           PY
+      - name: Attempt isolated state push
+        run: |
+          sleep 15
+          bash /tmp/phase7-race-persist.sh
+      - name: Preserve test state for reconciliation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: race-state-${{ github.run_id }}
+          path: phase7-race-state.json
+          if-no-files-found: error
+          retention-days: 1
