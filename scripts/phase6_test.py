@@ -39,6 +39,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--verify-state", action="store_true")
     parser.add_argument("--text-only", action="store_true")
+    parser.add_argument("--topic", choices=("ai_tech", "gold_price"), default="ai_tech")
     args = parser.parse_args()
     state_path = Path("seen_posts.json")
     if args.verify_state:
@@ -55,7 +56,7 @@ def main():
     config.app.max_posts_per_topic = 1
     if args.text_only:
         for topic in config.topics:
-            topic.enabled = topic.enabled and topic.id == "ai_tech"
+            topic.enabled = topic.enabled and topic.id == args.topic
     validate_live_config(config)
     notifier = BoundedNotifier(token=os.environ["TELEGRAM_BOT_TOKEN"],
                                chat_id=os.environ["TELEGRAM_CHAT_ID"], max_retries=0)

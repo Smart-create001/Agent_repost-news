@@ -34,14 +34,15 @@ def test_bounded_notifier_rejects_long_message_without_sending():
         notifier.close()
 
 
-def test_text_only_uses_alert_and_limits_ai_without_audio(monkeypatch):
+@pytest.mark.parametrize("args,expected_topic", [(["--text-only"], "ai_tech"), (["--text-only", "--topic", "gold_price"], "gold_price")])
+def test_text_only_uses_alert_and_limits_selected_topic_without_audio(monkeypatch, args, expected_topic):
     import sys
     from pathlib import Path
     from scripts import phase6_test
     from src.config import load_config
 
     config = load_config(Path(__file__).resolve().parents[1] / "config.yaml")
-    monkeypatch.setattr(sys, "argv", ["phase6_test", "--text-only"])
+    monkeypatch.setattr(sys, "argv", ["phase6_test", *args])
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "dummy")
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "-1")
     monkeypatch.setattr(phase6_test, "load_config", lambda: config)
@@ -50,7 +51,7 @@ def test_text_only_uses_alert_and_limits_ai_without_audio(monkeypatch):
     def check_run(settings, *, mode, state_path, notifier):
         assert mode == "alert"
         assert settings.app.max_posts_per_topic == 1
-        assert [t.id for t in settings.topics if t.enabled] == ["ai_tech"]
+        assert [t.id for t in settings.topics if t.enabled] == [expected_topic]
         assert not settings.alert.generate_audio
         return 0
 

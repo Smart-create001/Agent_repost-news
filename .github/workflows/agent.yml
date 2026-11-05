@@ -16,6 +16,12 @@ on:
         required: false
         type: boolean
         default: false
+      phase6_topic:
+        description: Topic for a bounded alert test
+        required: false
+        type: choice
+        default: ai_tech
+        options: [ai_tech, gold_price]
 
 permissions:
   contents: write
@@ -51,6 +57,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '25 0 * * *' && 'briefing' || 'alert') }}
           PHASE6_TEST: ${{ github.event_name == 'workflow_dispatch' && inputs.phase6_test || false }}
+          PHASE6_TOPIC: ${{ inputs.phase6_topic || 'ai_tech' }}
         shell: bash
         run: |
           set +e
@@ -59,7 +66,7 @@ jobs:
             agent_exit=$?
           elif [[ "$PHASE6_TEST" == "true" ]]; then
             if [[ "$RUN_MODE" == "alert" ]]; then
-              python -m scripts.phase6_test --text-only
+              python -m scripts.phase6_test --text-only --topic "$PHASE6_TOPIC"
               agent_exit=$?
             elif [[ "$RUN_MODE" == "briefing" ]]; then
               python -m scripts.phase6_test
