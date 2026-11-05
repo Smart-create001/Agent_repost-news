@@ -1698,7 +1698,25 @@
           "title": "Anthropic executive Cat Wu joins OpenAI to lead product management for core products - India Today"
         }
       },
-      "briefings": {}
+      "briefings": {
+        "ai_tech:briefing:2026-11-05T00:00:00+00:00": {
+          "id": "ai_tech:briefing:2026-11-05T00:00:00+00:00",
+          "window_start": "2026-11-05T00:00:00+00:00",
+          "window_end": "2026-11-06T00:00:00+00:00",
+          "post_ids": [
+            "953c58821b81409f0c0669b9e0ddce9747afb38a4ba763b29276aa3bfe0d801b"
+          ],
+          "text": {
+            "delivered": true,
+            "message_id": 137
+          },
+          "audio_required": false,
+          "last_attempt_at": "2026-11-05T12:23:50.224942+00:00",
+          "retry_count": 1,
+          "last_error": null,
+          "summary_text": "📰 Cat Wu ผู้บริหารจาก Anthropic ย้ายไปร่วมงานกับ OpenAI\n\nCat Wu ผู้บริหารจาก Anthropic ได้ย้ายไปร่วมงานกับ OpenAI เพื่อรับตำแหน่งหัวหน้าฝ่ายบริหารจัดการผลิตภัณฑ์สำหรับผลิตภัณฑ์หลัก\n\nข้อจำกัด: ไม่ระบุวันที่เริ่มงานอย่างเป็นทางการ; ไม่ระบุรายละเอียดขอบเขตของผลิตภัณฑ์หลักที่ได้รับมอบหมายให้ดูแล\n\n🔗 แหล่งข่าว: https://news.google.com/rss/articles/CBMi6wFBVV95cUxOVWx0cDhLQkRiR3JZX0VOaGxLelllRlRBbVhQZW82RFlvNkxZanpGdWNmSHI0M2NRbDN0UnpUWFFpaDUtTkM4LWpYMVM3a2hBREZ3ZUg2elpETS1WVElBSG1xWnFIYm1oZVpzbmpXbDQ1dTJFWFl3Mk91QXloQlJxTVVKTlNQTDZ3YzUzaU9MaU95TEdsMk1KQTFpeDZqRVRaaGxrNkE5TncyTXg3Vk8tTXVwUldXTDBhUG1vUlF1a2dfU1lYOEpFNjlZTEF3WXNnLWtJLTFrLUNVRnJFOWQwNVZZZTR6c1MxOVA40gHrAUFVX3lxTE5VbHRwOEtCRGJHcllfRU5obEt6WWVGVEFtWFBlbzZEWW82TFlqekZ1Y2ZIcjQzY1FsM3RSelRYUWloNS1OQzgtalgxUzdraEFERndlSDZ6WkRNLVZUSUFIbXFacUhibWhlWnNualdsNDV1MkVYWXcyT3VBeWhCUnFNVUpOU1BMNndjNTNpT0xpT3lMR2wyTUpBMWl4NmpFVFpobGs2QTlOdzJNeDdWTy1NdXBSV1dMMGFQbW9SUXVrZ19TWVg4SkU2OVlMQXdZc2cta0ktMWstQ1VGckU5ZDA1VlllNHpzUzE5UDg?oc=5"
+        }
+      }
     }
   }
 }
