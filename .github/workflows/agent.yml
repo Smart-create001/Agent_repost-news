@@ -1,4 +1,4 @@
-name: Facebook group public access diagnostic
+name: Facebook group source diagnostic
 on:
   workflow_dispatch:
 permissions:
@@ -7,18 +7,20 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Check public group page
+      - name: Inspect public Facebook pages
         run: |
           python - <<'PY'
-          import urllib.request
-          url = 'https://www.facebook.com/groups/4157162401260703/'
-          try:
-              req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-              with urllib.request.urlopen(req, timeout=25) as response:
-                  body = response.read(2000000).decode('utf-8', errors='replace').lower()
-                  indicators = {k: body.count(k) for k in ('login', 'comet_sections', 'story_message', 'creation_time', 'feedback_context', 'groups/4157162401260703/posts/', 'groups/4157162401260703/permalink/', 'openaI codex'.lower(), 'content not found')}
-                  print(f'::warning::Facebook status={response.status} bytes={len(body)} indicators={indicators}', flush=True)
-          except Exception as exc:
-              print(f'::error::Facebook request failed type={type(exc).__name__} status={getattr(exc, "code", "none")}', flush=True)
-              raise
+          import urllib.request, urllib.parse, re
+          urls = ['https://www.facebook.com/share/g/19Fr5Q2Pdf/', 'https://www.facebook.com/groups/4157162401260703/', 'https://m.facebook.com/groups/4157162401260703/','https://mbasic.facebook.com/groups/4157162401260703/']
+          for url in urls:
+              try:
+                  req=urllib.request.Request(url, headers={'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36'})
+                  with urllib.request.urlopen(req, timeout=20) as response:
+                      body=response.read(2000000).decode('utf-8',errors='replace')
+                      lower=body.lower()
+                      target=urllib.parse.urlsplit(response.url)
+                      title=re.search(r'<title[^>]*>(.*?)</title>',body,re.I|re.S)
+                      print(f'::warning::source={urllib.parse.urlsplit(url).netloc} status={response.status} target={target.netloc}{target.path} title={(title.group(1)[:100] if title else "none")} group_name={"openai codex" in lower} story_markers={lower.count("story_message")} posts_links={lower.count("/posts/")}',flush=True)
+              except Exception as exc:
+                  print(f'::warning::source={urllib.parse.urlsplit(url).netloc} failed type={type(exc).__name__} status={getattr(exc,"code","none")}',flush=True)
           PY
