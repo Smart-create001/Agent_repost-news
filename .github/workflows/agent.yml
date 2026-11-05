@@ -19,12 +19,21 @@ jobs:
           import httpx
           from src.scraper import parse_x_profile
           url = 'https://x.com/thsottiaux'
-          response = httpx.get(url, timeout=30, follow_redirects=True)
-          print('HTTP status:', response.status_code)
-          response.raise_for_status()
+          try:
+              response = httpx.get(url, timeout=30, follow_redirects=True)
+              print('HTTP status:', response.status_code)
+              response.raise_for_status()
+          except Exception as exc:
+              status = getattr(getattr(exc, 'response', None), 'status_code', 'none')
+              print(f'::error::X request failed type={type(exc).__name__} status={status}', flush=True)
+              raise
           if response.url.host != 'x.com':
               raise RuntimeError('Unexpected redirect')
-          posts = parse_x_profile(response.text, 'thsottiaux', now=datetime.now(timezone.utc), max_age=timedelta(days=2))
+          try:
+              posts = parse_x_profile(response.text, 'thsottiaux', now=datetime.now(timezone.utc), max_age=timedelta(days=2))
+          except Exception as exc:
+              print(f'::error::X parse failed type={type(exc).__name__}: {exc}', flush=True)
+              raise
           print('Recent posts parsed:', len(posts))
           if not posts:
               raise RuntimeError('No recent posts to validate')
