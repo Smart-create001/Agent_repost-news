@@ -10,6 +10,7 @@ from google import genai
 from google.genai import types
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, ValidationError, field_validator
 from src.models import AISettings, AppSettings
+from src.retry import retry_delay
 
 
 LOG = logging.getLogger(__name__)
@@ -280,9 +281,12 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
             status = getattr(exc, "code", getattr(exc, "status_code", None))
             retryable = status in (429, 500, 502, 503, 504) or isinstance(exc, (TimeoutError, httpx.TimeoutException))
             if retryable and attempt < max_retries:
-                LOG.warning("AI request retry %d after %s", attempt + 1, type(exc).__name__)
-                time.sleep(min(2 ** attempt, 4))
-                attempt += 1
-                continue
+                response = getattr(exc, "response", None)
+                delay = retry_delay(getattr(response, "headers", None), attempt)
+                if delay is not None:
+                    LOG.warning("AI request retry %d after %s", attempt + 1, type(exc).__name__)
+                    time.sleep(delay)
+                    attempt += 1
+                    continue
             raise BrainError(f"AI request failed: {type(exc).__name__}") from exc
     raise BrainError("AI retry limit exceeded")

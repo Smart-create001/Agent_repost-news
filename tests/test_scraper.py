@@ -54,6 +54,29 @@ def test_tc2_07_timeout_is_bounded(monkeypatch, caplog):
     assert "after 3 attempts" in caplog.text
 
 
+def test_feed_retry_after_and_permanent_error(monkeypatch):
+    waits, calls = [], []
+    def handler(request):
+        calls.append(request)
+        if request.url.path == '/denied':
+            return httpx.Response(403)
+        if sum(r.url.path == '/rss' for r in calls) == 1:
+            return httpx.Response(429, headers={'Retry-After': '7'})
+        return httpx.Response(200, content=(FIXTURES / 'sample.atom').read_bytes())
+    monkeypatch.setattr('src.scraper.time.sleep', waits.append)
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        posts, errors = fetch_topic(SimpleNamespace(rss_urls=['https://feeds.example.org/denied', URL]), client=client, now=NOW)
+    assert len(posts) == 1 and len(errors) == 1 and waits == [7]
+    assert sum(r.url.path == '/denied' for r in calls) == 1
+
+
+def test_retry_after_http_date_and_long_delay():
+    from src.retry import retry_delay
+    assert retry_delay({'Retry-After': 'Mon, 26 Oct 2026 12:00:08 GMT'}, 0, now=NOW) == 8
+    assert retry_delay({'Retry-After': '120'}, 0, now=NOW) is None
+    assert retry_delay({'Retry-After': 'invalid'}, 0, now=NOW) is None
+
+
 def test_feeds_are_interleaved_before_pipeline_limit():
     def handler(request):
         prefix = request.url.path.strip("/")

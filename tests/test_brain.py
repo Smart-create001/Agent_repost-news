@@ -4,6 +4,7 @@ import json
 from types import SimpleNamespace
 
 import pytest
+import httpx
 
 from src.brain import BrainError, analyze_topic
 
@@ -90,6 +91,21 @@ def test_tc3_07_rate_limit_retry(monkeypatch):
     mock = client(RateLimit(), json.dumps([result()]))
     assert len(analyze_topic(topic(), [POST], client=mock, max_retries=1)) == 1
     assert len(mock.models.calls) == 2
+
+
+def test_gemini_retry_after_respected_and_long_wait_stops(monkeypatch):
+    from google.genai import errors
+    waits = []
+    monkeypatch.setattr("src.brain.time.sleep", waits.append)
+    response = httpx.Response(429, headers={"Retry-After": "7"})
+    mock = client(errors.ClientError(429, {}, response), json.dumps([result()]))
+    assert len(analyze_topic(topic(), [POST], client=mock, max_retries=1)) == 1
+    assert waits == [7] and len(mock.models.calls) == 2
+    response = httpx.Response(429, headers={"Retry-After": "120"})
+    mock = client(errors.ClientError(429, {}, response))
+    with pytest.raises(BrainError):
+        analyze_topic(topic(), [POST], client=mock, max_retries=1)
+    assert len(mock.models.calls) == 1 and waits == [7]
 
 
 def test_tc3_08_timeout_bounded(monkeypatch):

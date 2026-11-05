@@ -10,6 +10,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import feedparser
 import httpx
+from src.retry import retry_delay
 
 LOG = logging.getLogger(__name__)
 
@@ -116,11 +117,15 @@ def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
                             current_feed.append(post)
                     break
                 except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
-                    if attempt < max_retries:
-                        time.sleep(min(2 ** attempt, 4))
+                    status = exc.response.status_code if isinstance(exc, httpx.HTTPStatusError) else None
+                    retryable = status is None or status in (429, 500, 502, 503, 504)
+                    delay = retry_delay(exc.response.headers if status is not None else None, attempt)
+                    if attempt < max_retries and retryable and delay is not None:
+                        time.sleep(delay)
                         continue
                     LOG.warning("Feed fetch failed after %d attempts: %s", attempt + 1, type(exc).__name__)
                     errors.append(f"feed fetch failed: {type(exc).__name__}")
+                    break
                 except ValueError as exc:
                     LOG.warning("Feed parse failed: %s", exc)
                     errors.append(str(exc))
