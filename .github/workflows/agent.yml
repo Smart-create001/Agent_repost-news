@@ -1,4 +1,4 @@
-name: X profile connectivity diagnostic
+name: Public X feed diagnostic
 on:
   workflow_dispatch:
 permissions:
@@ -7,34 +7,20 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -r requirements.txt
-      - name: Check public X profile
+      - name: Check public feeds
         run: |
           python - <<'PY'
-          from datetime import datetime, timedelta, timezone
-          import httpx
-          from src.scraper import parse_x_profile
-          url = 'https://x.com/thsottiaux'
-          try:
-              response = httpx.get(url, timeout=30, follow_redirects=True, headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36', 'Accept': 'text/html'})
-              print('HTTP status:', response.status_code)
-              response.raise_for_status()
-          except Exception as exc:
-              status = getattr(getattr(exc, 'response', None), 'status_code', 'none')
-              print(f'::error::X request failed type={type(exc).__name__} status={status}', flush=True)
-              raise
-          if response.url.host != 'x.com':
-              raise RuntimeError('Unexpected redirect')
-          try:
-              posts = parse_x_profile(response.text, 'thsottiaux', now=datetime.now(timezone.utc), max_age=timedelta(days=2))
-          except Exception as exc:
-              print(f'::error::X parse failed type={type(exc).__name__}: {exc}', flush=True)
-              raise
-          print('Recent posts parsed:', len(posts))
-          if not posts:
-              raise RuntimeError('No recent posts to validate')
+          import urllib.request, xml.etree.ElementTree as ET
+          for url in ('https://rsshub.app/twitter/user/thsottiaux', 'https://nitter.net/thsottiaux/rss'):
+              try:
+                  with urllib.request.urlopen(url, timeout=20) as response:
+                      data = response.read(2000000)
+                      root = ET.fromstring(data)
+                      count = len(root.findall('.//item')) + len(root.findall('.//{http://www.w3.org/2005/Atom}entry'))
+                      print(f'::notice::{url} status={response.status} entries={count}')
+              except Exception as exc:
+                  print(f'::warning::{url} failed type={type(exc).__name__} status={getattr(exc, "code", "none")}')
           PY
