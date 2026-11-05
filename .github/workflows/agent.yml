@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: diagnostic/dashboard-check
           fetch-depth: 0
           persist-credentials: true
       - uses: actions/setup-python@v5
@@ -100,6 +100,12 @@ jobs:
           AGENT_OUTCOME: ${{ steps.agent.outcome }}
           RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '25 0 * * *' && 'briefing' || 'alert') }}
         run: python scripts/dashboard.py --log "$RUNNER_TEMP/agent-dashboard.log" --state seen_posts.json --html "$RUNNER_TEMP/dashboard.html" --summary "$GITHUB_STEP_SUMMARY"
+      - name: Verify dashboard output
+        if: always()
+        run: |
+          test -s "$RUNNER_TEMP/dashboard.html"
+          grep -q "ไม่ได้ตรวจ" "$RUNNER_TEMP/dashboard.html"
+          grep -q "สถานะบอท" "$GITHUB_STEP_SUMMARY"
       - name: Save dashboard
         if: always()
         uses: actions/upload-artifact@v4
