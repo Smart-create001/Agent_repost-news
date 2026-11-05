@@ -74,10 +74,19 @@ class Topic(StrictModel):
     context: str = ""
     telegram: TelegramTopic
     rss_urls: list[HttpUrl] = Field(default_factory=list)
+    x_handles: list[str] = Field(default_factory=list, max_length=5)
+
+    @field_validator("x_handles")
+    @classmethod
+    def valid_x_handles(cls, handles: list[str]) -> list[str]:
+        import re
+        if any(not re.fullmatch(r"[A-Za-z0-9_]{1,15}", handle) for handle in handles):
+            raise ValueError("X handles must contain only letters, numbers or underscores")
+        return handles
 
     @model_validator(mode="after")
     def enabled_has_feed(self) -> "Topic":
-        if self.enabled and not self.rss_urls:
+        if self.enabled and not (self.rss_urls or self.x_handles):
             raise ValueError(f"enabled topic '{self.id}' requires at least one RSS URL")
         return self
 

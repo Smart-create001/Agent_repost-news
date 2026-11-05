@@ -3,8 +3,10 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import httpx
+import json
+import pytest
 
-from src.scraper import fetch_topic, parse_feed
+from src.scraper import fetch_topic, parse_feed, parse_x_profile
 
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -64,3 +66,34 @@ def test_feeds_are_interleaved_before_pipeline_limit():
     assert not errors
     assert [post.title for post in posts[:4]] == ["first0", "second0", "first1", "second1"]
     assert sum(post.title.startswith("second") for post in posts[:20]) == 10
+
+
+def x_page(tweets):
+    entries = [{"content": {"content": {"__typename": "TimelineTweet", "tweet_results": {"result": tweet}}}} for tweet in tweets]
+    timeline = {"id": "ProfileOriginalsProduct-Timeline", "instructions": [{"__typename": "TimelineAddEntries", "entries": entries}]}
+    payload = {"data": {"user_result_by_screen_name": {"result": {"profile_user_originals_timeline": {"timeline": timeline}}}}}
+    return '<script>kind:"Result.Ok",value:' + json.dumps(json.dumps(payload)) + '</script>'
+
+
+def x_tweet(identifier, author, text):
+    return {"__typename": "Tweet", "rest_id": identifier, "core": {"user_results": {"result": {"core": {"screen_name": author}}}},
+            "details": {"created_at_ms": int(NOW.timestamp() * 1000), "full_text": text}}
+
+
+def test_x_profile_extracts_only_account_posts_with_stable_ids():
+    page = x_page([x_tweet("123", "thsottiaux", "AI product update"), x_tweet("124", "other", "other post"), x_tweet("123", "thsottiaux", "duplicate")])
+    posts = parse_x_profile(page, "thsottiaux", now=NOW, max_age=timedelta(days=2))
+    assert len(posts) == 1
+    assert posts[0].url == "https://x.com/thsottiaux/status/123"
+    assert posts[0].published_at == NOW and posts[0].title == "AI product update"
+    assert parse_x_profile(page, "thsottiaux", now=NOW + timedelta(days=3), max_age=timedelta(days=2)) == []
+
+
+def test_x_missing_timeline_is_reported_and_rss_continues():
+    with pytest.raises(ValueError, match="timeline unavailable"):
+        parse_x_profile("<html>login</html>", "thsottiaux", now=NOW)
+    def handler(request):
+        return httpx.Response(200, text="<html>login</html>") if request.url.host == "x.com" else httpx.Response(200, content=(FIXTURES / "sample.atom").read_bytes())
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        posts, errors = fetch_topic(SimpleNamespace(x_handles=["thsottiaux"], rss_urls=[URL]), client=client, now=NOW)
+    assert len(posts) == 1 and len(errors) == 1

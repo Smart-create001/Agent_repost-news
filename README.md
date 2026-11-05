@@ -2,6 +2,8 @@
 
 Multi-topic AI social listening agent. This release is text-only; audio code is retained for future approved work.
 
+The AI topic also reads the public X profile configured in `x_handles` and sends its posts through the existing relevance and grounding checks. The profile provides a limited recent timeline, so posts can be missed during high activity or outages. X may change or block this unofficial page format; failures are logged and make the run report an error. Quoted posts are not treated as part of the author's text. No X account or paid API is configured.
+
 ## Phase 1: configuration
 
 Requires Python 3.11+ (tested with 3.12). From this repository:

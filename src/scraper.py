@@ -5,6 +5,8 @@ from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 from html.parser import HTMLParser
 import logging
+import json
+import re
 import time
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
@@ -91,6 +93,63 @@ def parse_feed(data: bytes, source_url: str, *, now: datetime | None = None,
     return posts
 
 
+def parse_x_profile(data: str, handle: str, *, now: datetime, max_age: timedelta | None = None) -> list[Post]:
+    """Read the public profile timeline; reject unknown page formats instead of silently succeeding."""
+    profile = f"https://x.com/{handle}"
+    decoder = json.JSONDecoder()
+    timeline = None
+    for match in re.finditer(r'kind:"Result.Ok",value:', data):
+        try:
+            value, _ = decoder.raw_decode(data[match.end():])
+            payload = json.loads(value)
+            candidate = payload["data"]["user_result_by_screen_name"]["result"]
+            candidate = candidate["profile_user_originals_timeline"]["timeline"]
+            if candidate.get("id") == "ProfileOriginalsProduct-Timeline":
+                timeline = candidate
+                break
+        except (ValueError, KeyError, TypeError):
+            continue
+    if timeline is None:
+        raise ValueError("X profile timeline unavailable or page format changed")
+    instructions = timeline.get("instructions")
+    if not isinstance(instructions, list):
+        raise ValueError("X profile timeline instructions missing")
+    additions = [item for item in instructions if item.get("__typename") == "TimelineAddEntries"]
+    if not additions or any(not isinstance(item.get("entries"), list) for item in additions):
+        raise ValueError("X profile timeline entries missing")
+    posts = []
+    seen = set()
+    for instruction in additions:
+        for entry in instruction["entries"]:
+            content = entry.get("content", {}).get("content", {})
+            if content.get("__typename") != "TimelineTweet":
+                continue
+            try:
+                tweet = content["tweet_results"]["result"]
+                if tweet.get("__typename") != "Tweet":
+                    raise ValueError("unsupported X post format")
+                author = tweet["core"]["user_results"]["result"]["core"]["screen_name"]
+                if author.lower() != handle.lower():
+                    continue
+                post_id = tweet["rest_id"]
+                details = tweet["details"]
+                title = details["full_text"].strip()
+                timestamp = details["created_at_ms"]
+                if not isinstance(post_id, str) or not post_id.isdecimal() or not title or not isinstance(timestamp, int):
+                    raise ValueError("invalid X post fields")
+                published = datetime.fromtimestamp(timestamp / 1000, timezone.utc)
+            except (KeyError, TypeError, OverflowError, OSError) as exc:
+                raise ValueError("X post fields missing or invalid") from exc
+            if post_id in seen or (max_age is not None and published < now - max_age):
+                continue
+            seen.add(post_id)
+            url = f"https://x.com/{handle}/status/{post_id}"
+            posts.append(Post(id=sha256(url.encode()).hexdigest(), url=url, title=title[:500],
+                              description=title[:3000], published_at=published, source_url=profile,
+                              retrieved_at=now))
+    return posts
+
+
 def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
                 max_age: timedelta | None = None, client: httpx.Client | None = None,
                 now: datetime | None = None) -> tuple[list[Post], list[str]]:
@@ -102,6 +161,31 @@ def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
     feed_posts: list[list[Post]] = []
     errors: list[str] = []
     try:
+        for handle in getattr(topic, "x_handles", []):
+            url = f"https://x.com/{handle}"
+            current_feed = []
+            feed_posts.append(current_feed)
+            for attempt in range(max_retries + 1):
+                try:
+                    response = client.get(url, timeout=timeout)
+                    response.raise_for_status()
+                    if response.url.host != "x.com":
+                        raise ValueError("X profile redirected outside x.com")
+                    for post in parse_x_profile(response.text, handle, now=now or datetime.now(timezone.utc), max_age=max_age):
+                        if post.id not in posts:
+                            posts[post.id] = post
+                            current_feed.append(post)
+                    break
+                except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
+                    if attempt < max_retries:
+                        time.sleep(min(2 ** attempt, 4))
+                        continue
+                    LOG.warning("X profile fetch failed: %s", type(exc).__name__)
+                    errors.append(f"X profile fetch failed: {type(exc).__name__}")
+                except ValueError as exc:
+                    LOG.warning("X profile parse failed: %s", exc)
+                    errors.append(str(exc))
+                    break
         for feed_url in topic.rss_urls:
             url = str(feed_url)
             current_feed: list[Post] = []

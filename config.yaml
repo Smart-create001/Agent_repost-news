@@ -41,10 +41,14 @@ topics:
       ติดตามการเปิดตัวโมเดล AI ใหม่ การเปลี่ยนนโยบายของผู้ให้บริการ
       และข่าวหรือโพสต์เกี่ยวกับการรีเซ็ตโควตา token หรือ API โดยเฉพาะ
       ข้อมูลจาก Tibo และ Logan Kilpatrick หากแหล่งข่าวระบุตัวบุคคลชัดเจน
+      สำหรับโพสต์ X ของ Tibo คัดเฉพาะข่าวเกี่ยวกับ AI โมเดล ผลิตภัณฑ์
+      ฟีเจอร์ โควตาการใช้งาน หรือประกาศเกี่ยวกับบริการ ไม่รวมเรื่องส่วนตัวหรือมุกทั่วไป
       ระบุชื่อโมเดล ผู้ให้บริการ วันที่ประกาศ และแหล่งข่าวตามข้อมูลที่พบจริง
       หากคำว่า reset หมายถึงเรื่องอื่นหรือข้อมูลยังไม่ยืนยัน ให้ระบุความไม่แน่นอน
     telegram:
       message_thread_id: 5
+    x_handles:
+      - thsottiaux
     rss_urls:
       - 'https://news.google.com/rss/search?q=OpenAI%20OR%20Google%20Gemini%20OR%20Anthropic%20AI%20model%20launch%20policy&hl=en-US&gl=US&ceid=US:en'
       - 'https://news.google.com/rss/search?q=%22Tibo%22%20OR%20%22Logan%20Kilpatrick%22%20AI%20token%20reset%20API&hl=en-US&gl=US&ceid=US:en'

@@ -23,6 +23,7 @@ def settings(two=True):
     config = load_config(ROOT / "config.yaml")
     topics = [topic.model_copy(update={
         "enabled": True,
+        "x_handles": [],
         "telegram": topic.telegram.model_copy(update={"message_thread_id": thread_id}),
     }) for topic, thread_id in zip(config.topics, (101, 102))]
     return config.model_copy(update={"topics": topics if two else topics[:1]})
