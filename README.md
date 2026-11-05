@@ -2,6 +2,8 @@
 
 Multi-topic AI social listening agent. This release is text-only; audio code is retained for future approved work.
 
+The AI topic includes a Google News search for `thsottiaux`. This finds indexed coverage and does not monitor the X account directly or guarantee that every post appears.
+
 ## Phase 1: configuration
 
 Requires Python 3.11+ (tested with 3.12). From this repository:

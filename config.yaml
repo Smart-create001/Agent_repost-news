@@ -48,6 +48,7 @@ topics:
     rss_urls:
       - 'https://news.google.com/rss/search?q=OpenAI%20OR%20Google%20Gemini%20OR%20Anthropic%20AI%20model%20launch%20policy&hl=en-US&gl=US&ceid=US:en'
       - 'https://news.google.com/rss/search?q=%22Tibo%22%20OR%20%22Logan%20Kilpatrick%22%20AI%20token%20reset%20API&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=%22thsottiaux%22&hl=en-US&gl=US&ceid=US:en'
   - id: gold_price
     name: Gold Price
     enabled: true
