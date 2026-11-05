@@ -1710,6 +1710,20 @@
           },
           "last_error": null,
           "title": "Anthropic executive Cat Wu joins OpenAI to lead product management for core products - India Today"
+        },
+        "3e12ae16e12e9bd8a463fdf7282038151e8e1e3d1de6c37dfe4128f0359b67d0": {
+          "id": "3e12ae16e12e9bd8a463fdf7282038151e8e1e3d1de6c37dfe4128f0359b67d0",
+          "source_url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFA5NWYxZlFCTC0tNDNNdlJXODlzb0xTVFV0RmJQeEw4RWJlY2NOVHJ1OXdWZElOdEJ2NW4tSDhGeTBYOG1TNy1RR3l5bnpXRWhRNmRuRzJEaU9URS1tVWVfUUtBLXpIdnlm?oc=5",
+          "first_seen_at": "2026-11-05T12:52:05.871165+00:00",
+          "last_attempt_at": "2026-11-05T12:52:05.871165+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 139
+          },
+          "last_error": null,
+          "title": "Gemini Omni Flash 1.2 Leak: What Google Hasn't Said - OrcaRouter"
         }
       },
       "briefings": {
