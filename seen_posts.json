@@ -1528,6 +1528,34 @@
           },
           "last_error": null,
           "title": "Gold Prices in Pakistan Surge by Rs11,500 Per Tola - https://newsalert.com.pk/"
+        },
+        "006b3fff290d47738c287dd73aeb7db8fecb511b2bdfd30590feff94c460a408": {
+          "id": "006b3fff290d47738c287dd73aeb7db8fecb511b2bdfd30590feff94c460a408",
+          "source_url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBqT09UN1RUdk9CY293RzBlbTJSb0MySGxaQkxxcl8zY2ZzV01Hd2ZnZDRIVkwwUndWc3Y4UVNnUVIyS0FnNnowMnZuT2dNZFg0cDUtcjg4UTR4Zw?oc=5",
+          "first_seen_at": "2026-11-05T23:40:25.760424+00:00",
+          "last_attempt_at": "2026-11-05T23:40:25.760424+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 146
+          },
+          "last_error": null,
+          "title": "ทองคำผันผวนหนักเดือด 28 รอบ! พุ่งขึ้น 850 บาท ทองแท่งแตะ 65,250 บาท - Thunhoon"
+        },
+        "4c2ad8bf6c1f249e8c60518ec8fb3bb70640d2a6f083b293cfb72aec8535d4bc": {
+          "id": "4c2ad8bf6c1f249e8c60518ec8fb3bb70640d2a6f083b293cfb72aec8535d4bc",
+          "source_url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNbmUweUdscDYxeG1QNXplb0NOLVktMUNwYkFyN2ZIQzhEbzRKRmdtR1E3S1BoQjlWemRVakJFaENDVmVIZmd2UUh1LVBTTlRvZV9PRTFpM2F1M3V5eW55Z1Z4VnpXUWFyWEpadGFnbDVnaHJyNHJhdU1OMUtUTXJpTjNkR25yUnM2LWNXT1lfOEFuLWZFSlJqcnplMl9KajN4Q0JSZnRGLU5qcnI5akdoS2xzWnBKQWowVmc?oc=5",
+          "first_seen_at": "2026-11-05T23:40:25.760424+00:00",
+          "last_attempt_at": "2026-11-05T23:40:25.760424+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 147
+          },
+          "last_error": null,
+          "title": "Gold prices hit $4,000 as Democrats see electoral Sweep to gain control of Congress - Kitco"
         }
       },
       "briefings": {
