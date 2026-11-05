@@ -31,6 +31,25 @@ def test_tc2_08_corrupt_state_refuses_overwrite(tmp_path):
     assert path.read_text() == "{broken"
 
 
+def test_reconcile_corrupt_state_from_confirmed_backup(tmp_path):
+    path = tmp_path / "state.json"
+    state = empty_state()
+    record_post(state, "a", POST, now=NOW)
+    record_delivery(state, "a", POST.id, mode="alert", success=True, message_id=7, now=NOW)
+    save_state(path, state)
+    confirmed_backup = path.read_bytes()
+    path.write_text("{broken")
+    with pytest.raises(StateError):
+        load_state(path)
+    preserved = tmp_path / "state.corrupt"
+    path.replace(preserved)
+    path.write_bytes(confirmed_backup)
+    restored = load_state(path)
+    assert restored == state
+    assert restored["topics"]["a"]["posts"][POST.id]["alert"]["message_id"] == 7
+    assert preserved.read_text() == "{broken"
+
+
 def test_tc2_09_atomic_write_failure(tmp_path, monkeypatch):
     path = tmp_path / "state.json"
     save_state(path, empty_state())
