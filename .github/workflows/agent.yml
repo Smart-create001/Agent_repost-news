@@ -1,30 +1,28 @@
-name: Verify isolated conflict recovery
+name: Public social RSS diagnostic
 on:
   workflow_dispatch:
 permissions:
   contents: read
-  actions: read
 jobs:
-  verify:
+  check:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: diagnostic/state-race-data
-      - uses: actions/download-artifact@v4
-        with:
-          name: race-state-42044051152
-          run-id: 42044051152
-          github-token: ${{ github.token }}
-          path: recovered
-      - name: Verify both isolated results
+      - name: Check publicly offered RSS feeds
         run: |
-          python3 - <<'PY'
-          import json
-          with open('phase7-race-state.json') as f: accepted=json.load(f)
-          with open('recovered/phase7-race-state.json') as f: rejected=json.load(f)
-          assert accepted == {'schema_version': 1, 'writers': ['42044051082']}
-          assert rejected == {'schema_version': 1, 'writers': ['42044051152']}
-          print('::notice::Accepted and rejected writer states both verified; no merge was performed.')
+          python - <<'PY'
+          import urllib.request, xml.etree.ElementTree as ET
+          feeds={'Facebook':'https://rss.kael.ink/facebook/group/4157162401260703','X':'https://rss.kael.ink/twitter/user/thsottiaux'}
+          for source,url in feeds.items():
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent':'Mozilla/5.0'}),timeout=25) as response:
+                      data=response.read(2000000)
+                      root=ET.fromstring(data)
+                      items=root.findall('.//item')+root.findall('.//{http://www.w3.org/2005/Atom}entry')
+                      print(f'::notice::{source} status={response.status} root={root.tag} items={len(items)}',flush=True)
+                      for item in items[:2]:
+                          title=item.findtext('title') or item.findtext('{http://www.w3.org/2005/Atom}title') or ''
+                          print(f'::notice::{source} item title={title[:100]}',flush=True)
+              except Exception as exc:
+                  print(f'::warning::{source} failed type={type(exc).__name__} status={getattr(exc,"code","none")}',flush=True)
           PY
