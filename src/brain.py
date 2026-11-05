@@ -173,6 +173,9 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                 try:
                     if any(str(url) not in sources for url in result.source_urls):
                         raise BrainError("AI response cited a URL absent from input")
+                    # Discard irrelevant results before validating text that will never be delivered.
+                    if not result.relevant or result.relevance_score < threshold:
+                        continue
                     evidence_parts = []
                     for url in result.source_urls:
                         post = sources[str(url)]
