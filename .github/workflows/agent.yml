@@ -1,4 +1,4 @@
-name: Public X feed diagnostic
+name: Free X source diagnostic
 on:
   workflow_dispatch:
 permissions:
@@ -7,20 +7,22 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Check public feeds
+      - name: Check candidate sources
         run: |
           python - <<'PY'
-          import urllib.request, xml.etree.ElementTree as ET
-          for url in ('https://rsshub.app/twitter/user/thsottiaux', 'https://nitter.net/thsottiaux/rss'):
+          import urllib.request, xml.etree.ElementTree as ET, json
+          urls = ['https://syndication.twitter.com/srv/timeline-profile/screen-name/thsottiaux', 'https://cdn.syndication.twimg.com/widgets/timelines/profile?screen_name=thsottiaux', 'https://xcancel.com/thsottiaux/rss', 'https://nitter.poast.org/thsottiaux/rss', 'https://nitter.privacydev.net/thsottiaux/rss']
+          for url in urls:
               try:
-                  with urllib.request.urlopen(url, timeout=20) as response:
+                  req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                  with urllib.request.urlopen(req, timeout=15) as response:
                       data = response.read(2000000)
-                      root = ET.fromstring(data)
-                      count = len(root.findall('.//item')) + len(root.findall('.//{http://www.w3.org/2005/Atom}entry'))
-                      print(f'::notice::{url} status={response.status} entries={count}')
+                      try:
+                          root = ET.fromstring(data)
+                          count = len(root.findall('.//item')) + len(root.findall('.//{http://www.w3.org/2005/Atom}entry'))
+                      except ET.ParseError:
+                          count = -1
+                      print(f'::warning::{url} status={response.status} bytes={len(data)} entries={count}', flush=True)
               except Exception as exc:
-                  print(f'::warning::{url} failed type={type(exc).__name__} status={getattr(exc, "code", "none")}')
+                  print(f'::warning::{url} failed type={type(exc).__name__} status={getattr(exc, "code", "none")}', flush=True)
           PY
