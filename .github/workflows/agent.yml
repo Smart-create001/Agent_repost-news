@@ -16,7 +16,7 @@ jobs:
               req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
               with urllib.request.urlopen(req, timeout=25) as response:
                   body = response.read(2000000).decode('utf-8', errors='replace').lower()
-                  indicators = {k: k in body for k in ('login', 'log in', 'private group', 'public group', 'groups/4157162401260703/posts/')}
+                  indicators = {k: body.count(k) for k in ('login', 'comet_sections', 'story_message', 'creation_time', 'feedback_context', 'groups/4157162401260703/posts/', 'groups/4157162401260703/permalink/', 'openaI codex'.lower(), 'content not found')}
                   print(f'::warning::Facebook status={response.status} bytes={len(body)} indicators={indicators}', flush=True)
           except Exception as exc:
               print(f'::error::Facebook request failed type={type(exc).__name__} status={getattr(exc, "code", "none")}', flush=True)
