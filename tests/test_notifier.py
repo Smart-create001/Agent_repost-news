@@ -45,6 +45,41 @@ def test_tc4_05_api_failure_not_success():
     assert not outcome.text_delivered and outcome.text_message_ids == []
 
 
+@pytest.mark.parametrize("response", [httpx.Response(503), httpx.Response(200, text="not json"),
+                                      httpx.Response(200, json={"ok": True, "result": {}})])
+def test_unconfirmed_delivery_is_uncertain_and_not_retried(response):
+    calls = []
+    def handler(request):
+        calls.append(request)
+        return response
+    notifier = TelegramNotifier(token="test-token", chat_id="-42", client=fake_client(handler), max_retries=2)
+    result = deliver(notifier, 101, "ข่าว")
+    assert len(calls) == 1 and result.text_uncertain and not result.text_delivered
+
+
+def test_rate_limit_respects_retry_after_and_is_bounded(monkeypatch):
+    calls, waits = [], []
+    def handler(request):
+        calls.append(request)
+        return httpx.Response(429, headers={"Retry-After": "7"}, json={"ok": False}) if len(calls) == 1 else ok(request)
+    monkeypatch.setattr("src.notifier.time.sleep", waits.append)
+    notifier = TelegramNotifier(token="test-token", chat_id="-42", client=fake_client(handler), max_retries=1)
+    assert notifier.send_text(101, "ข่าว") == [77]
+    assert len(calls) == 2 and waits == [7]
+
+
+def test_large_rate_limit_does_not_retry_early(monkeypatch):
+    calls = []
+    def handler(request):
+        calls.append(request)
+        return httpx.Response(429, json={"ok": False, "parameters": {"retry_after": 120}})
+    monkeypatch.setattr("src.notifier.time.sleep", lambda _: pytest.fail("should not sleep"))
+    notifier = TelegramNotifier(token="test-token", chat_id="-42", client=fake_client(handler), max_retries=2)
+    with pytest.raises(DeliveryError, match="later retry"):
+        notifier.send_text(101, "ข่าว")
+    assert len(calls) == 1
+
+
 class FakeTTS:
     def __init__(self, text, *, voice, rate, fail=False):
         self.fail = fail

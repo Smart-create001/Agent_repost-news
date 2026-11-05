@@ -74,24 +74,42 @@ class TelegramNotifier:
                     data=payload, files=files, timeout=self.timeout,
                 )
                 response.raise_for_status()
-                body = response.json()
-                if body.get("ok") is not True or type(body.get("result", {}).get("message_id")) is not int:
-                    raise DeliveryError("Telegram did not confirm a message ID")
+                try:
+                    body = response.json()
+                except (ValueError, TypeError) as exc:
+                    raise DeliveryError("Invalid Telegram response", uncertain=True) from exc
+                if not isinstance(body, dict) or type(body.get("ok")) is not bool:
+                    raise DeliveryError("Invalid Telegram response", uncertain=True)
+                if body["ok"] is False:
+                    raise DeliveryError("Telegram rejected the request")
+                if not isinstance(body.get("result"), dict) or type(body["result"].get("message_id")) is not int:
+                    raise DeliveryError("Telegram did not confirm a message ID", uncertain=True)
                 returned = body["result"]
                 if returned.get("message_thread_id") != thread_id:
-                    raise DeliveryError("Telegram did not confirm the requested thread ID")
+                    raise DeliveryError("Telegram did not confirm the requested thread ID", uncertain=True)
                 if str(returned.get("chat", {}).get("id")) != self.chat_id:
-                    raise DeliveryError("Telegram did not confirm the requested chat ID")
+                    raise DeliveryError("Telegram did not confirm the requested chat ID", uncertain=True)
                 return returned["message_id"]
             except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
                 status = exc.response.status_code if isinstance(exc, httpx.HTTPStatusError) else None
                 # A timeout or transport break may follow accepted delivery.
                 # Retrying that request can duplicate a message.
-                if attempt < self.max_retries and status in (429, 500, 502, 503, 504):
-                    time.sleep(min(2 ** attempt, 4))
+                if attempt < self.max_retries and status == 429:
+                    wait = min(2 ** attempt, 4)
+                    retry_after = exc.response.headers.get("Retry-After")
+                    try:
+                        parameters = exc.response.json().get("parameters", {})
+                        retry_after = parameters.get("retry_after", retry_after)
+                    except (ValueError, AttributeError):
+                        parameters = {}
+                    if retry_after is not None:
+                        if not str(retry_after).isdigit() or int(retry_after) > 30:
+                            raise DeliveryError("Telegram rate limit requires a later retry") from exc
+                        wait = max(wait, int(retry_after))
+                    time.sleep(wait)
                     continue
                 raise DeliveryError(f"Telegram request failed: {type(exc).__name__}",
-                                    uncertain=status is None) from exc
+                                    uncertain=status is None or status >= 500) from exc
             except (ValueError, TypeError) as exc:
                 raise DeliveryError("Invalid Telegram response") from exc
         raise DeliveryError("Telegram retry limit exceeded")

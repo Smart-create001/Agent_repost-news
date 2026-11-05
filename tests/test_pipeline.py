@@ -56,6 +56,55 @@ def test_tc5_01_sequential_and_tc5_10_isolation(tmp_path, monkeypatch):
                       ("gold_price", "fetch"), ("gold_price", "analyze"), (102, "send")]
 
 
+def test_three_topics_isolate_sources_and_route_sequentially(tmp_path, monkeypatch):
+    cfg = settings()
+    third = cfg.topics[0].model_copy(update={"id": "third", "name": "Third", "telegram": cfg.topics[0].telegram.model_copy(update={"message_thread_id": 103})})
+    cfg = cfg.model_copy(update={"topics": [*cfg.topics, third]})
+    events = []
+    def fetch(topic, **kwargs):
+        events.append((topic.id, "fetch"))
+        return [post(topic)], []
+    def analyze(topic, posts, **kwargs):
+        assert [p.url for p in posts] == [f"https://news.example.org/{topic.id}"]
+        events.append((topic.id, "analyze"))
+        return [SimpleNamespace(summary_th=topic.id, source_urls=[posts[0].url])]
+    def send(notifier, thread_id, text, **kwargs):
+        events.append((thread_id, text))
+        return DeliveryResult(text_message_ids=[thread_id])
+    monkeypatch.setattr("src.main.deliver", send)
+    assert run(cfg, mode="alert", state_path=tmp_path / "state.json", fetch=fetch, analyze=analyze, notifier=object(), now=NOW) == 0
+    for index, topic in enumerate(cfg.topics):
+        assert events[index * 3:index * 3 + 2] == [(topic.id, "fetch"), (topic.id, "analyze")]
+        thread, text = events[index * 3 + 2]
+        assert thread == 101 + index and topic.id in text
+        assert all(other.id not in text for other in cfg.topics if other.id != topic.id)
+
+
+def test_gemini_failure_then_recovery_preserves_delivered_topic(tmp_path, monkeypatch):
+    cfg = settings()
+    path = tmp_path / "state.json"
+    attempts = []
+    gold_attempts = []
+    def analyze(topic, posts, **kwargs):
+        if topic.id == "gold_price":
+            gold_attempts.append(1)
+            if len(gold_attempts) == 1:
+                raise RuntimeError("simulated Gemini failure")
+        return [analysis(topic)]
+    def send(notifier, thread_id, text, **kwargs):
+        attempts.append(thread_id)
+        return DeliveryResult(text_message_ids=[thread_id])
+    monkeypatch.setattr("src.main.deliver", send)
+    kwargs = dict(mode="alert", state_path=path, fetch=lambda topic, **kw: ([post(topic)], []), analyze=analyze, notifier=object(), now=NOW)
+    assert run(cfg, **kwargs) == 1
+    state = load_state(path)
+    assert state["topics"]["ai_tech"]["posts"]["ai_tech-post"]["alert"]["delivered"]
+    assert not state["topics"].get("gold_price", {}).get("posts", {})
+    assert run(cfg, **kwargs) == 0
+    assert attempts == [101, 102]
+    assert load_state(path)["topics"]["gold_price"]["posts"]["gold_price-post"]["alert"]["delivered"]
+
+
 def test_tc5_02_failure_isolated(tmp_path, monkeypatch):
     seen = []
     def fetch(topic, **kwargs):
@@ -126,6 +175,24 @@ def test_tc5_08_unknown_delivery_not_retried(tmp_path, monkeypatch):
     assert run(settings(False), **kwargs) == 1
     assert run(settings(False), **kwargs) == 0
     assert sent == [1]
+
+
+def test_telegram_503_is_quarantined_across_runs(tmp_path):
+    path = tmp_path / "state.json"
+    attempts = []
+    def handler(request):
+        attempts.append(request)
+        return httpx.Response(503)
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    notifier = TelegramNotifier(token="test-token", chat_id="-42", client=client, max_retries=2)
+    kwargs = dict(mode="alert", state_path=path, fetch=lambda topic, **kw: ([post(topic)], []),
+                  analyze=lambda topic, posts, **kw: [analysis(topic)], notifier=notifier, now=NOW)
+    assert run(settings(False), **kwargs) == 1
+    saved = load_state(path)["topics"]["ai_tech"]["posts"]["ai_tech-post"]["alert"]
+    assert saved["uncertain"] and not saved["delivered"]
+    assert run(settings(False), **kwargs) == 0
+    assert len(attempts) == 1
+    client.close()
 
 
 def test_tc5_09_dry_run_does_not_write_or_deliver(tmp_path, monkeypatch):

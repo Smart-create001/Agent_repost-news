@@ -98,3 +98,11 @@ The preserved audio interfaces and sanitization are not part of the production e
 Editorial addendum V2.1 remains pending: the current summary format does not yet implement the full newsroom structure. See `Master Prompt สำหรับ AI นักข่าวมืออาชีพ.md` as the editorial reference after editorial implementation is authorized.
 
 State is Git-backed and does not guarantee exactly-once delivery. Preserve state and reconcile uncertain delivery manually. Workflow schedules are approximate.
+
+## Troubleshooting and recovery
+
+- If a feed or Gemini call fails, inspect the Actions run and retry after resolving the reported service or configuration error. Runs can deliver some topics before reporting failure; check state and Telegram before retrying.
+- If delivery is marked uncertain, inspect the destination thread and the stored message state, then reconcile manually before attempting another delivery. Transport errors, HTTP 5xx and unconfirmed Telegram responses are treated as uncertain because the message may have been accepted.
+- For a corrupt `seen_posts.json`, preserve the damaged file and compare it with the last confirmed Git version or the workflow's reconciliation artifact. Restore only after reconciling delivery history; never reset the production file for testing.
+- If state push fails or `main` advances, retain the reconciliation artifact and compare it with the current state. Do not force push or blindly overwrite either copy.
+- A Telegram 429 response is retried only within configured retry limits, honoring a valid `retry_after` up to 30 seconds. A longer or invalid value stops the current attempt; operators must wait the requested interval before rerunning. Retry deadlines are not persisted across workflow runs.
