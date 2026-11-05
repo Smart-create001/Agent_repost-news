@@ -1430,6 +1430,20 @@
           },
           "last_error": null,
           "title": "Gold price today: Spot gold climbs 2.74% to $4,035 after US ADP jobs data - Business Upturn"
+        },
+        "ee256984a8d16b29171e43de0dd7708b567423b57b10856801510eff3100575e": {
+          "id": "ee256984a8d16b29171e43de0dd7708b567423b57b10856801510eff3100575e",
+          "source_url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPR1MxRGVnd2pXLXhLV1VsSDhRV3JNUlQycWZBa1BjOUZDRElvcUVTX1VidjFFRXBZMUdGZ2MxdGMwWTd3ZlNfeS13ZXBDTFVjU1FvQnB2QUVCeU03WU1aWnFoZHNxejRUWlhQN1FfYkFfbU1TZ0Q2VU9mOHJRVktsazNjMl9mc3JYUHpuLUJqYk9udUtzRlpPOExtZHRXQVl4Q3g4WkZFQUJnQ1F4VmgyNHJTMmJwYlFvc1p4a0tYcHhKQkItVGdiMmNn?oc=5",
+          "first_seen_at": "2026-11-05T12:37:57.972467+00:00",
+          "last_attempt_at": "2026-11-05T12:37:57.972467+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 138
+          },
+          "last_error": null,
+          "title": "Gold gains as oil, dollar, Treasury yields tumble after U.S. midterms - Investing.com"
         }
       },
       "briefings": {
