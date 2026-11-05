@@ -62,22 +62,22 @@ jobs:
         run: |
           set +e
           if [[ "$RUN_MODE" == "verify_state" ]]; then
-            python -m scripts.phase6_test --verify-state
-            agent_exit=$?
+            python -m scripts.phase6_test --verify-state 2>&1 | tee "$RUNNER_TEMP/agent-dashboard.log"
+            agent_exit=${PIPESTATUS[0]}
           elif [[ "$PHASE6_TEST" == "true" ]]; then
             if [[ "$RUN_MODE" == "alert" ]]; then
-              python -m scripts.phase6_test --text-only --topic "$PHASE6_TOPIC"
-              agent_exit=$?
+              python -m scripts.phase6_test --text-only --topic "$PHASE6_TOPIC" 2>&1 | tee "$RUNNER_TEMP/agent-dashboard.log"
+              agent_exit=${PIPESTATUS[0]}
             elif [[ "$RUN_MODE" == "briefing" ]]; then
-              python -m scripts.phase6_test
-              agent_exit=$?
+              python -m scripts.phase6_test 2>&1 | tee "$RUNNER_TEMP/agent-dashboard.log"
+              agent_exit=${PIPESTATUS[0]}
             else
               echo 'Phase 6 test requires alert or briefing mode' >&2
               agent_exit=2
             fi
           else
-            python -m src.main --mode "$RUN_MODE"
-            agent_exit=$?
+            python -m src.main --mode "$RUN_MODE" 2>&1 | tee "$RUNNER_TEMP/agent-dashboard.log"
+            agent_exit=${PIPESTATUS[0]}
           fi
           echo "exit_code=$agent_exit" >> "$GITHUB_OUTPUT"
           exit 0
@@ -91,6 +91,22 @@ jobs:
           name: state-for-reconciliation-${{ github.run_id }}
           path: seen_posts.json
           if-no-files-found: error
+          retention-days: 30
+      - name: Create status dashboard
+        if: always()
+        env:
+          AGENT_EXIT: ${{ steps.agent.outputs.exit_code }}
+          PERSIST_OUTCOME: ${{ steps.persist.outcome }}
+          AGENT_OUTCOME: ${{ steps.agent.outcome }}
+          RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '25 0 * * *' && 'briefing' || 'alert') }}
+        run: python scripts/dashboard.py --log "$RUNNER_TEMP/agent-dashboard.log" --state seen_posts.json --html "$RUNNER_TEMP/dashboard.html" --summary "$GITHUB_STEP_SUMMARY"
+      - name: Save dashboard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-${{ github.run_id }}
+          path: ${{ runner.temp }}/dashboard.html
+          if-no-files-found: warn
           retention-days: 30
       - name: Report agent failure
         if: always()

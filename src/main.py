@@ -125,6 +125,9 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                     outcome = deliver(notifier, topic.telegram.message_thread_id, _text(analysis),
                                       audio=False,
                                       voice=config.tts.voice, rate=config.tts.rate)
+                    if not outcome.text_delivered:
+                        LOG.error("topic=%s mode=%s delivery_failed=1 uncertain=%s", topic.id, mode,
+                                  bool(outcome.text_uncertain or (outcome.text_error and outcome.text_message_ids)))
                     if outcome.text_uncertain or (outcome.text_error and outcome.text_message_ids):
                         mark_uncertain(state, topic.id, post.id, mode="alert")
                     else:
@@ -146,6 +149,9 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                 mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="text")
                 _save(state_path, state, dry_run)
                 outcome = deliver(notifier, topic.telegram.message_thread_id, text, audio=False)
+                if not outcome.text_delivered:
+                    LOG.error("topic=%s mode=%s delivery_failed=1 uncertain=%s", topic.id, mode,
+                              bool(outcome.text_uncertain or (outcome.text_error and outcome.text_message_ids)))
                 if outcome.text_uncertain or (outcome.text_error and outcome.text_message_ids):
                     mark_uncertain(state, topic.id, briefing_id, mode="briefing", part="text")
                 else:

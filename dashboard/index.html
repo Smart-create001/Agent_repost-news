@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>News Agent · Dashboard</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,sans-serif;color:#14243e;background:#f3f6fb}*{box-sizing:border-box}body{margin:0}main{max-width:1100px;margin:auto;padding:36px 24px 64px}header{background:linear-gradient(120deg,#102849,#1b4774);color:#fff;border-radius:22px;padding:36px;display:flex;align-items:end;justify-content:space-between;gap:20px}h1{font-size:clamp(27px,4vw,40px);letter-spacing:-.03em;margin:8px 0}.eyebrow{font-size:12px;letter-spacing:.13em;font-weight:750;color:#a7d2ff}.subtitle{margin:0;color:#d2e1f2}.button{color:#12345a;background:#fff;padding:11px 18px;border:0;border-radius:10px;font-weight:700;cursor:pointer;white-space:nowrap}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}.card,.panel{background:#fff;border:1px solid #e0e7f1;border-radius:16px;box-shadow:0 4px 16px #1b33500b}.card{padding:22px}.label{color:#64748b;font-size:14px}.value{font-size:27px;font-weight:750;margin-top:8px}.detail{color:#718096;font-size:13px;margin-top:8px}.panel{padding:26px;margin-top:18px}.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.panel h2{font-size:20px;margin:0}.panel p{color:#64748b;font-size:14px;line-height:1.7}table{width:100%;border-collapse:collapse;text-align:left}th{font-size:12px;color:#748198;padding:14px 10px;border-bottom:1px solid #e7ecf3}td{padding:15px 10px;border-bottom:1px solid #edf1f6;font-size:14px}tr:last-child td{border:0}.pill{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700;background:#edf2f7;color:#526176}.ok{background:#e5f7ec;color:#16784a}.bad{background:#fff0ed;color:#b53e32}.pending{background:#fff7e1;color:#976200}a{color:#205e9d;text-decoration:none;font-weight:650}a:hover{text-decoration:underline}.message{padding:18px 10px;color:#64748b}.warn{color:#ab3c33}.footer{color:#748198;font-size:12px;line-height:1.7;margin-top:20px}@media(max-width:700px){main{padding:18px 14px 48px}header{padding:24px;display:block}.button{margin-top:20px}.grid{grid-template-columns:1fr}.panel{padding:18px}th:nth-child(2),td:nth-child(2){display:none}}
+  </style>
+</head>
+<body><main>
+  <header><div><div class="eyebrow">SOCIAL LISTENING · STATUS</div><h1>สถานะบอทข่าว</h1><p class="subtitle">ภาพรวมการทำงานและรายการที่ต้องตรวจสอบ</p></div><button class="button" id="refresh">↻ อัปเดตข้อมูล</button></header>
+  <section class="grid" aria-label="ภาพรวม">
+    <article class="card"><div class="label">ผลรันล่าสุด</div><div class="value" id="latest">กำลังโหลด</div><div class="detail" id="latest-time">—</div></article>
+    <article class="card"><div class="label">รอตรวจสอบใน state</div><div class="value" id="uncertain">—</div><div class="detail">ผลส่งไม่แน่นอน ต้องตรวจ Telegram ก่อนส่งซ้ำ</div></article>
+    <article class="card"><div class="label">สถานะข้อมูล</div><div class="value" id="connection">กำลังโหลด</div><div class="detail" id="updated">—</div></article>
+  </section>
+  <section class="panel"><div class="panel-head"><h2>ประวัติการทำงาน</h2><a href="https://github.com/Smart-create001/Agent_repost-news/actions/workflows/agent.yml" target="_blank" rel="noopener noreferrer">เปิด Actions ↗</a></div><p>เลือก “ดูรายละเอียด” เพื่อดูสรุป Feed, Gemini, Telegram และ state ของรอบนั้นใน GitHub Actions</p><div id="run-message" class="message">กำลังโหลดประวัติ…</div><div style="overflow-x:auto"><table id="runs" hidden><thead><tr><th>รอบ</th><th>วิธีเริ่ม</th><th>เวลาเริ่ม (ไทย)</th><th>สถานะ</th><th></th></tr></thead><tbody></tbody></table></div></section>
+  <section class="panel"><h2>รายการที่ต้องตรวจสอบ</h2><p>ข้อมูลจาก state ล่าสุดบน main; รายการที่ส่งไม่แน่นอนต้องตรวจปลายทางและ reconcile ก่อนส่งซ้ำ</p><div id="state-message" class="message">กำลังโหลด state…</div><div id="state-list"></div></section>
+  <div class="footer">หน้านี้อ่านข้อมูลสาธารณะจาก GitHub โดยตรง ไม่มีการขอ token หรือแก้ไข state · รายละเอียดแยกประเภทมีเฉพาะรอบที่สร้างหลังติดตั้ง dashboard · GitHub อาจจำกัดจำนวนคำขอ</div>
+</main>
+<script>
+'use strict';
+const repo='Smart-create001/Agent_repost-news';
+const byId=id=>document.getElementById(id);
+const setText=(id,value)=>{byId(id).textContent=value;};
+const time=value=>new Intl.DateTimeFormat('th-TH',{timeZone:'Asia/Bangkok',dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
+const status=run=>run.status!=='completed'?['กำลังทำงาน','pending']:run.conclusion==='success'?['สำเร็จ','ok']:run.conclusion==='failure'?['ล้มเหลว','bad']:[run.conclusion==='cancelled'?'ยกเลิก':'สถานะอื่น','pending'];
+async function json(url){const response=await fetch(url,{cache:'no-store',headers:{'Accept':'application/vnd.github+json'}});if(!response.ok)throw new Error('HTTP '+response.status);return response.json();}
+async function loadRuns(){
+  const data=await json('https://api.github.com/repos/'+repo+'/actions/workflows/agent.yml/runs?branch=main&per_page=20');
+  if(!Array.isArray(data.workflow_runs))throw new Error('ข้อมูล run ไม่ถูกต้อง');
+  const runs=data.workflow_runs, body=document.querySelector('#runs tbody');body.replaceChildren();
+  if(!runs.length){setText('run-message','ยังไม่มีประวัติ');byId('run-message').hidden=false;byId('runs').hidden=true;setText('latest','ไม่มีข้อมูล');return;}
+  const [latest]=status(runs[0]);setText('latest',latest);setText('latest-time',time(runs[0].created_at));
+  for(const run of runs){
+    if(!Number.isSafeInteger(run.id))continue;
+    const row=document.createElement('tr');
+    for(const text of ['#'+String(run.run_number),run.event==='schedule'?'ตามเวลา':run.event==='workflow_dispatch'?'สั่งรัน':'อื่น ๆ',time(run.created_at)]){const cell=document.createElement('td');cell.textContent=text;row.append(cell);}
+    const [label,kind]=status(run), cell=document.createElement('td'), pill=document.createElement('span');pill.className='pill '+kind;pill.textContent=label;cell.append(pill);row.append(cell);
+    const action=document.createElement('td'), link=document.createElement('a');link.href='https://github.com/'+repo+'/actions/runs/'+run.id;link.target='_blank';link.rel='noopener noreferrer';link.textContent='ดูรายละเอียด ↗';action.append(link);row.append(action);body.append(row);
+  }
+  byId('run-message').hidden=true;byId('runs').hidden=false;
+}
+async function loadState(){
+  const state=await json('https://raw.githubusercontent.com/'+repo+'/main/seen_posts.json');
+  if(state.schema_version!==1||!state.topics||typeof state.topics!=='object'||Array.isArray(state.topics))throw new Error('state ไม่ถูกต้อง');
+  const counts=[];let total=0;
+  for(const [name,topic] of Object.entries(state.topics)){
+    if(!topic||!topic.posts||!topic.briefings)throw new Error('state ไม่สมบูรณ์');
+    const count=Object.values(topic.posts).filter(p=>p?.alert?.uncertain===true).length+Object.values(topic.briefings).filter(b=>b?.text?.uncertain===true).length;
+    counts.push([name,count]);total+=count;
+  }
+  setText('uncertain',String(total));setText('state-message',total?'พบรายการที่ต้องตรวจสอบ':'ไม่พบรายการ uncertain ใน state ล่าสุด');
+  const list=byId('state-list');list.replaceChildren();for(const [name,count] of counts){const p=document.createElement('p');p.textContent=name+': '+count+' รายการ';list.append(p);}
+}
+async function refresh(){
+  setText('connection','กำลังโหลด');const results=await Promise.allSettled([loadRuns(),loadState()]);
+  if(results[0].status==='rejected'){setText('latest','ไม่มีข้อมูล');byId('runs').hidden=true;byId('run-message').hidden=false;setText('run-message','โหลดประวัติไม่ได้ ลองใหม่ภายหลัง');}
+  if(results[1].status==='rejected'){setText('uncertain','ไม่มีข้อมูล');setText('state-message','โหลด state ไม่ได้ จึงยังยืนยันจำนวนไม่ได้');byId('state-list').replaceChildren();}
+  setText('connection',results.every(r=>r.status==='fulfilled')?'เชื่อมต่อแล้ว':'ข้อมูลไม่ครบ');setText('updated','ตรวจล่าสุด '+time(new Date()));
+}
+byId('refresh').addEventListener('click',refresh);refresh();
+</script></body></html>

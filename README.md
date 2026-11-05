@@ -107,3 +107,9 @@ State is Git-backed and does not guarantee exactly-once delivery. Preserve state
 - If state push fails or `main` advances, retain the reconciliation artifact and compare it with the current state. Do not force push or blindly overwrite either copy.
 - A Telegram 429 response is retried only within configured retry limits, honoring a valid `retry_after` up to 30 seconds. A longer or invalid value stops the current attempt; operators must wait the requested interval before rerunning. Retry deadlines are not persisted across workflow runs.
 - RSS and Gemini retries honor a valid HTTP `Retry-After` header up to 30 seconds, including HTTP dates. Longer or invalid headers stop the current attempt. The waiting deadline is not stored across runs; wait the provider's required interval before manually rerunning.
+
+## Status dashboard
+
+`dashboard/index.html` is a static web dashboard for this public repository. It reads recent workflow runs and the latest `seen_posts.json` directly from GitHub; it never requests credentials or changes state. Open it through a static web server, for example `python -m http.server 8000 --directory dashboard` from the repository root (PowerShell: `py -m http.server 8000 --directory dashboard`). GitHub may rate-limit unauthenticated requests. Errors are shown as unavailable, not as a healthy status.
+
+Each workflow run creates a Thai status summary in GitHub Actions and a `dashboard-<run_id>` HTML artifact retained for 30 days. The summary counts recognized Feed, Gemini, quarantine and Telegram error log events from that run, and shows currently unresolved uncertain items in state. It does not expose raw logs or article content. Older runs lack this summary. A zero count only means no matching event was recorded; a `verify_state` run does not check providers. Review the run logs when more detail is needed.
