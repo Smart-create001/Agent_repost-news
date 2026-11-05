@@ -1,41 +1,30 @@
-name: Isolated state collision diagnostic
+name: Verify isolated conflict recovery
 on:
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
+  actions: read
 jobs:
-  collision:
+  verify:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: bd7f0905dc0d70a71f3913300333e23b76bd1159
-          fetch-depth: 0
-      - name: Prepare isolated write
+          ref: diagnostic/state-race-data
+      - uses: actions/download-artifact@v4
+        with:
+          name: race-state-42044051152
+          run-id: 42044051152
+          github-token: ${{ github.token }}
+          path: recovered
+      - name: Verify both isolated results
         run: |
           python3 - <<'PY'
-          import json, os
-          p='phase7-race-state.json'
-          with open(p) as f: state=json.load(f)
-          state['writers'].append(os.environ['GITHUB_RUN_ID'])
-          with open(p,'w') as f: json.dump(state,f); f.write('\n')
-          original=open('scripts/persist_state.sh').read()
-          replacements={'state_file=seen_posts.json':'state_file=phase7-race-state.json', 'origin main':'origin diagnostic/state-race-data', 'refs/remotes/origin/main':'refs/remotes/origin/diagnostic/state-race-data', 'HEAD:main':'HEAD:diagnostic/state-race-data'}
-          for before,after in replacements.items():
-              if original.count(before) != 1: raise RuntimeError('Unexpected persistence script structure')
-              original=original.replace(before,after)
-          open('/tmp/phase7-race-persist.sh','w').write(original)
+          import json
+          with open('phase7-race-state.json') as f: accepted=json.load(f)
+          with open('recovered/phase7-race-state.json') as f: rejected=json.load(f)
+          assert accepted == {'schema_version': 1, 'writers': ['42044051082']}
+          assert rejected == {'schema_version': 1, 'writers': ['42044051152']}
+          print('::notice::Accepted and rejected writer states both verified; no merge was performed.')
           PY
-      - name: Attempt isolated state push
-        run: |
-          sleep 15
-          bash /tmp/phase7-race-persist.sh
-      - name: Preserve test state for reconciliation
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: race-state-${{ github.run_id }}
-          path: phase7-race-state.json
-          if-no-files-found: error
-          retention-days: 1
