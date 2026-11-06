@@ -1,6 +1,7 @@
 """Phase 1 configuration acceptance checks; no network access required."""
 
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 
@@ -88,6 +89,8 @@ def test_repository_config_is_valid_offline():
     assert config.app.default_model == "gemini-3.1-flash-lite"
     assert {topic.id: topic.telegram.message_thread_id for topic in config.topics} == {
         "ai_tech": 5, "gold_price": 6}
+    ai = next(topic for topic in config.topics if topic.id == "ai_tech")
+    assert any(parse_qs(urlsplit(str(url)).query).get("q") == ['"ChatGPT" "Images"'] for url in ai.rss_urls)
 
 
 def test_model_configuration_is_overridable(tmp_path):

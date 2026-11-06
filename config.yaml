@@ -30,6 +30,7 @@ topics:
     enabled: true
     keywords:
       - AI model launch
+      - ChatGPT image generation updates
       - OpenAI
       - Google Gemini
       - Anthropic Claude
@@ -39,6 +40,7 @@ topics:
       - Logan Kilpatrick
     context: >
       ติดตามการเปิดตัวโมเดล AI ใหม่ การเปลี่ยนนโยบายของผู้ให้บริการ
+      และการอัปเดตผลิตภัณฑ์สร้างภาพของ ChatGPT และ OpenAI
       และข่าวหรือโพสต์เกี่ยวกับการรีเซ็ตโควตา token หรือ API โดยเฉพาะ
       ข้อมูลจาก Tibo และ Logan Kilpatrick หากแหล่งข่าวระบุตัวบุคคลชัดเจน
       ระบุชื่อโมเดล ผู้ให้บริการ วันที่ประกาศ และแหล่งข่าวตามข้อมูลที่พบจริง
@@ -49,6 +51,7 @@ topics:
       - 'https://news.google.com/rss/search?q=OpenAI%20OR%20Google%20Gemini%20OR%20Anthropic%20AI%20model%20launch%20policy&hl=en-US&gl=US&ceid=US:en'
       - 'https://news.google.com/rss/search?q=%22Tibo%22%20OR%20%22Logan%20Kilpatrick%22%20AI%20token%20reset%20API&hl=en-US&gl=US&ceid=US:en'
       - 'https://news.google.com/rss/search?q=%22thsottiaux%22&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=%22ChatGPT%22%20%22Images%22&hl=en-US&gl=US&ceid=US:en'
   - id: gold_price
     name: Gold Price
     enabled: true
