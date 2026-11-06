@@ -1,31 +1,66 @@
-name: Review previous status summary
+name: Bounded image news production check
 on:
   workflow_dispatch:
 permissions:
-  actions: read
+  contents: write
+concurrency:
+  group: agent-state-${{ github.repository }}
+  cancel-in-progress: false
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
         with:
-          name: dashboard-42131117959
-          run-id: 42131117959
-          github-token: ${{ github.token }}
-          path: /tmp/prior-dashboard
-      - name: Read aggregate status
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Run bounded image feed check
+        id: agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          python3 - <<'PY'
-          from html.parser import HTMLParser
-          class Cards(HTMLParser):
-              def __init__(self): super().__init__(); self.capture=False; self.parts=[]
-              def handle_starttag(self,tag,attrs):
-                  if tag=='article': self.capture=True
-              def handle_endtag(self,tag):
-                  if tag=='article':
-                      self.capture=False
-                      print('::notice::'+ ' '.join(self.parts));self.parts=[]
-              def handle_data(self,data):
-                  if self.capture: self.parts.append(data.strip())
-          Cards().feed(open('/tmp/prior-dashboard/dashboard.html',encoding='utf-8').read())
+          set +e
+          python - <<'PY'
+          import logging, os
+          from scripts.phase6_test import BoundedNotifier
+          from src.config import load_config, validate_live_config
+          from src.main import run
+          logging.basicConfig(level=logging.INFO)
+          logging.getLogger('httpx').setLevel(logging.WARNING)
+          config=load_config().model_copy(deep=True)
+          config.app.max_posts_per_topic=1
+          for topic in config.topics:
+              topic.enabled=topic.enabled and topic.id=='ai_tech'
+              if topic.id=='ai_tech': topic.rss_urls=[topic.rss_urls[-1]]
+          validate_live_config(config)
+          notifier=BoundedNotifier(token=os.environ['TELEGRAM_BOT_TOKEN'],chat_id=os.environ['TELEGRAM_CHAT_ID'],max_retries=0)
+          try: result=run(config,mode='alert',state_path='seen_posts.json',notifier=notifier)
+          finally: notifier.close()
+          raise SystemExit(result)
           PY
+          agent_exit=$?
+          echo "exit_code=$agent_exit" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Persist state
+        run: bash scripts/persist_state.sh
+      - name: Preserve state for reconciliation
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: state-for-reconciliation-${{ github.run_id }}
+          path: seen_posts.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Report agent failure
+        if: always()
+        env:
+          AGENT_EXIT: ${{ steps.agent.outputs.exit_code }}
+        run: test "$AGENT_EXIT" = 0
