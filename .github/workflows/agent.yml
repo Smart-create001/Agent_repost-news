@@ -1,34 +1,31 @@
-name: Diagnose previous production run
+name: Review previous status summary
 on:
   workflow_dispatch:
 permissions:
-  contents: read
   actions: read
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Summarize prior job errors
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: dashboard-42131117959
+          run-id: 42131117959
+          github-token: ${{ github.token }}
+          path: /tmp/prior-dashboard
+      - name: Read aggregate status
         run: |
-          if ! gh api repos/Smart-create001/Agent_repost-news/actions/jobs/127607684132/logs > /tmp/prior-run.log 2>/tmp/prior-error; then
-            python3 -c 'import re; s=open("/tmp/prior-error").read(); m=re.search(r"HTTP (\d+)",s); print("::error::Log API failed status="+(m.group(1) if m else "unknown"))'
-            exit 1
-          fi
           python3 - <<'PY'
-          import re
-          from collections import Counter
-          lines=open('/tmp/prior-run.log',encoding='utf-8').read().splitlines()
-          counts=Counter()
-          for line in lines:
-              topic=re.search(r'topic=([A-Za-z0-9_-]+)',line)
-              topic=topic.group(1) if topic else 'unknown'
-              if 'feed_errors=' in line: counts[(topic,'feed errors')]+=1
-              if 'batch_start=' in line and 'failed=' in line: counts[(topic,'Gemini batch failure')]+=1
-              if 'quarantined=' in line: counts[(topic,'quarantined output')]+=1
-              if 'delivery_failed=1' in line: counts[(topic,'Telegram delivery failure')]+=1
-              if 'topic=' in line and 'failed=' in line and 'batch_start=' not in line and 'delivery_failed=' not in line: counts[(topic,'topic failure')]+=1
-          for (topic,kind),count in sorted(counts.items()): print(f'::notice::topic={topic} category={kind} count={count}')
-          if not counts: print('::warning::No classified error events found')
+          from html.parser import HTMLParser
+          class Cards(HTMLParser):
+              def __init__(self): super().__init__(); self.capture=False; self.parts=[]
+              def handle_starttag(self,tag,attrs):
+                  if tag=='article': self.capture=True
+              def handle_endtag(self,tag):
+                  if tag=='article':
+                      self.capture=False
+                      print('::notice::'+ ' '.join(self.parts));self.parts=[]
+              def handle_data(self,data):
+                  if self.capture: self.parts.append(data.strip())
+          Cards().feed(open('/tmp/prior-dashboard/dashboard.html',encoding='utf-8').read())
           PY
