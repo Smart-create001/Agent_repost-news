@@ -8,7 +8,7 @@ from pathlib import Path
 import tempfile
 from urllib.parse import urlsplit
 
-PENDING_CAPACITY = 300
+PENDING_CAPACITY = 600
 PENDING_TITLE_LIMIT = 500
 PENDING_DESCRIPTION_LIMIT = 3000
 

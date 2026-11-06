@@ -58,7 +58,7 @@ jobs:
           python -m src.main --mode alert --capture-pending 2>&1 | tee "$RUNNER_TEMP/agent-capture.log"
           capture_exit=${PIPESTATUS[0]}
           echo "exit_code=$capture_exit" >> "$GITHUB_OUTPUT"
-          exit 0
+          exit "$capture_exit"
       - name: Persist captured candidates
         if: steps.capture.outcome == 'success'
         id: persist_capture
@@ -66,7 +66,20 @@ jobs:
         run: |
           bash scripts/persist_state.sh
           echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Verify captured state on remote
+        if: steps.persist_capture.outcome == 'success'
+        id: verify_capture
+        env:
+          PERSISTED_COMMIT: ${{ steps.persist_capture.outputs.commit }}
+        run: python -c 'import os; from src.persistence import verify_remote_state; verify_remote_state("seen_posts.json", os.environ["PERSISTED_COMMIT"])'
+      - name: Persist validated partial capture for reconciliation
+        if: failure() && steps.capture.outcome == 'failure'
+        id: persist_partial
+        run: |
+          python -c 'from src.state import load_state; load_state("seen_posts.json")'
+          bash scripts/persist_state.sh
       - name: Run agent
+        if: success() && (steps.capture.outcome == 'skipped' || steps.verify_capture.outcome == 'success')
         id: agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -117,11 +130,18 @@ jobs:
       - name: Create status dashboard
         if: always()
         env:
+          CAPTURE_OUTCOME: ${{ steps.capture.outcome }}
+          PARTIAL_PERSIST_OUTCOME: ${{ steps.persist_partial.outcome }}
           AGENT_EXIT: ${{ steps.agent.outputs.exit_code }}
           PERSIST_OUTCOME: ${{ steps.persist.outcome }}
           AGENT_OUTCOME: ${{ steps.agent.outcome }}
           RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '25 0 * * *' && 'briefing' || 'alert') }}
-        run: python scripts/dashboard.py --log "$RUNNER_TEMP/agent-dashboard.log" --state seen_posts.json --html "$RUNNER_TEMP/dashboard.html" --summary "$GITHUB_STEP_SUMMARY"
+        shell: bash
+        run: |
+          if [[ -f "$RUNNER_TEMP/agent-capture.log" ]]; then
+            cat "$RUNNER_TEMP/agent-capture.log" >> "$RUNNER_TEMP/agent-dashboard.log"
+          fi
+          python scripts/dashboard.py --log "$RUNNER_TEMP/agent-dashboard.log" --state seen_posts.json --html "$RUNNER_TEMP/dashboard.html" --summary "$GITHUB_STEP_SUMMARY"
       - name: Save dashboard
         if: always()
         uses: actions/upload-artifact@v4
@@ -131,7 +151,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
       - name: Report agent failure
-        if: always()
+        if: always() && steps.agent.outcome != 'skipped'
         env:
           AGENT_EXIT: ${{ steps.agent.outputs.exit_code }}
         shell: bash
@@ -141,12 +161,10 @@ jobs:
             exit 1
           fi
       - name: Report capture failure
-        if: always() && steps.capture.outcome == 'success'
+        if: always() && steps.capture.outcome == 'failure'
         env:
           CAPTURE_EXIT: ${{ steps.capture.outputs.exit_code }}
         shell: bash
         run: |
-          if [[ "$CAPTURE_EXIT" != "0" ]]; then
-            echo "Capture exited with status $CAPTURE_EXIT; see agent-capture.log" >&2
-            exit 1
-          fi
+          echo "Capture exited with status $CAPTURE_EXIT; processing was skipped" >&2
+          exit 1

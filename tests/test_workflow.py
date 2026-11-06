@@ -1,6 +1,7 @@
 """Phase 6 workflow and local Git persistence checks."""
 
 from pathlib import Path
+import os
 import subprocess
 
 import yaml
@@ -128,7 +129,34 @@ def test_pending_capture_is_pushed_before_normal_alert_processing():
     assert "--capture-pending" in capture["run"]
     assert "inputs.phase6_test != true" in capture["if"]
     persist = next(step for step in steps if step.get("id") == "persist_capture")
+    assert "steps.capture.outcome == 'success'" in persist["if"]
     assert "scripts/persist_state.sh" in persist["run"]
+    verify = next(step for step in steps if step.get("id") == "verify_capture")
+    assert "steps.persist_capture.outcome == 'success'" in verify["if"]
+    assert "verify_remote_state" in verify["run"]
+    partial = next(step for step in steps if step.get("id") == "persist_partial")
+    assert "failure()" in partial["if"] and "steps.capture.outcome == 'failure'" in partial["if"]
+    assert "load_state" in partial["run"] and "scripts/persist_state.sh" in partial["run"]
     agent = next(step for step in steps if step.get("id") == "agent")
+    assert "steps.verify_capture.outcome == 'success'" in agent["if"]
+    assert "steps.capture.outcome == 'skipped'" in agent["if"]
     assert "--process-pending --persisted-commit" in agent["run"]
     assert "steps.persist_capture.outputs.commit" in agent["env"]["PERSISTED_COMMIT"]
+
+
+def test_capture_shell_propagates_exit_code_instead_of_reporting_success(tmp_path):
+    capture = next(step for step in workflow()["jobs"]["run"]["steps"] if step.get("id") == "capture")
+    fake_bin = tmp_path / "bin"
+    fake_bin.mkdir()
+    fake_python = fake_bin / "python"
+    fake_python.write_text('#!/bin/sh\nexit "$FAKE_CAPTURE_EXIT"\n')
+    fake_python.chmod(0o755)
+    for code in (0, 1, 2):
+        output = tmp_path / f"output-{code}"
+        env = {**os.environ, "PATH": f"{fake_bin}:{os.environ['PATH']}",
+               "RUNNER_TEMP": str(tmp_path), "GITHUB_OUTPUT": str(output),
+               "FAKE_CAPTURE_EXIT": str(code)}
+        result = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", capture["run"]],
+                                cwd=ROOT, env=env, capture_output=True, text=True)
+        assert result.returncode == code
+        assert f"exit_code={code}" in output.read_text()

@@ -11,7 +11,7 @@ import pytest
 from src.brain import AnalysisResults, BrainError
 from src.main import capture_pending, run
 from src.notifier import DeliveryResult
-from src.persistence import verify_remote_state
+from src.persistence import persist_remote_state, verify_remote_state
 from src.state import StateError, empty_state, load_state, save_state
 from tests.test_phase7_stability import NOW, live_like_fetch, make_post, selected_analyses
 from tests.test_pipeline import settings
@@ -118,13 +118,79 @@ def test_queue_capacity_300_reports_overflow_and_keeps_first_300(tmp_path, caplo
     posts = [make_post(f"post-{i}", NOW) for i in range(301)]
     with caplog.at_level(logging.INFO):
         assert capture_pending(settings(False), state_path=path,
-                               fetch=live_like_fetch(posts), now=NOW) == 1
+                               fetch=live_like_fetch(posts), now=NOW,
+                               queue_capacity=300) == 1
     state = load_state(path)["topics"]["ai_tech"]
     assert len(state["pending_posts"]) == 300
     assert state["pending_metrics"]["overflow_total"] == 1
     assert state["pending_metrics"]["overflow_unresolved"] is True
     assert "overflow=1" in caplog.text
     assert "alert_checkpoint_at" not in state
+
+
+@pytest.mark.parametrize("capacity,expected_overflow", [(500, 101), (600, 1)])
+def test_larger_queue_capacities_and_state_validation(tmp_path, capacity, expected_overflow):
+    work, _ = setup_git(tmp_path)
+    path = work / "seen_posts.json"
+    posts = [make_post(f"post-{i}", NOW) for i in range(601)]
+    assert capture_pending(settings(False), state_path=path,
+                           fetch=live_like_fetch(posts), now=NOW,
+                           queue_capacity=capacity) == 1
+    state = load_state(path)
+    pending = state["topics"]["ai_tech"]["pending_posts"]
+    assert len(pending) == capacity
+    assert state["topics"]["ai_tech"]["pending_metrics"]["overflow_total"] == expected_overflow
+    if capacity == 600:
+        original = path.read_bytes()
+        pending["extra"] = {**pending["post-0"], "id": "extra"}
+        with pytest.raises(StateError, match="oversized"):
+            save_state(path, state)
+        assert path.read_bytes() == original
+
+
+def test_overflow_partial_capture_can_be_persisted_for_reconciliation(tmp_path):
+    work, remote = setup_git(tmp_path)
+    path = work / "seen_posts.json"
+    posts = [make_post(f"post-{i}", NOW) for i in range(301)]
+    assert capture_pending(settings(False), state_path=path,
+                           fetch=live_like_fetch(posts), now=NOW,
+                           queue_capacity=300) == 1
+    commit = persist(work)
+    clone = next_run(tmp_path, remote)
+    verify_remote_state(clone / "seen_posts.json", commit, repo=clone)
+    remote_state = load_state(clone / "seen_posts.json")["topics"]["ai_tech"]
+    assert len(remote_state["pending_posts"]) == 300
+    assert remote_state["pending_metrics"]["overflow_total"] == 1
+    assert remote_state["pending_metrics"]["overflow_unresolved"]
+    assert "alert_checkpoint_at" not in remote_state
+
+
+def test_failed_capture_push_does_not_create_remote_checkpoint(tmp_path):
+    work, remote, path = prepare(tmp_path, [make_post("new", NOW)])
+    hook = remote / "hooks" / "pre-receive"
+    hook.write_text("#!/bin/sh\nexit 1\n")
+    hook.chmod(0o755)
+    with pytest.raises(StateError, match="push failed"):
+        persist_remote_state(path, repo=work)
+    remote_state = load_state(next_run(tmp_path, remote) / "seen_posts.json")
+    assert remote_state == empty_state()
+    assert "new" in load_state(path)["topics"]["ai_tech"]["pending_posts"]
+
+
+def test_remote_commit_mismatch_stops_processing(tmp_path, monkeypatch):
+    work, remote, path = prepare(tmp_path, [make_post("new", NOW)])
+    captured_commit = persist(work)
+    other = next_run(tmp_path, remote, "other")
+    changed = load_state(other / "seen_posts.json")
+    changed["topics"]["another"] = {"posts": {}, "briefings": {}}
+    save_state(other / "seen_posts.json", changed)
+    persist(other)
+    monkeypatch.setattr("src.main.deliver", lambda *a, **k:
+                        pytest.fail("Telegram called after remote mismatch"))
+    with pytest.raises(StateError, match="Remote main moved"):
+        run(settings(False), mode="alert", state_path=path,
+            durable_pending=True, persisted_commit=captured_commit, git_repo=work,
+            analyze=selected_analyses, notifier=object(), now=NOW)
 
 
 def test_unresolved_overflow_blocks_checkpoint_even_after_queue_drains(tmp_path):

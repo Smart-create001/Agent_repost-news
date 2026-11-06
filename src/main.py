@@ -14,7 +14,7 @@ from src.notifier import TelegramNotifier, deliver
 from src.persistence import persist_remote_state, verify_remote_state
 from src.scraper import fetch_topic
 from src.state import (cleanup_state, ensure_topic, load_state, mark_processed,
-                       mark_uncertain, pending_as_posts, queue_post, record_briefing,
+                       mark_uncertain, pending_as_posts, PENDING_CAPACITY, queue_post, record_briefing,
                        record_delivery, record_post, save_state)
 
 
@@ -38,7 +38,8 @@ def _save(state_path: Path, state: dict, dry_run: bool) -> None:
 
 
 def capture_pending(config, *, state_path: str | Path = "seen_posts.json",
-                    fetch=fetch_topic, now: datetime | None = None) -> int:
+                    fetch=fetch_topic, now: datetime | None = None,
+                    queue_capacity: int = PENDING_CAPACITY) -> int:
     """Capture eligible alert candidates; workflow must push before processing."""
     now = now or datetime.now(timezone.utc)
     state_path = Path(state_path)
@@ -57,7 +58,8 @@ def capture_pending(config, *, state_path: str | Path = "seen_posts.json",
             counts = {"added": 0, "existing": 0, "settled": 0, "overflow": 0, "invalid": 0}
             for post in posts:
                 try:
-                    counts[queue_post(state, topic.id, post, now=now)] += 1
+                    counts[queue_post(state, topic.id, post, now=now,
+                                      capacity=queue_capacity)] += 1
                 except (TypeError, ValueError, AttributeError):
                     counts["invalid"] += 1
                     LOG.warning("topic=%s pending_entry_invalid=1", topic.id)
