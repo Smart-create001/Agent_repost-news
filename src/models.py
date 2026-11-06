@@ -37,6 +37,8 @@ class AlertSettings(StrictModel):
     enabled: bool = True
     relevance_threshold: float = Field(default=0.75, ge=0, le=1)
     generate_audio: bool = False
+    catchup_hours: int = Field(default=168, ge=48, le=168)
+    catchup_posts_per_run: int = Field(default=3, ge=1, le=20)
 
 
 class BriefingSettings(StrictModel):

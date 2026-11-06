@@ -49,7 +49,8 @@ def test_tc3_01_relevant_article():
 
 
 def test_tc3_02_irrelevant_below_threshold():
-    assert analyze_topic(topic(), [POST], client=client(json.dumps([result(relevance_score=0.4)]))) == []
+    answer = analyze_topic(topic(), [POST], client=client(json.dumps([result(relevance_score=0.4)])))
+    assert answer == [] and answer.irrelevant_sources == {POST.url}
 
 
 def test_tc3_03_and_10_topic_isolation():

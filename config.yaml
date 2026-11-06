@@ -16,6 +16,8 @@ alert:
   enabled: true
   relevance_threshold: 0.75
   generate_audio: false
+  catchup_hours: 168
+  catchup_posts_per_run: 3
 briefing:
   enabled: true
   reporting_hours: 24

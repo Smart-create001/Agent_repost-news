@@ -1,6 +1,6 @@
 """End-to-end pipeline tests with all external operations injected."""
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -13,6 +13,7 @@ from src.main import main, run
 from src.notifier import DeliveryResult, TelegramNotifier
 from src.scraper import fetch_topic
 from src.state import load_state
+from src.brain import AnalysisResults
 
 
 NOW = datetime(2026, 10, 26, 12, tzinfo=timezone.utc)
@@ -123,7 +124,65 @@ def test_tc5_03_no_data_no_ai_or_tts(tmp_path):
     assert run(settings(False), mode="alert", state_path=path,
                fetch=lambda *a, **k: ([], []),
                analyze=lambda *a, **k: (_ for _ in ()).throw(AssertionError("AI called")), now=NOW) == 0
-    assert not path.exists()
+    assert load_state(path)["topics"]["ai_tech"]["alert_checkpoint_at"] == NOW.isoformat()
+
+
+def test_bounded_catchup_after_gap_preserves_fresh_capacity_and_state(tmp_path, monkeypatch):
+    cfg = settings(False)
+    cfg.app.max_posts_per_topic = 2
+    cfg.alert.catchup_posts_per_run = 1
+    path = tmp_path / "state.json"
+    sent = []
+    monkeypatch.setattr("src.main.deliver", lambda notifier, thread, text, **kw:
+                        (sent.append((thread, text)) or DeliveryResult(text_message_ids=[len(sent)])))
+    def fetch_empty(topic, **kwargs):
+        return [], []
+    assert run(cfg, mode="alert", state_path=path, fetch=fetch_empty, now=NOW) == 0
+    after_gap = NOW + timedelta(days=4)
+    older = [SimpleNamespace(id=f"old-{i}", url=f"https://news.example.org/old-{i}",
+                             title=f"Old {i}", published_at=NOW + timedelta(hours=i)) for i in (1, 2)]
+    fresh = SimpleNamespace(id="fresh", url="https://news.example.org/fresh",
+                            title="Fresh", published_at=after_gap - timedelta(hours=1))
+    windows = []
+    def fetch_late(topic, **kwargs):
+        windows.append(kwargs["max_age"])
+        return [*older, fresh], []
+    def analyze(topic, posts, **kwargs):
+        return [SimpleNamespace(summary_th=p.title, source_urls=[p.url]) for p in posts]
+    args = dict(mode="alert", state_path=path, fetch=fetch_late, analyze=analyze,
+                notifier=object(), now=after_gap)
+    assert run(cfg, **args) == 0
+    assert ["Old 1", "Fresh"] == [p[1].split("\n")[0] for p in sent]
+    assert load_state(path)["topics"]["ai_tech"]["alert_checkpoint_at"] == NOW.isoformat()
+    assert run(cfg, **args) == 0
+    assert [p[1].split("\n")[0] for p in sent] == ["Old 1", "Fresh", "Old 2"]
+    assert windows == [timedelta(days=4), timedelta(days=4)]
+    assert load_state(path)["topics"]["ai_tech"]["alert_checkpoint_at"] == after_gap.isoformat()
+    assert run(cfg, **args) == 0
+    assert len(sent) == 3
+
+
+def test_catchup_hard_cap_and_irrelevant_item_is_not_reanalyzed(tmp_path):
+    cfg = settings(False)
+    path = tmp_path / "state.json"
+    assert run(cfg, mode="alert", state_path=path, fetch=lambda *a, **k: ([], []), now=NOW) == 0
+    later = NOW + timedelta(days=10)
+    old = SimpleNamespace(id="old", url="https://news.example.org/old",
+                          title="Old", published_at=later - timedelta(days=6))
+    seen = []
+    windows = []
+    def fetch(topic, **kwargs):
+        windows.append(kwargs["max_age"])
+        return [old], []
+    def analyze(topic, posts, **kwargs):
+        seen.append(posts[0].id)
+        return AnalysisResults([], irrelevant_sources=[posts[0].url])
+    args = dict(mode="alert", state_path=path, fetch=fetch, analyze=analyze, now=later)
+    assert run(cfg, **args) == 0
+    assert load_state(path)["topics"]["ai_tech"]["posts"]["old"]["status"] == "processed"
+    assert run(cfg, **args) == 0
+    assert seen == ["old"]
+    assert windows == [timedelta(days=7), timedelta(days=2)]
 
 
 def test_tc5_04_alert_relevance_and_tc5_06_repeat(tmp_path, monkeypatch):

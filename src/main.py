@@ -12,8 +12,9 @@ from src.config import ConfigError, load_config, validate_live_config
 from src.editorial import render_news
 from src.notifier import TelegramNotifier, deliver
 from src.scraper import fetch_topic
-from src.state import (cleanup_state, load_state, mark_uncertain, record_briefing,
-                       record_delivery, record_post, save_state)
+from src.state import (cleanup_state, ensure_topic, load_state, mark_processed,
+                       mark_uncertain, record_briefing, record_delivery, record_post,
+                       save_state)
 
 
 LOG = logging.getLogger(__name__)
@@ -54,9 +55,21 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
         if not topic.enabled:
             continue
         try:
+            topic_failures = failures
             hours = config.briefing.reporting_hours
             start, end = _window(now, hours)
             current = state["topics"].get(topic.id, {"posts": {}, "briefings": {}})
+            alert_checkpoint = None
+            if mode == "alert":
+                alert_checkpoint = datetime.fromisoformat(
+                    current.get("alert_checkpoint_at", (now - timedelta(days=2)).isoformat()))
+                if not dry_run and "alert_checkpoint_at" not in current:
+                    ensure_topic(state, topic.id)["alert_checkpoint_at"] = alert_checkpoint.isoformat()
+                    _save(state_path, state, dry_run)
+                lookback = min(config.alert.catchup_hours,
+                               max(48, (now - alert_checkpoint).total_seconds() / 3600))
+                if lookback >= config.alert.catchup_hours and now - alert_checkpoint > timedelta(hours=lookback):
+                    LOG.warning("topic=%s catchup_window_capped_hours=%d", topic.id, config.alert.catchup_hours)
             existing_briefing_id = f"{topic.id}:briefing:{start.isoformat()}"
             existing_briefing = current["briefings"].get(existing_briefing_id)
             # Preserve existing delivered text and historical audio state; never retry audio.
@@ -64,21 +77,32 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                 continue
             posts, errors = fetch(topic, timeout=config.app.request_timeout_seconds,
                                   max_retries=config.app.max_retries,
-                                  max_age=timedelta(hours=hours) if mode == "briefing" else timedelta(days=2),
+                                  max_age=timedelta(hours=hours if mode == "briefing" else lookback),
                                   now=now)
             if errors:
                 LOG.warning("topic=%s feed_errors=%d", topic.id, len(errors))
                 failures += len(errors)
             if mode == "alert":
                 posts = [p for p in posts if not current["posts"].get(p.id, {}).get("alert", {}).get("delivered")
-                         and not current["posts"].get(p.id, {}).get("alert", {}).get("uncertain")]
+                         and not current["posts"].get(p.id, {}).get("alert", {}).get("uncertain")
+                         and current["posts"].get(p.id, {}).get("status") != "processed"]
+                pending_posts = posts
+                older = [p for p in posts if p.published_at < now - timedelta(days=2)]
+                fresh = [p for p in posts if p.published_at >= now - timedelta(days=2)]
+                older_limit = min(config.alert.catchup_posts_per_run, config.app.max_posts_per_topic)
+                posts = (older[:older_limit] + fresh[:config.app.max_posts_per_topic - min(len(older), older_limit)])
+                LOG.info("topic=%s catchup_candidates=%d catchup_selected=%d",
+                         topic.id, len(older), min(len(older), older_limit))
             else:
                 posts = [p for p in posts if start <= p.published_at < end]
                 if existing_briefing and (existing_briefing["text"]["delivered"]
                                           or existing_briefing["text"].get("uncertain")):
                     continue
-            posts = posts[:config.app.max_posts_per_topic]
+                posts = posts[:config.app.max_posts_per_topic]
             if not posts:
+                if mode == "alert" and not dry_run and failures == topic_failures:
+                    ensure_topic(state, topic.id)["alert_checkpoint_at"] = now.isoformat()
+                    _save(state_path, state, dry_run)
                 continue
             if dry_run:
                 LOG.info("topic=%s mode=%s dry_run_candidates=%d", topic.id, mode, len(posts))
@@ -96,6 +120,13 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                                             source_only_fallback=config.ai.source_only_fallback,
                                             api_key=os.environ.get("GEMINI_API_KEY"))
                     results.extend(batch_results)
+                    if mode == "alert":
+                        irrelevant_sources = getattr(batch_results, "irrelevant_sources", ())
+                        for post in batch:
+                            if post.url in irrelevant_sources:
+                                mark_processed(state, topic.id, post, now=now)
+                        if any(post.url in irrelevant_sources for post in batch):
+                            _save(state_path, state, dry_run)
                     if getattr(batch_results, "rejected_count", 0):
                         failures += 1
                         batch_failed = True
@@ -109,7 +140,7 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
             # A delivered briefing closes its time window; do not close an incomplete one.
             if mode == "briefing" and batch_failed:
                 continue
-            if not results:
+            if not results and mode == "briefing":
                 continue
             if mode == "alert":
                 for analysis in results:
@@ -137,6 +168,13 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                                         error=outcome.text_error, now=now)
                     _save(state_path, state, dry_run)
                     failures += not outcome.text_delivered
+                if failures == topic_failures and all(
+                    state["topics"][topic.id]["posts"].get(p.id, {}).get("status") == "processed"
+                    or state["topics"][topic.id]["posts"].get(p.id, {}).get("alert", {}).get("delivered")
+                    for p in pending_posts
+                ):
+                    ensure_topic(state, topic.id)["alert_checkpoint_at"] = now.isoformat()
+                    _save(state_path, state, dry_run)
             else:
                 briefing_id = existing_briefing_id
                 text = "\n\n".join(_text(item) for item in results)

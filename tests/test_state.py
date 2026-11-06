@@ -31,6 +31,13 @@ def test_tc2_08_corrupt_state_refuses_overwrite(tmp_path):
     assert path.read_text() == "{broken"
 
 
+def test_malformed_alert_checkpoint_rejected(tmp_path):
+    path = tmp_path / "state.json"
+    path.write_text('{"schema_version":1,"topics":{"ai":{"posts":{},"briefings":{},"alert_checkpoint_at":"bad"}}}')
+    with pytest.raises(StateError, match="checkpoint"):
+        load_state(path)
+
+
 def test_reconcile_corrupt_state_from_confirmed_backup(tmp_path):
     path = tmp_path / "state.json"
     state = empty_state()

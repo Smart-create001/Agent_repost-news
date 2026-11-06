@@ -44,9 +44,10 @@ class BrainError(ValueError):
 class AnalysisResults(list):
     """Validated analyses plus count of quarantined editorial items."""
 
-    def __init__(self, values, rejected_count=0):
+    def __init__(self, values, rejected_count=0, irrelevant_sources=()):
         super().__init__(values)
         self.rejected_count = rejected_count
+        self.irrelevant_sources = frozenset(irrelevant_sources)
 
 
 class SourceNotice(BaseModel):
@@ -170,12 +171,14 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
             accepted = []
             rejected = []
             accepted_sources = set()
+            irrelevant_sources = set()
             for result in results:
                 try:
                     if any(str(url) not in sources for url in result.source_urls):
                         raise BrainError("AI response cited a URL absent from input")
                     # Discard irrelevant results before validating text that will never be delivered.
                     if not result.relevant or result.relevance_score < threshold:
+                        irrelevant_sources.add(str(result.source_urls[0]))
                         continue
                     evidence_parts = []
                     for url in result.source_urls:
@@ -272,7 +275,8 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                     accepted.append(result)
             if rejected and not accepted:
                 raise BrainError(rejected[0])
-            return AnalysisResults(accepted, rejected_count=len(rejected))
+            return AnalysisResults(accepted, rejected_count=len(rejected),
+                                   irrelevant_sources=irrelevant_sources - accepted_sources)
         except (json.JSONDecodeError, ValidationError, TypeError) as exc:
             raise BrainError("Malformed AI response; no result is safe to deliver") from exc
         except BrainError:

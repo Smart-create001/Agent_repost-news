@@ -1,6 +1,6 @@
 """Offline regression for truncated Gemini responses and batch recovery."""
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 
 import pytest
@@ -84,6 +84,7 @@ def test_batch_failures_preserve_successes_and_retry_only_failed(tmp_path, monke
     assert batches == [[str(i) for i in range(j, j + 4)] for j in (0, 4, 8)]
     saved = load_state(path)['topics']['ai_tech']['posts']
     assert len(saved) == 8 and '4' not in saved
+    assert load_state(path)['topics']['ai_tech']['alert_checkpoint_at'] == (now - timedelta(days=2)).isoformat()
     fail[0] = False
     assert run(cfg, **args) == 0
     assert batches[-1] == ['4', '5', '6', '7']

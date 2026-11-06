@@ -76,6 +76,12 @@ On PowerShell replace `.venv/bin/python` with `.venv\Scripts\python.exe`. The dr
 
 For deployment, place verified feed URLs and forum thread IDs in `config.yaml`, enable the intended topics, configure the three named GitHub Actions secrets, and confirm Actions has permission to write to `main`. Branch protection may reject the state push. Git-based state works for this small single-writer workflow but can hit conflicts or repository policy limits; durable storage is preferable if update frequency or writers grow. GitHub schedule timing is approximate. Production Actions have pushed state and a subsequent run has read it back.
 
+### Alert catch-up after missed runs
+
+Each topic stores `alert_checkpoint_at` in `seen_posts.json`. Its first live alert run anchors the scan at 48 hours before that run; a fully processed run advances the checkpoint. After a failed or delayed run, the next alert scans back to the checkpoint, capped by `alert.catchup_hours` (default 168 hours). It selects at most `alert.catchup_posts_per_run` older articles (default 3) and leaves capacity for fresh articles under `app.max_posts_per_topic`. Delivered articles, uncertain deliveries, and articles explicitly judged irrelevant are not sent again. A failed feed, Gemini batch, or Telegram delivery leaves the checkpoint in place for another attempt. Dry runs do not alter it.
+
+Catch-up is bounded: RSS items that disappear from a provider, items older than seven days, and items that never match a configured RSS search cannot be recovered automatically. The checkpoint is advanced only after all fetched candidates have a confirmed delivered or explicitly irrelevant state. Do not reset production state or widen these limits solely to replay an old story; that can send many unrelated alerts.
+
 ### ตั้งค่าสำหรับรันจริงเมื่อพร้อม
 
 `config.yaml` ตั้งหัวข้อ `ai_tech` สำหรับข่าวเปิดตัวโมเดล นโยบาย และข่าวเกี่ยวกับ token/quota reset โดยติดตามชื่อ Tibo กับ Logan Kilpatrick และหัวข้อ `gold_price` สำหรับข่าวราคาทองโลก/ไทยแล้ว RSS ที่ใส่เป็น Google News search feed ซึ่งเคยตรวจ endpoint แล้ว ทั้งสองหัวข้อเปิดใช้งาน โดยตั้ง thread ID ของ AI เป็น `5` และทองเป็น `6`. ข้อมูลราคาทองจากข่าวอาจไม่ใช่ราคา ณ เวลาปัจจุบัน.

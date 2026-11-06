@@ -23,6 +23,14 @@ def validate_state(state: dict) -> None:
     for topic in state["topics"].values():
         if not isinstance(topic, dict) or not isinstance(topic.get("posts"), dict) or not isinstance(topic.get("briefings"), dict):
             raise StateError("Malformed topic state")
+        alert_checkpoint = topic.get("alert_checkpoint_at")
+        if alert_checkpoint is not None:
+            try:
+                parsed = datetime.fromisoformat(alert_checkpoint)
+                if parsed.utcoffset() is None:
+                    raise ValueError("timezone required")
+            except (TypeError, ValueError) as exc:
+                raise StateError("Malformed alert checkpoint") from exc
 
 
 def load_state(path: str | Path) -> dict:
@@ -73,6 +81,16 @@ def record_post(state: dict, topic_id: str, post, *, now: datetime | None = None
         "alert": {"delivered": False, "message_id": None},
         "last_error": None, "title": post.title,
     })
+
+
+def mark_processed(state: dict, topic_id: str, post, *, now: datetime | None = None) -> None:
+    """Remember an article that a complete AI response did not select for delivery."""
+    now = now or datetime.now(timezone.utc)
+    item = record_post(state, topic_id, post, now=now)
+    if item["alert"].get("delivered") or item["alert"].get("uncertain"):
+        return
+    item["status"] = "processed"
+    item["last_attempt_at"] = now.isoformat()
 
 
 def record_briefing(state: dict, topic_id: str, briefing_id: str,
