@@ -1836,6 +1836,20 @@
           },
           "last_error": null,
           "title": "Gemini Omni Flash 1.2 Leak: What Google Hasn't Said - OrcaRouter"
+        },
+        "c09c01d06a5e78741889cc19e09cbf88dbc8edc1cf4a163e97eccce8aacc4900": {
+          "id": "c09c01d06a5e78741889cc19e09cbf88dbc8edc1cf4a163e97eccce8aacc4900",
+          "source_url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPbHVmMkJJSDdzTHJxRFRtUjNoSzJSQTl2Mk1kQmRLbmFaTEE4bDRxZ3FHUzh4Rzd0akdvMUtra2k0U2dPTWdEcm80YnJfRFhXN2lUYjRuSktPdG00VjVFclNqWGxUOERWQ3RKeFpHdkR5aUcxNmVxOHFwMVJJbGJHYTlWRkFFQWljX2VOUUFrUWNiRk13b190NXN4STNqdXNq?oc=5",
+          "first_seen_at": "2026-11-06T01:38:49.407501+00:00",
+          "last_attempt_at": "2026-11-06T01:38:49.407501+00:00",
+          "status": "delivered",
+          "retry_count": 1,
+          "alert": {
+            "delivered": true,
+            "message_id": 148
+          },
+          "last_error": null,
+          "title": "ChatGPT will now make you animated GIFs - The Verge"
         }
       },
       "briefings": {
