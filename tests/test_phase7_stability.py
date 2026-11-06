@@ -9,11 +9,11 @@ import httpx
 import pytest
 from google.genai import errors
 
-from src.brain import AnalysisResults, BrainError, analyze_topic
+from src.brain import AnalysisResults, BrainError, SourceNotice, analyze_topic
 from src.main import run
 from src.notifier import DeliveryResult
 from src.scraper import Post, fetch_topic
-from src.state import load_state
+from src.state import empty_state, load_state, save_state
 from tests.test_brain import POST, result, topic
 from tests.test_pipeline import settings
 from tests.test_workflow import SCRIPT, git, setup_git
@@ -266,3 +266,31 @@ def test_expired_feed_entries_are_counted_and_reported(tmp_path, caplog):
     finally:
         client.close()
     assert "expired_feed_entries=1 expired_untracked=1" in caplog.text
+
+
+def test_read_only_probe_checks_single_and_batch_without_state_mutation(tmp_path, monkeypatch, capsys):
+    from pathlib import Path
+    from scripts import phase7_probe
+    from src.config import load_config
+
+    config = load_config(Path(__file__).resolve().parents[1] / "config.yaml")
+    monkeypatch.chdir(tmp_path)
+    state_path = tmp_path / "seen_posts.json"
+    save_state(state_path, empty_state())
+    before = state_path.read_bytes()
+    posts = [make_post("Gemini Omni 1.2 Flash - blog.google", NOW),
+             make_post("Open model release - Hugging Face", NOW)]
+    calls = []
+    monkeypatch.setattr(phase7_probe, "load_config", lambda: config)
+    monkeypatch.setattr(phase7_probe, "fetch_topic", lambda *a, **kw: (posts, []))
+    def analyze(_topic, selected, **kwargs):
+        calls.append(len(selected))
+        source = selected[0]
+        return AnalysisResults([SourceNotice(title=source.title, source_urls=[source.url])],
+                               attempt=1, finish_reason="STOP", token_usage={"total_tokens": 100})
+    monkeypatch.setattr(phase7_probe, "analyze_topic", analyze)
+    monkeypatch.setenv("GEMINI_API_KEY", "offline-dummy")
+    assert phase7_probe.main() == 0
+    assert calls == [1, 2]
+    assert state_path.read_bytes() == before
+    assert "gold_processed=false audio_called=false" in capsys.readouterr().out

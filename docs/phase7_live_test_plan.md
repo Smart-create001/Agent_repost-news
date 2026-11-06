@@ -2,7 +2,7 @@
 
 ## Completed without Telegram delivery
 
-- The manual `phase7-probe.yml` workflow reads all 15 configured AI feeds, calls the configured Gemini model for one real RSS article, validates structured output, and checks the state file hash. It has `contents: read`, only `GEMINI_API_KEY`, and no Telegram credentials. Run 42189317440 on `main` completed successfully with 15 feeds, zero feed errors, one Gemini result, and unchanged state.
+- The manual `phase7-probe.yml` workflow reads all 15 configured AI feeds, calls the configured Gemini model for one real RSS article and one batch of up to four pending articles, validates structured output, and checks the state file hash. It has `contents: read`, only `GEMINI_API_KEY`, and no Telegram credentials. Run 42189317440 on `main` completed successfully with 15 feeds, zero feed errors, one Gemini result, and unchanged state before the four-article probe was added.
 - Offline controlled fixtures cover the seven-day ceiling, three older articles per run, retry after Gemini failure, partial Telegram failure with Git state persistence, and the documented feed-eviction gap.
 
 ## Pending explicit authorization: one bounded production delivery attempt
