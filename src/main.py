@@ -7,7 +7,7 @@ import logging
 import os
 from pathlib import Path
 
-from src.brain import Analysis, SourceNotice, analyze_topic
+from src.brain import Analysis, BrainError, SourceNotice, analyze_topic
 from src.config import ConfigError, load_config, validate_live_config
 from src.editorial import render_news
 from src.notifier import TelegramNotifier, deliver
@@ -75,10 +75,21 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
             # Preserve existing delivered text and historical audio state; never retry audio.
             if mode == "briefing" and existing_briefing and existing_briefing["text"]["delivered"]:
                 continue
+            feed_stats: dict = {}
             posts, errors = fetch(topic, timeout=config.app.request_timeout_seconds,
                                   max_retries=config.app.max_retries,
                                   max_age=timedelta(hours=hours if mode == "briefing" else lookback),
-                                  now=now)
+                                  now=now,
+                                  expiry_age=timedelta(hours=config.alert.catchup_hours) if mode == "alert" else None,
+                                  stats=feed_stats)
+            if mode == "alert":
+                expired_ids = feed_stats.get("expired_ids", set())
+                expired_untracked = sum(
+                    p_id not in current["posts"] for p_id in expired_ids
+                )
+                if expired_ids:
+                    LOG.warning("topic=%s expired_feed_entries=%d expired_untracked=%d",
+                                topic.id, len(expired_ids), expired_untracked)
             if errors:
                 LOG.warning("topic=%s feed_errors=%d", topic.id, len(errors))
                 failures += len(errors)
@@ -120,6 +131,13 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                                             source_only_fallback=config.ai.source_only_fallback,
                                             api_key=os.environ.get("GEMINI_API_KEY"))
                     results.extend(batch_results)
+                    usage = getattr(batch_results, "token_usage", {})
+                    LOG.info("event=gemini_batch_success topic=%s mode=%s model=%s batch_start=%d batch_size=%d attempt=%s finish_reason=%s input_tokens=%s output_tokens=%s total_tokens=%s",
+                             topic.id, mode, config.app.default_model, offset, len(batch),
+                             getattr(batch_results, "attempt", None),
+                             getattr(batch_results, "finish_reason", None),
+                             usage.get("input_tokens"), usage.get("output_tokens"),
+                             usage.get("total_tokens"))
                     if mode == "alert":
                         irrelevant_sources = getattr(batch_results, "irrelevant_sources", ())
                         for post in batch:
@@ -135,8 +153,15 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                 except Exception as exc:
                     failures += 1
                     batch_failed = True
-                    LOG.error("topic=%s mode=%s batch_start=%d batch_size=%d failed=%s",
-                              topic.id, mode, offset, len(batch), type(exc).__name__)
+                    usage = exc.token_usage if isinstance(exc, BrainError) else {}
+                    LOG.error("event=gemini_batch_error topic=%s mode=%s model=%s batch_start=%d batch_size=%d failed=%s error_category=%s attempt=%s finish_reason=%s input_tokens=%s output_tokens=%s total_tokens=%s",
+                              topic.id, mode, config.app.default_model, offset, len(batch),
+                              type(exc).__name__,
+                              exc.error_category if isinstance(exc, BrainError) else "UNKNOWN_ERROR",
+                              exc.attempt if isinstance(exc, BrainError) else None,
+                              exc.finish_reason if isinstance(exc, BrainError) else None,
+                              usage.get("input_tokens"), usage.get("output_tokens"),
+                              usage.get("total_tokens"))
             # A delivered briefing closes its time window; do not close an incomplete one.
             if mode == "briefing" and batch_failed:
                 continue

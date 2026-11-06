@@ -8,9 +8,11 @@ def test_dashboard_summarizes_errors_without_including_raw_logs(tmp_path):
     path.write_text(json.dumps({'schema_version': 1, 'topics': {'ai': {'posts': {'x': {'alert': {'uncertain': True}}}, 'briefings': {}}}}))
     log = ('WARNING topic=ai feed_errors=2\nERROR topic=ai batch_start=0 failed=BrainError\n'
            'ERROR topic=ai batch_start=4 quarantined=1\nERROR topic=ai delivery_failed=1 uncertain=True\n'
+           'WARNING topic=ai expired_feed_entries=7 expired_untracked=3\n'
            'secret-do-not-copy https://example.org/private\n')
     report = build_report(log, path, {'AGENT_EXIT': '1', 'PERSIST_OUTCOME': 'success', 'RUN_MODE': 'alert', 'GITHUB_RUN_NUMBER': '42'})
     assert [report[x] for x in ('feed', 'gemini', 'quarantined', 'telegram', 'uncertain')] == ['2', '1', '1', '1', '1']
+    assert report['expired'] == '3'
     assert report['agent'] == 'ล้มเหลว' and report['persist'] == 'ผ่าน'
     summary, page = render(report)
     assert 'secret-do-not-copy' not in summary + page and 'example.org/private' not in summary + page

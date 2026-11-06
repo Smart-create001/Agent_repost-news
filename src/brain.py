@@ -40,14 +40,55 @@ SYSTEM_INSTRUCTION = (
 class BrainError(ValueError):
     """AI request or response cannot safely be used."""
 
+    def __init__(self, message: str, *, error_category: str = "UNKNOWN_ERROR",
+                 finish_reason: str | None = None, attempt: int | None = None,
+                 token_usage: dict[str, int] | None = None):
+        super().__init__(message)
+        self.error_category = error_category
+        self.finish_reason = finish_reason
+        self.attempt = attempt
+        self.token_usage = token_usage or {}
+
+
+def _token_usage(response) -> dict[str, int]:
+    usage = getattr(response, "usage_metadata", None)
+    fields = {"input_tokens": "prompt_token_count",
+              "output_tokens": "candidates_token_count", "total_tokens": "total_token_count"}
+    values = {}
+    for name, field in fields.items():
+        value = getattr(usage, field, None)
+        if type(value) is int and value >= 0:
+            values[name] = value
+    return values
+
+
+def _provider_category(exc: Exception) -> str:
+    code = getattr(exc, "code", getattr(exc, "status_code", None))
+    try:
+        code = int(code)
+    except (TypeError, ValueError):
+        code = None
+    if code == 429:
+        return "RATE_LIMIT"
+    if code is not None and 500 <= code < 600:
+        return "SERVER_ERROR"
+    if isinstance(exc, (TimeoutError, httpx.TimeoutException)):
+        return "TIMEOUT"
+    return "UNKNOWN_ERROR"
+
 
 class AnalysisResults(list):
     """Validated analyses plus count of quarantined editorial items."""
 
-    def __init__(self, values, rejected_count=0, irrelevant_sources=()):
+    def __init__(self, values, rejected_count=0, irrelevant_sources=(), *,
+                 attempt: int | None = None, finish_reason: str | None = None,
+                 token_usage: dict[str, int] | None = None):
         super().__init__(values)
         self.rejected_count = rejected_count
         self.irrelevant_sources = frozenset(irrelevant_sources)
+        self.attempt = attempt
+        self.finish_reason = finish_reason
+        self.token_usage = token_usage or {}
 
 
 class SourceNotice(BaseModel):
@@ -145,29 +186,60 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
     )
     attempt = 0
     output_attempt = 0
+    request_attempt = 0
     while True:
+        request_attempt += 1
+        response = None
+        usage = {}
+        finish = None
         try:
             response = client.models.generate_content(model=model, contents=prompt, config=config)
+            usage = _token_usage(response)
             candidates = getattr(response, "candidates", None)
             if not candidates:
-                raise BrainError("AI response missing candidate or blocked")
+                raise BrainError("AI response missing candidate or blocked",
+                                 error_category="SCHEMA_VALIDATION_ERROR",
+                                 attempt=request_attempt, token_usage=usage)
             finish = candidates[0].finish_reason
             finish = getattr(finish, "value", finish)
             if finish == "MAX_TOKENS":
-                LOG.warning("event=ai_output_truncation topic=%s retry=%d limit=%d", topic.id, output_attempt, max_output_retries)
+                LOG.warning("event=ai_output_truncation topic=%s model=%s finish_reason=MAX_TOKENS attempt=%d input_tokens=%s output_tokens=%s total_tokens=%s retry=%d limit=%d",
+                            topic.id, model, request_attempt, usage.get("input_tokens"),
+                            usage.get("output_tokens"), usage.get("total_tokens"),
+                            output_attempt, max_output_retries)
                 if output_attempt < max_output_retries:
                     output_attempt += 1
                     continue
-                raise BrainError("AI output truncated: MAX_TOKENS recovery exhausted")
+                raise BrainError("AI output truncated: MAX_TOKENS recovery exhausted",
+                                 error_category="MAX_TOKENS", finish_reason="MAX_TOKENS",
+                                 attempt=request_attempt, token_usage=usage)
             if finish != "STOP":
-                raise BrainError(f"AI response stopped without completion: {finish}")
+                raise BrainError(f"AI response stopped without completion: {finish}",
+                                 error_category="SCHEMA_VALIDATION_ERROR",
+                                 finish_reason=str(finish), attempt=request_attempt,
+                                 token_usage=usage)
             response_text = response.text
             if not response_text or not response_text.strip():
-                raise BrainError("AI response text missing after STOP")
-            raw = json.loads(response_text)
+                raise BrainError("AI response text missing after STOP",
+                                 error_category="SCHEMA_VALIDATION_ERROR",
+                                 finish_reason="STOP", attempt=request_attempt,
+                                 token_usage=usage)
+            try:
+                raw = json.loads(response_text)
+            except json.JSONDecodeError as exc:
+                raise BrainError("Malformed AI response; no result is safe to deliver",
+                                 error_category="JSON_DECODE_ERROR", finish_reason="STOP",
+                                 attempt=request_attempt, token_usage=usage) from exc
             if not isinstance(raw, list):
-                raise BrainError("AI response must be a list")
-            results = [Analysis.model_validate(item) for item in raw]
+                raise BrainError("AI response must be a list",
+                                 error_category="SCHEMA_VALIDATION_ERROR", finish_reason="STOP",
+                                 attempt=request_attempt, token_usage=usage)
+            try:
+                results = [Analysis.model_validate(item) for item in raw]
+            except (ValidationError, TypeError) as exc:
+                raise BrainError("Malformed AI response; no result is safe to deliver",
+                                 error_category="SCHEMA_VALIDATION_ERROR", finish_reason="STOP",
+                                 attempt=request_attempt, token_usage=usage) from exc
             accepted = []
             rejected = []
             accepted_sources = set()
@@ -260,10 +332,10 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                             result.relevant and result.relevance_score >= threshold and source not in accepted_sources):
                         accepted_sources.add(source)
                         accepted.append(SourceNotice(title=post.title[:500], source_urls=[source]))
-                        LOG.warning("Editorial item rejected; using original source headline: %s", exc)
+                        LOG.warning("Editorial item rejected; using original source headline: %s error_category=SOURCE_GROUNDING_ERROR", exc)
                         continue
                     rejected.append(str(exc))
-                    LOG.warning("Editorial item rejected: %s", exc)
+                    LOG.warning("Editorial item rejected: %s error_category=SOURCE_GROUNDING_ERROR", exc)
                     continue
                 if result.relevant and result.relevance_score >= threshold:
                     source = str(result.source_urls[0])
@@ -274,23 +346,28 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                     accepted_sources.add(source)
                     accepted.append(result)
             if rejected and not accepted:
-                raise BrainError(rejected[0])
+                raise BrainError(rejected[0], error_category="SOURCE_GROUNDING_ERROR",
+                                 finish_reason="STOP", attempt=request_attempt,
+                                 token_usage=usage)
             return AnalysisResults(accepted, rejected_count=len(rejected),
-                                   irrelevant_sources=irrelevant_sources - accepted_sources)
-        except (json.JSONDecodeError, ValidationError, TypeError) as exc:
-            raise BrainError("Malformed AI response; no result is safe to deliver") from exc
+                                   irrelevant_sources=irrelevant_sources - accepted_sources,
+                                   attempt=request_attempt, finish_reason="STOP", token_usage=usage)
         except BrainError:
             raise
         except Exception as exc:
+            category = _provider_category(exc)
             status = getattr(exc, "code", getattr(exc, "status_code", None))
-            retryable = status in (429, 500, 502, 503, 504) or isinstance(exc, (TimeoutError, httpx.TimeoutException))
+            retryable = category in {"RATE_LIMIT", "TIMEOUT"} or status in (500, 502, 503, 504)
             if retryable and attempt < max_retries:
                 response = getattr(exc, "response", None)
                 delay = retry_delay(getattr(response, "headers", None), attempt)
                 if delay is not None:
-                    LOG.warning("AI request retry %d after %s", attempt + 1, type(exc).__name__)
+                    LOG.warning("event=gemini_retry topic=%s model=%s error_category=%s attempt=%d delay_seconds=%s",
+                                topic.id, model, category, request_attempt, delay)
                     time.sleep(delay)
                     attempt += 1
                     continue
-            raise BrainError(f"AI request failed: {type(exc).__name__}") from exc
-    raise BrainError("AI retry limit exceeded")
+            raise BrainError(f"AI request failed: {type(exc).__name__}",
+                             error_category=category, finish_reason=str(finish) if finish else None,
+                             attempt=request_attempt, token_usage=usage) from exc
+    raise BrainError("AI retry limit exceeded", error_category="UNKNOWN_ERROR")

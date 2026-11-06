@@ -8,6 +8,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github/workflows/agent.yml"
+PROBE = ROOT / ".github/workflows/phase7-probe.yml"
 SCRIPT = ROOT / "scripts/persist_state.sh"
 
 
@@ -92,6 +93,15 @@ def test_tc6_09_failure_propagation_and_shell_syntax():
 def test_tc6_10_live_protection_not_verified():
     # Local tests cannot prove branch protection or token write permission.
     assert "git push origin HEAD:main" in SCRIPT.read_text()
+
+
+def test_phase7_probe_is_manual_read_only_and_has_no_telegram_secret():
+    text = PROBE.read_text()
+    config = yaml.load(text, Loader=yaml.BaseLoader)
+    assert list(config["on"]) == ["workflow_dispatch"]
+    assert config["permissions"] == {"contents": "read"}
+    assert "TELEGRAM_BOT_TOKEN" not in text and "TELEGRAM_CHAT_ID" not in text
+    assert "persist_state" not in text and "seen_posts.json" not in text
 
 
 def test_rejected_push_preserves_local_and_remote_state(tmp_path):

@@ -71,7 +71,9 @@ def headline_key(title: str) -> str:
 
 
 def parse_feed(data: bytes, source_url: str, *, now: datetime | None = None,
-               max_age: timedelta | None = None) -> list[Post]:
+               max_age: timedelta | None = None,
+               expiry_age: timedelta | None = None,
+               expired_ids: set[str] | None = None) -> list[Post]:
     now = now or datetime.now(timezone.utc)
     if now.tzinfo is None:
         raise ValueError("now must be timezone-aware")
@@ -91,6 +93,8 @@ def parse_feed(data: bytes, source_url: str, *, now: datetime | None = None,
         seen.add(url)
         stamp = entry.get("published_parsed") or entry.get("updated_parsed")
         published = datetime(*stamp[:6], tzinfo=timezone.utc) if stamp else now
+        if expiry_age is not None and published < now - expiry_age and expired_ids is not None:
+            expired_ids.add(sha256(url.encode()).hexdigest())
         if max_age is not None and published < now - max_age:
             continue
         posts.append(Post(id=sha256(url.encode()).hexdigest(), url=url,
@@ -102,7 +106,8 @@ def parse_feed(data: bytes, source_url: str, *, now: datetime | None = None,
 
 def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
                 max_age: timedelta | None = None, client: httpx.Client | None = None,
-                now: datetime | None = None) -> tuple[list[Post], list[str]]:
+                now: datetime | None = None, expiry_age: timedelta | None = None,
+                stats: dict | None = None) -> tuple[list[Post], list[str]]:
     if timeout <= 0 or max_retries < 0:
         raise ValueError("timeout must be positive and max_retries nonnegative")
     own_client = client is None
@@ -111,6 +116,7 @@ def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
     seen_headlines: set[str] = set()
     feed_posts: list[list[Post]] = []
     errors: list[str] = []
+    expired_ids: set[str] = set()
     try:
         for feed_url in topic.rss_urls:
             url = str(feed_url)
@@ -120,7 +126,8 @@ def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
                 try:
                     response = client.get(url, timeout=timeout)
                     response.raise_for_status()
-                    for post in parse_feed(response.content, url, now=now, max_age=max_age):
+                    for post in parse_feed(response.content, url, now=now, max_age=max_age,
+                                           expiry_age=expiry_age, expired_ids=expired_ids):
                         key = headline_key(post.title)
                         if post.id not in posts and (not key or key not in seen_headlines):
                             posts[post.id] = post
@@ -149,4 +156,6 @@ def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
     interleaved = []
     for index in range(max((len(feed) for feed in feed_posts), default=0)):
         interleaved.extend(feed[index] for feed in feed_posts if index < len(feed))
+    if stats is not None:
+        stats["expired_ids"] = expired_ids
     return interleaved, errors
