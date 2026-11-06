@@ -12,7 +12,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api repos/Smart-create001/Agent_repost-news/actions/jobs/127607684132/logs > /tmp/prior-run.log
+          if ! gh api repos/Smart-create001/Agent_repost-news/actions/jobs/127607684132/logs > /tmp/prior-run.log 2>/tmp/prior-error; then
+            python3 -c 'import re; s=open("/tmp/prior-error").read(); m=re.search(r"HTTP (\d+)",s); print("::error::Log API failed status="+(m.group(1) if m else "unknown"))'
+            exit 1
+          fi
           python3 - <<'PY'
           import re
           from collections import Counter
