@@ -60,6 +60,13 @@ def test_hash_mismatch_fails_before_reporting_validated(tmp_path):
         verify_snapshot(work, commit, "0" * 64, processing_outcome="skipped", config_path=CONFIG)
 
 
+@pytest.mark.parametrize("commit,digest", [("", ""), ("a" * 40, "")])
+def test_missing_expected_commit_or_sha_fails_closed(tmp_path, commit, digest):
+    work, _ = setup_git(tmp_path)
+    with pytest.raises(StateError, match="required"):
+        verify_snapshot(work, commit, digest, processing_outcome="skipped", config_path=CONFIG)
+
+
 @pytest.mark.parametrize("commit,digest", [("", "a" * 64), ("f" * 40, "a" * 64)])
 def test_missing_or_unavailable_expected_commit_fails(tmp_path, commit, digest):
     work, _ = setup_git(tmp_path)
@@ -102,3 +109,14 @@ def test_unskipped_processing_is_not_reported_as_non_invocation(tmp_path):
     commit, digest = commit_state(work, empty_state())
     with pytest.raises(StateError, match="not verified as skipped"):
         verify_snapshot(work, commit, digest, processing_outcome="success", config_path=CONFIG)
+
+
+def test_current_production_snapshot_70c7a7_has_321_pending_read_only():
+    repo = ROOT
+    commit = "70c7a7beb2b3b84898df8191decadbc8dcb295c9"
+    raw = subprocess.check_output(["git", "show", f"{commit}:seen_posts.json"], cwd=repo)
+    digest = sha256(raw).hexdigest()
+    assert digest == "04c4a2f479e785351b9b882f7c7409512a8c0310423337f501eb26dd42e2814e"
+    report = verify_snapshot(repo, commit, digest, processing_outcome="skipped", config_path=CONFIG)
+    assert report["ai_pending"] == 321
+    assert report["main_state_matches_expected"] is True
