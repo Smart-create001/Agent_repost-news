@@ -1,0 +1,3230 @@
+{
+  "schema_version": 1,
+  "topics": {
+    "ai_tech": {
+      "posts": {},
+      "briefings": {},
+      "pending_posts": {
+        "3c45d7262f0267015a4f4a15d628b50355d1c987fcd14cc1ca53d35aac57658c": {
+          "id": "3c45d7262f0267015a4f4a15d628b50355d1c987fcd14cc1ca53d35aac57658c",
+          "canonical_url": "https://fixture.example.org/ai/000",
+          "title": "Fixture AI article 000",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3e5d17d7d5367dc3725b583dde06eb38cd87162086323aea86f886701179e545": {
+          "id": "3e5d17d7d5367dc3725b583dde06eb38cd87162086323aea86f886701179e545",
+          "canonical_url": "https://fixture.example.org/ai/001",
+          "title": "Fixture AI article 001",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6d485729d757fa6814cd14a3b6af330f38246ae0259039664e43c50e838f0908": {
+          "id": "6d485729d757fa6814cd14a3b6af330f38246ae0259039664e43c50e838f0908",
+          "canonical_url": "https://fixture.example.org/ai/002",
+          "title": "Fixture AI article 002",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "ab3360c4ee624f7cc9cdc0cca0d73d1805c34feb26b4bff450fa58b415e22c82": {
+          "id": "ab3360c4ee624f7cc9cdc0cca0d73d1805c34feb26b4bff450fa58b415e22c82",
+          "canonical_url": "https://fixture.example.org/ai/003",
+          "title": "Fixture AI article 003",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f51092e8eac6de725f078e948bc15da580b1f67314507a28c5dc56019f968114": {
+          "id": "f51092e8eac6de725f078e948bc15da580b1f67314507a28c5dc56019f968114",
+          "canonical_url": "https://fixture.example.org/ai/004",
+          "title": "Fixture AI article 004",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "31105f0b57aec4f579264d2770b864e367cace21b34991dda2c31e90413a8576": {
+          "id": "31105f0b57aec4f579264d2770b864e367cace21b34991dda2c31e90413a8576",
+          "canonical_url": "https://fixture.example.org/ai/005",
+          "title": "Fixture AI article 005",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "933b608650de0abc287ba901a09dcea26208c38e320e760864d8df4bb6236312": {
+          "id": "933b608650de0abc287ba901a09dcea26208c38e320e760864d8df4bb6236312",
+          "canonical_url": "https://fixture.example.org/ai/006",
+          "title": "Fixture AI article 006",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7f829a77cb887c5b20723cd5f100a7f266e7939c98422f82bcfa31b7bda890ef": {
+          "id": "7f829a77cb887c5b20723cd5f100a7f266e7939c98422f82bcfa31b7bda890ef",
+          "canonical_url": "https://fixture.example.org/ai/007",
+          "title": "Fixture AI article 007",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "760bf32ff7d37e025eb16155b4dafd0fc9982fa3e81256e43ea5bd4bb62355d1": {
+          "id": "760bf32ff7d37e025eb16155b4dafd0fc9982fa3e81256e43ea5bd4bb62355d1",
+          "canonical_url": "https://fixture.example.org/ai/008",
+          "title": "Fixture AI article 008",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "70c04f1341d6d3ab81197ea7f6771e020920c985536b201fa176c7a983e6e11b": {
+          "id": "70c04f1341d6d3ab81197ea7f6771e020920c985536b201fa176c7a983e6e11b",
+          "canonical_url": "https://fixture.example.org/ai/009",
+          "title": "Fixture AI article 009",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "21244abbb7a2641ee4e053548c947c54fb58a59961999d0e30634829b1342e08": {
+          "id": "21244abbb7a2641ee4e053548c947c54fb58a59961999d0e30634829b1342e08",
+          "canonical_url": "https://fixture.example.org/ai/010",
+          "title": "Fixture AI article 010",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "ae9b7826682a0b69cf229e3ee4a022e784a3cf45e672af4f8a16167977c63ff7": {
+          "id": "ae9b7826682a0b69cf229e3ee4a022e784a3cf45e672af4f8a16167977c63ff7",
+          "canonical_url": "https://fixture.example.org/ai/011",
+          "title": "Fixture AI article 011",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "e03468e9d82df0ac6b2999dae2a991cb4ce13479fab2d28f37930203e7665052": {
+          "id": "e03468e9d82df0ac6b2999dae2a991cb4ce13479fab2d28f37930203e7665052",
+          "canonical_url": "https://fixture.example.org/ai/012",
+          "title": "Fixture AI article 012",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1de457489c8e2036f940b7649b554d44a91216f56cb2d47771e180dab098acd2": {
+          "id": "1de457489c8e2036f940b7649b554d44a91216f56cb2d47771e180dab098acd2",
+          "canonical_url": "https://fixture.example.org/ai/013",
+          "title": "Fixture AI article 013",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "857c78356781ba8d960d62b818f15aa21209531099aee3fb0c6f962116a80086": {
+          "id": "857c78356781ba8d960d62b818f15aa21209531099aee3fb0c6f962116a80086",
+          "canonical_url": "https://fixture.example.org/ai/014",
+          "title": "Fixture AI article 014",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "25bc5f677e43ab6ef0d0fde80c4e958f7cc3ff2f2700d0be13baaa657166871b": {
+          "id": "25bc5f677e43ab6ef0d0fde80c4e958f7cc3ff2f2700d0be13baaa657166871b",
+          "canonical_url": "https://fixture.example.org/ai/015",
+          "title": "Fixture AI article 015",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7d3cdaaa3b92fdcb23b45ed6cad3029e3e704439dbdfd557376a6212201b32b6": {
+          "id": "7d3cdaaa3b92fdcb23b45ed6cad3029e3e704439dbdfd557376a6212201b32b6",
+          "canonical_url": "https://fixture.example.org/ai/016",
+          "title": "Fixture AI article 016",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "70cc72997c07a23e4ad134accd909dfd75bdf286ae9aa09ff322087227bf221a": {
+          "id": "70cc72997c07a23e4ad134accd909dfd75bdf286ae9aa09ff322087227bf221a",
+          "canonical_url": "https://fixture.example.org/ai/017",
+          "title": "Fixture AI article 017",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "506ae39cd36de30ce2a286abc33a4f3a63c445f2ba5714140a54e37f52ff6448": {
+          "id": "506ae39cd36de30ce2a286abc33a4f3a63c445f2ba5714140a54e37f52ff6448",
+          "canonical_url": "https://fixture.example.org/ai/018",
+          "title": "Fixture AI article 018",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "30e3c1837f49334efeee83e27f2ded005aa445a63b64670b303efad836a02bd1": {
+          "id": "30e3c1837f49334efeee83e27f2ded005aa445a63b64670b303efad836a02bd1",
+          "canonical_url": "https://fixture.example.org/ai/019",
+          "title": "Fixture AI article 019",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b95261cb49f3cd3371d80773edebf872894ffc00f80470bfa66ef6f3ce19dcca": {
+          "id": "b95261cb49f3cd3371d80773edebf872894ffc00f80470bfa66ef6f3ce19dcca",
+          "canonical_url": "https://fixture.example.org/ai/020",
+          "title": "Fixture AI article 020",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0baca2fd995808ca2cc9daeddc52d90351e686dcfa58c76f0cfec193388b4744": {
+          "id": "0baca2fd995808ca2cc9daeddc52d90351e686dcfa58c76f0cfec193388b4744",
+          "canonical_url": "https://fixture.example.org/ai/021",
+          "title": "Fixture AI article 021",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c822a46272db2af57547b75c06e436d04808b7bd463c2cc6d2c71be9523f3e98": {
+          "id": "c822a46272db2af57547b75c06e436d04808b7bd463c2cc6d2c71be9523f3e98",
+          "canonical_url": "https://fixture.example.org/ai/022",
+          "title": "Fixture AI article 022",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a337d8e939d466a58222b9e5e7c129f6f87273b956f44df0a1b4382c0c55b9f0": {
+          "id": "a337d8e939d466a58222b9e5e7c129f6f87273b956f44df0a1b4382c0c55b9f0",
+          "canonical_url": "https://fixture.example.org/ai/023",
+          "title": "Fixture AI article 023",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "576d350af37559dd22f798c513afe88effb7ed9b16ace17b6653d2b0e18924a2": {
+          "id": "576d350af37559dd22f798c513afe88effb7ed9b16ace17b6653d2b0e18924a2",
+          "canonical_url": "https://fixture.example.org/ai/024",
+          "title": "Fixture AI article 024",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "8d41cb1191818cf53d67ac725439d00e737d4aa50ec1957bae5ec4766c008cb3": {
+          "id": "8d41cb1191818cf53d67ac725439d00e737d4aa50ec1957bae5ec4766c008cb3",
+          "canonical_url": "https://fixture.example.org/ai/025",
+          "title": "Fixture AI article 025",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9607efd73e50172371fc66a84faea27d2aa15508c5330f26cf022966997e83f5": {
+          "id": "9607efd73e50172371fc66a84faea27d2aa15508c5330f26cf022966997e83f5",
+          "canonical_url": "https://fixture.example.org/ai/026",
+          "title": "Fixture AI article 026",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "baeefbb0d0e02ac1cdd64eccb93e4c34602e9046080da0d58de4b06fd7061afe": {
+          "id": "baeefbb0d0e02ac1cdd64eccb93e4c34602e9046080da0d58de4b06fd7061afe",
+          "canonical_url": "https://fixture.example.org/ai/027",
+          "title": "Fixture AI article 027",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "63a262c48120cae499c43535e713a58cf669dff3d7f1d6feec8c1c2713ae57b6": {
+          "id": "63a262c48120cae499c43535e713a58cf669dff3d7f1d6feec8c1c2713ae57b6",
+          "canonical_url": "https://fixture.example.org/ai/028",
+          "title": "Fixture AI article 028",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "13c9de58c98786a83e354e9545fac408b10a8bc61f23784f33a571883df013b6": {
+          "id": "13c9de58c98786a83e354e9545fac408b10a8bc61f23784f33a571883df013b6",
+          "canonical_url": "https://fixture.example.org/ai/029",
+          "title": "Fixture AI article 029",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "018b325f0a74eaeb8dbfae9df9df505b359af3b8b87a324414011274bee1669e": {
+          "id": "018b325f0a74eaeb8dbfae9df9df505b359af3b8b87a324414011274bee1669e",
+          "canonical_url": "https://fixture.example.org/ai/030",
+          "title": "Fixture AI article 030",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "134b3ddd68ec66834d3c8b19b50421854fbc9b8529607190c78a4e7d9e08535d": {
+          "id": "134b3ddd68ec66834d3c8b19b50421854fbc9b8529607190c78a4e7d9e08535d",
+          "canonical_url": "https://fixture.example.org/ai/031",
+          "title": "Fixture AI article 031",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "df9686b87ec337420a5b6da58fe2838e258acd320fbd89f5d7f15c4ac81e9e14": {
+          "id": "df9686b87ec337420a5b6da58fe2838e258acd320fbd89f5d7f15c4ac81e9e14",
+          "canonical_url": "https://fixture.example.org/ai/032",
+          "title": "Fixture AI article 032",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "30a8aa8c054c70cdd4032d26ef27e053de2935f8319bd2cd8d0925153d2c44b6": {
+          "id": "30a8aa8c054c70cdd4032d26ef27e053de2935f8319bd2cd8d0925153d2c44b6",
+          "canonical_url": "https://fixture.example.org/ai/033",
+          "title": "Fixture AI article 033",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "2d4d6fa2e55ede03def9d660ccf298fa1262f161d6019461d8902658e42ea181": {
+          "id": "2d4d6fa2e55ede03def9d660ccf298fa1262f161d6019461d8902658e42ea181",
+          "canonical_url": "https://fixture.example.org/ai/034",
+          "title": "Fixture AI article 034",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "68e43b83516ba769a69457d185b5e0cb7c7035d83817f401ec8b4e90ee167e0f": {
+          "id": "68e43b83516ba769a69457d185b5e0cb7c7035d83817f401ec8b4e90ee167e0f",
+          "canonical_url": "https://fixture.example.org/ai/035",
+          "title": "Fixture AI article 035",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "5a8b8719e443535b13a65a24e63c956ea63a39417f563a1163b191f4599c47a7": {
+          "id": "5a8b8719e443535b13a65a24e63c956ea63a39417f563a1163b191f4599c47a7",
+          "canonical_url": "https://fixture.example.org/ai/036",
+          "title": "Fixture AI article 036",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "ba5835c681e829033407af3de8285207b5ced5585a4acaa74bd6105c7f776a06": {
+          "id": "ba5835c681e829033407af3de8285207b5ced5585a4acaa74bd6105c7f776a06",
+          "canonical_url": "https://fixture.example.org/ai/037",
+          "title": "Fixture AI article 037",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6e025d2d7acdbc0b5509fc9d4c0e5e7a58fe2a10067cc50a345967091af69f0b": {
+          "id": "6e025d2d7acdbc0b5509fc9d4c0e5e7a58fe2a10067cc50a345967091af69f0b",
+          "canonical_url": "https://fixture.example.org/ai/038",
+          "title": "Fixture AI article 038",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "51211a5107d8125bffb7b1808a6ce8549496e01e9113fea0a99e6dad904022b8": {
+          "id": "51211a5107d8125bffb7b1808a6ce8549496e01e9113fea0a99e6dad904022b8",
+          "canonical_url": "https://fixture.example.org/ai/039",
+          "title": "Fixture AI article 039",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "fbff9e84e49fadf09d747b1d0285591a738cd3284d56ec14e069e46f8f834fc7": {
+          "id": "fbff9e84e49fadf09d747b1d0285591a738cd3284d56ec14e069e46f8f834fc7",
+          "canonical_url": "https://fixture.example.org/ai/040",
+          "title": "Fixture AI article 040",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c6917233f336d1ee9fae2837f015184c671ca608ee0d469eba6709b0c2867976": {
+          "id": "c6917233f336d1ee9fae2837f015184c671ca608ee0d469eba6709b0c2867976",
+          "canonical_url": "https://fixture.example.org/ai/041",
+          "title": "Fixture AI article 041",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7e2a9c583e6a5183d052453d3b5b6027172e9f36acb888733040b8ce4f7331e2": {
+          "id": "7e2a9c583e6a5183d052453d3b5b6027172e9f36acb888733040b8ce4f7331e2",
+          "canonical_url": "https://fixture.example.org/ai/042",
+          "title": "Fixture AI article 042",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "15d30eeb0a170b8596ea01f620bbae380c0d5705f9a7822bb0e5b0ba639c5dd3": {
+          "id": "15d30eeb0a170b8596ea01f620bbae380c0d5705f9a7822bb0e5b0ba639c5dd3",
+          "canonical_url": "https://fixture.example.org/ai/043",
+          "title": "Fixture AI article 043",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "8bdb2fea49c1243665e60b430e46c196d1b6335b0cc3e6fb5f429d612c7cf37e": {
+          "id": "8bdb2fea49c1243665e60b430e46c196d1b6335b0cc3e6fb5f429d612c7cf37e",
+          "canonical_url": "https://fixture.example.org/ai/044",
+          "title": "Fixture AI article 044",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1fde9a88ac5bbb1fd8acd50be373aa17f49d45da752a81b754bc41bd073488c4": {
+          "id": "1fde9a88ac5bbb1fd8acd50be373aa17f49d45da752a81b754bc41bd073488c4",
+          "canonical_url": "https://fixture.example.org/ai/045",
+          "title": "Fixture AI article 045",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "42fdda4cb3b8c8267e9a78336ed3995a18df0f58ee27808c5e8b3206282cea08": {
+          "id": "42fdda4cb3b8c8267e9a78336ed3995a18df0f58ee27808c5e8b3206282cea08",
+          "canonical_url": "https://fixture.example.org/ai/046",
+          "title": "Fixture AI article 046",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7dd2154f4324ba28be1837f992eeeb26d32f337f3d59471ecf6979f8a03679fd": {
+          "id": "7dd2154f4324ba28be1837f992eeeb26d32f337f3d59471ecf6979f8a03679fd",
+          "canonical_url": "https://fixture.example.org/ai/047",
+          "title": "Fixture AI article 047",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7191a99980ed856ed66e5f57231a7b9c639dbc9a5d13e1e9308077ce3274ce2d": {
+          "id": "7191a99980ed856ed66e5f57231a7b9c639dbc9a5d13e1e9308077ce3274ce2d",
+          "canonical_url": "https://fixture.example.org/ai/048",
+          "title": "Fixture AI article 048",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "205d8c50035164e7ec3618de715f751bec12f686ee42f3fb1aab83b3ce54e711": {
+          "id": "205d8c50035164e7ec3618de715f751bec12f686ee42f3fb1aab83b3ce54e711",
+          "canonical_url": "https://fixture.example.org/ai/049",
+          "title": "Fixture AI article 049",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0f971ac7d666ba230cc4ae86f85dc5ec46bce42b1dee78dea03c2bc2a88e4d37": {
+          "id": "0f971ac7d666ba230cc4ae86f85dc5ec46bce42b1dee78dea03c2bc2a88e4d37",
+          "canonical_url": "https://fixture.example.org/ai/050",
+          "title": "Fixture AI article 050",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7756c00f466e619729ceb767651c8bdd6941732dbcbf45f55c1d4b7c6e4e9840": {
+          "id": "7756c00f466e619729ceb767651c8bdd6941732dbcbf45f55c1d4b7c6e4e9840",
+          "canonical_url": "https://fixture.example.org/ai/051",
+          "title": "Fixture AI article 051",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6595cae7343e592aa816d992093ec0c5a4e2d3b97e015571274afd7c6ced342d": {
+          "id": "6595cae7343e592aa816d992093ec0c5a4e2d3b97e015571274afd7c6ced342d",
+          "canonical_url": "https://fixture.example.org/ai/052",
+          "title": "Fixture AI article 052",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "42847926d99bdb5732a272c3424e2eace651f871ecb5cd3a811e478383fea41d": {
+          "id": "42847926d99bdb5732a272c3424e2eace651f871ecb5cd3a811e478383fea41d",
+          "canonical_url": "https://fixture.example.org/ai/053",
+          "title": "Fixture AI article 053",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1bb471fd95fab076e228867e9f5f988950265fcd58db02bdd3252999e5bff697": {
+          "id": "1bb471fd95fab076e228867e9f5f988950265fcd58db02bdd3252999e5bff697",
+          "canonical_url": "https://fixture.example.org/ai/054",
+          "title": "Fixture AI article 054",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7dea2c4f49d255335f1fddbdb969cf15b1238fcc77ca64ef3ec7b218a38d6c2f": {
+          "id": "7dea2c4f49d255335f1fddbdb969cf15b1238fcc77ca64ef3ec7b218a38d6c2f",
+          "canonical_url": "https://fixture.example.org/ai/055",
+          "title": "Fixture AI article 055",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "83b150f8daf7852209f118c1491cac0856234d158f14b1480ea13453f8281964": {
+          "id": "83b150f8daf7852209f118c1491cac0856234d158f14b1480ea13453f8281964",
+          "canonical_url": "https://fixture.example.org/ai/056",
+          "title": "Fixture AI article 056",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6dee298f086236c1fe399ceb721d662374e53507ba612c53ff58efcfea8ddac4": {
+          "id": "6dee298f086236c1fe399ceb721d662374e53507ba612c53ff58efcfea8ddac4",
+          "canonical_url": "https://fixture.example.org/ai/057",
+          "title": "Fixture AI article 057",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d43d7f411da931bef5b2628ebc834d62341dfb94be05a8dd6c26f176606671b7": {
+          "id": "d43d7f411da931bef5b2628ebc834d62341dfb94be05a8dd6c26f176606671b7",
+          "canonical_url": "https://fixture.example.org/ai/058",
+          "title": "Fixture AI article 058",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1e0543486cb57942edbb983cea9a4b442f6d50755a2268b4b1296cb4d6eb34c7": {
+          "id": "1e0543486cb57942edbb983cea9a4b442f6d50755a2268b4b1296cb4d6eb34c7",
+          "canonical_url": "https://fixture.example.org/ai/059",
+          "title": "Fixture AI article 059",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "16a0de7802523b28cb97155a8ffeaba6a95ce21589a807e9808a12307ac76ed5": {
+          "id": "16a0de7802523b28cb97155a8ffeaba6a95ce21589a807e9808a12307ac76ed5",
+          "canonical_url": "https://fixture.example.org/ai/060",
+          "title": "Fixture AI article 060",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "76d80b8719481b27ee758f6909a29a0109d429216805e30a4ab4d19b0620e549": {
+          "id": "76d80b8719481b27ee758f6909a29a0109d429216805e30a4ab4d19b0620e549",
+          "canonical_url": "https://fixture.example.org/ai/061",
+          "title": "Fixture AI article 061",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "dcd5962ee1bd7f9327561cd183fa42635828692177aa68a5bf944dcdbb8300ed": {
+          "id": "dcd5962ee1bd7f9327561cd183fa42635828692177aa68a5bf944dcdbb8300ed",
+          "canonical_url": "https://fixture.example.org/ai/062",
+          "title": "Fixture AI article 062",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f330741fb4bba5d5a53c479e6e9c0cd25ac90639060f35e6ce905726d1a525a1": {
+          "id": "f330741fb4bba5d5a53c479e6e9c0cd25ac90639060f35e6ce905726d1a525a1",
+          "canonical_url": "https://fixture.example.org/ai/063",
+          "title": "Fixture AI article 063",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b5493c42712adddce7620dbe107f65982eea9d0a515c1ccdc98e023857658946": {
+          "id": "b5493c42712adddce7620dbe107f65982eea9d0a515c1ccdc98e023857658946",
+          "canonical_url": "https://fixture.example.org/ai/064",
+          "title": "Fixture AI article 064",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7b077ca2f478b551f30e90c38a379731edd2e15eb918a1a6975a2a17f31d1e9d": {
+          "id": "7b077ca2f478b551f30e90c38a379731edd2e15eb918a1a6975a2a17f31d1e9d",
+          "canonical_url": "https://fixture.example.org/ai/065",
+          "title": "Fixture AI article 065",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7bb8d7706b0e5335dde72626ec89fc4df2c70a549f23b61d0dce5e85500d57b3": {
+          "id": "7bb8d7706b0e5335dde72626ec89fc4df2c70a549f23b61d0dce5e85500d57b3",
+          "canonical_url": "https://fixture.example.org/ai/066",
+          "title": "Fixture AI article 066",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "40f5248839b92530357e3c5bb0f18784ce0510a341edf8296c37a0e77d6e95a1": {
+          "id": "40f5248839b92530357e3c5bb0f18784ce0510a341edf8296c37a0e77d6e95a1",
+          "canonical_url": "https://fixture.example.org/ai/067",
+          "title": "Fixture AI article 067",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1462c122b002cc43572b5912de665908aac8a10c3d3a2d09f2e048e91d22a6f6": {
+          "id": "1462c122b002cc43572b5912de665908aac8a10c3d3a2d09f2e048e91d22a6f6",
+          "canonical_url": "https://fixture.example.org/ai/068",
+          "title": "Fixture AI article 068",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "cfa6a94ba9dd524aeae12d2e50e1c704bc45048dc680cb02085dc8f891768227": {
+          "id": "cfa6a94ba9dd524aeae12d2e50e1c704bc45048dc680cb02085dc8f891768227",
+          "canonical_url": "https://fixture.example.org/ai/069",
+          "title": "Fixture AI article 069",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "81199e3b962b1db2006cceaa50c1932718afd3288228ab9b6d7a14e39638e359": {
+          "id": "81199e3b962b1db2006cceaa50c1932718afd3288228ab9b6d7a14e39638e359",
+          "canonical_url": "https://fixture.example.org/ai/070",
+          "title": "Fixture AI article 070",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "4a96b69f68dd6987917a5f6043b01342b46734e2b049e9866dcc734458f15ab3": {
+          "id": "4a96b69f68dd6987917a5f6043b01342b46734e2b049e9866dcc734458f15ab3",
+          "canonical_url": "https://fixture.example.org/ai/071",
+          "title": "Fixture AI article 071",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f70a43a082155509c6ce73b75ed1ee12aed657346a9a04817e430d5214ba20d3": {
+          "id": "f70a43a082155509c6ce73b75ed1ee12aed657346a9a04817e430d5214ba20d3",
+          "canonical_url": "https://fixture.example.org/ai/072",
+          "title": "Fixture AI article 072",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d4819c4cd256f5cfb8e35b6520f2719824beb14e6ab16dc08f1d20ef2d76719a": {
+          "id": "d4819c4cd256f5cfb8e35b6520f2719824beb14e6ab16dc08f1d20ef2d76719a",
+          "canonical_url": "https://fixture.example.org/ai/073",
+          "title": "Fixture AI article 073",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "cba97583bed58ca1c576909c4dc615b3707115f8d7dd8dac2805946d7d3bfa0f": {
+          "id": "cba97583bed58ca1c576909c4dc615b3707115f8d7dd8dac2805946d7d3bfa0f",
+          "canonical_url": "https://fixture.example.org/ai/074",
+          "title": "Fixture AI article 074",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6f5560efdfbe2e142dd7d75a6734f50d63a31d3a2f385ec7a74e3411e29d1e20": {
+          "id": "6f5560efdfbe2e142dd7d75a6734f50d63a31d3a2f385ec7a74e3411e29d1e20",
+          "canonical_url": "https://fixture.example.org/ai/075",
+          "title": "Fixture AI article 075",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f2c2adea6e9ef0d18a0bd780a7f69ce8e0dc05370031a553fc2f41881044e61d": {
+          "id": "f2c2adea6e9ef0d18a0bd780a7f69ce8e0dc05370031a553fc2f41881044e61d",
+          "canonical_url": "https://fixture.example.org/ai/076",
+          "title": "Fixture AI article 076",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "2d0f693bd0ea010179d5a849302bda8c9335042e1baa05472b07a1ed176dd3ef": {
+          "id": "2d0f693bd0ea010179d5a849302bda8c9335042e1baa05472b07a1ed176dd3ef",
+          "canonical_url": "https://fixture.example.org/ai/077",
+          "title": "Fixture AI article 077",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "ebace09d122430380e8182c8c7d2bf97a1bb6c2f769cc7fc44458d63ecb0dc44": {
+          "id": "ebace09d122430380e8182c8c7d2bf97a1bb6c2f769cc7fc44458d63ecb0dc44",
+          "canonical_url": "https://fixture.example.org/ai/078",
+          "title": "Fixture AI article 078",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "627481a90d681410e61263f9465c9abf177222c7c9470d1486795048f432e8ac": {
+          "id": "627481a90d681410e61263f9465c9abf177222c7c9470d1486795048f432e8ac",
+          "canonical_url": "https://fixture.example.org/ai/079",
+          "title": "Fixture AI article 079",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3304c57f0869f21359810a794d3b09f793c6f0aeca9712c2e261496b6f3b423b": {
+          "id": "3304c57f0869f21359810a794d3b09f793c6f0aeca9712c2e261496b6f3b423b",
+          "canonical_url": "https://fixture.example.org/ai/080",
+          "title": "Fixture AI article 080",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "ac8b4db7cb11d404222b572dee1114a07ee803a46078a6dcdb54c92baa5ab96a": {
+          "id": "ac8b4db7cb11d404222b572dee1114a07ee803a46078a6dcdb54c92baa5ab96a",
+          "canonical_url": "https://fixture.example.org/ai/081",
+          "title": "Fixture AI article 081",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "cbd1d3f0360f2ee1369873074a448d37d3f4b42db5cc86b740ace08a8fab8c3e": {
+          "id": "cbd1d3f0360f2ee1369873074a448d37d3f4b42db5cc86b740ace08a8fab8c3e",
+          "canonical_url": "https://fixture.example.org/ai/082",
+          "title": "Fixture AI article 082",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9a2dbc46f12162f86207d809fca4b63decad8cfa08c10d611075200885370055": {
+          "id": "9a2dbc46f12162f86207d809fca4b63decad8cfa08c10d611075200885370055",
+          "canonical_url": "https://fixture.example.org/ai/083",
+          "title": "Fixture AI article 083",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "bdc81263835d3b8ec7489d0cc0b01166911d6bce0258a1fd5e0911e05bb08616": {
+          "id": "bdc81263835d3b8ec7489d0cc0b01166911d6bce0258a1fd5e0911e05bb08616",
+          "canonical_url": "https://fixture.example.org/ai/084",
+          "title": "Fixture AI article 084",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "dd234a5e9ede8196170bd1c5d06e6f4f644982c24a4a8aa3e70ba002f25da15e": {
+          "id": "dd234a5e9ede8196170bd1c5d06e6f4f644982c24a4a8aa3e70ba002f25da15e",
+          "canonical_url": "https://fixture.example.org/ai/085",
+          "title": "Fixture AI article 085",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "2c6624206f88a08832b6309316b4dbaf84f40d5f30a3b5741c7ea854aa655b07": {
+          "id": "2c6624206f88a08832b6309316b4dbaf84f40d5f30a3b5741c7ea854aa655b07",
+          "canonical_url": "https://fixture.example.org/ai/086",
+          "title": "Fixture AI article 086",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d6f3e61cf82227690dd9ca05defeae7dc80c1647b8312943505172235d3fabe2": {
+          "id": "d6f3e61cf82227690dd9ca05defeae7dc80c1647b8312943505172235d3fabe2",
+          "canonical_url": "https://fixture.example.org/ai/087",
+          "title": "Fixture AI article 087",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d4e255749798751014f3fec6c421e14866dba1b880930d06831cf0a04dfd3a22": {
+          "id": "d4e255749798751014f3fec6c421e14866dba1b880930d06831cf0a04dfd3a22",
+          "canonical_url": "https://fixture.example.org/ai/088",
+          "title": "Fixture AI article 088",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "78ac0b38b508906bd97c3195acf8afbfc495c4edf41106b818576027b9f58aee": {
+          "id": "78ac0b38b508906bd97c3195acf8afbfc495c4edf41106b818576027b9f58aee",
+          "canonical_url": "https://fixture.example.org/ai/089",
+          "title": "Fixture AI article 089",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "15e03460e75f57f33ac61edef81d75d84abfcf617bd22c2f59a4769c0576db1d": {
+          "id": "15e03460e75f57f33ac61edef81d75d84abfcf617bd22c2f59a4769c0576db1d",
+          "canonical_url": "https://fixture.example.org/ai/090",
+          "title": "Fixture AI article 090",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "47702fd2660250ad530f0335ac8bb369de763827c75019b2ea0a022f72f1602c": {
+          "id": "47702fd2660250ad530f0335ac8bb369de763827c75019b2ea0a022f72f1602c",
+          "canonical_url": "https://fixture.example.org/ai/091",
+          "title": "Fixture AI article 091",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "5f311aee252665656bac1a3fa9c0e3be64dd966e9ed31e6948dbff863aef4853": {
+          "id": "5f311aee252665656bac1a3fa9c0e3be64dd966e9ed31e6948dbff863aef4853",
+          "canonical_url": "https://fixture.example.org/ai/092",
+          "title": "Fixture AI article 092",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "ac9285118c88945c9612b3af6176e8c2e96509729b1bccb25830e097ab617041": {
+          "id": "ac9285118c88945c9612b3af6176e8c2e96509729b1bccb25830e097ab617041",
+          "canonical_url": "https://fixture.example.org/ai/093",
+          "title": "Fixture AI article 093",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a54e300a7d0098ed6515cd2179c851245d889ea609ab242653e911df41a5caf0": {
+          "id": "a54e300a7d0098ed6515cd2179c851245d889ea609ab242653e911df41a5caf0",
+          "canonical_url": "https://fixture.example.org/ai/094",
+          "title": "Fixture AI article 094",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "bc22f0995816324a8df1c7b828a49a2254542ff2689a8ddee79318e4df9aaf8a": {
+          "id": "bc22f0995816324a8df1c7b828a49a2254542ff2689a8ddee79318e4df9aaf8a",
+          "canonical_url": "https://fixture.example.org/ai/095",
+          "title": "Fixture AI article 095",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9a37bbb94036d1b7c59e1a35f34b31ac51f6925a6e9a4379a704d4f15c9a60ef": {
+          "id": "9a37bbb94036d1b7c59e1a35f34b31ac51f6925a6e9a4379a704d4f15c9a60ef",
+          "canonical_url": "https://fixture.example.org/ai/096",
+          "title": "Fixture AI article 096",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "70bae7368bdbf6139674d5b3f777e96a5870f8a3819564c61d85b286a2d4eba2": {
+          "id": "70bae7368bdbf6139674d5b3f777e96a5870f8a3819564c61d85b286a2d4eba2",
+          "canonical_url": "https://fixture.example.org/ai/097",
+          "title": "Fixture AI article 097",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "e56274a2cb335eafd16fe16ef0fabd61357f8e8b4334cc5c57b8e805323d80a2": {
+          "id": "e56274a2cb335eafd16fe16ef0fabd61357f8e8b4334cc5c57b8e805323d80a2",
+          "canonical_url": "https://fixture.example.org/ai/098",
+          "title": "Fixture AI article 098",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b6e719344540bb394d9fd627d755191454993d568b46d380c36e2274032beb43": {
+          "id": "b6e719344540bb394d9fd627d755191454993d568b46d380c36e2274032beb43",
+          "canonical_url": "https://fixture.example.org/ai/099",
+          "title": "Fixture AI article 099",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0761df14b6a46ad1596b5ea811d4e421b3cb8b293b902a61a03165132a158ec5": {
+          "id": "0761df14b6a46ad1596b5ea811d4e421b3cb8b293b902a61a03165132a158ec5",
+          "canonical_url": "https://fixture.example.org/ai/100",
+          "title": "Fixture AI article 100",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f3367dc9748868d5190c3240c4921b23d25b7942588ddc4ff36d32d119d6f202": {
+          "id": "f3367dc9748868d5190c3240c4921b23d25b7942588ddc4ff36d32d119d6f202",
+          "canonical_url": "https://fixture.example.org/ai/101",
+          "title": "Fixture AI article 101",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "2e161ae92fc14abd53fbcf23294da35054032120ccb64196fafd655f45518d10": {
+          "id": "2e161ae92fc14abd53fbcf23294da35054032120ccb64196fafd655f45518d10",
+          "canonical_url": "https://fixture.example.org/ai/102",
+          "title": "Fixture AI article 102",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "32c06c2eb3c9721e44bdd910806913e63355ad3f0bc1ddee90a412573dddffd8": {
+          "id": "32c06c2eb3c9721e44bdd910806913e63355ad3f0bc1ddee90a412573dddffd8",
+          "canonical_url": "https://fixture.example.org/ai/103",
+          "title": "Fixture AI article 103",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b28bef4eda96f83dd0f43fc7f670a7b98c0edccfcd455d826eb7536aed50ebbb": {
+          "id": "b28bef4eda96f83dd0f43fc7f670a7b98c0edccfcd455d826eb7536aed50ebbb",
+          "canonical_url": "https://fixture.example.org/ai/104",
+          "title": "Fixture AI article 104",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b96cb5c06593a1ed429d1190445eca365023432829f02c9095fc7d55114b52a5": {
+          "id": "b96cb5c06593a1ed429d1190445eca365023432829f02c9095fc7d55114b52a5",
+          "canonical_url": "https://fixture.example.org/ai/105",
+          "title": "Fixture AI article 105",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "729784b64b612f0020da375faf5b84c15758d714893409bc3cad9772b3683ff9": {
+          "id": "729784b64b612f0020da375faf5b84c15758d714893409bc3cad9772b3683ff9",
+          "canonical_url": "https://fixture.example.org/ai/106",
+          "title": "Fixture AI article 106",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b5238941d583ee2d0854709ebf79304b3a5d72e9ab32f55278b2543ed9e9bc7e": {
+          "id": "b5238941d583ee2d0854709ebf79304b3a5d72e9ab32f55278b2543ed9e9bc7e",
+          "canonical_url": "https://fixture.example.org/ai/107",
+          "title": "Fixture AI article 107",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "2f851e1a2db5a651a90ef54f5e5f21a87cdd8a14445b8b90c676f34717753448": {
+          "id": "2f851e1a2db5a651a90ef54f5e5f21a87cdd8a14445b8b90c676f34717753448",
+          "canonical_url": "https://fixture.example.org/ai/108",
+          "title": "Fixture AI article 108",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "03e62d7d0573b229f7931dd8df0b7e9ec00ab9dd6a4fb78dbf45c1e27204c888": {
+          "id": "03e62d7d0573b229f7931dd8df0b7e9ec00ab9dd6a4fb78dbf45c1e27204c888",
+          "canonical_url": "https://fixture.example.org/ai/109",
+          "title": "Fixture AI article 109",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "af1621780446a5ad937532abfe4546d9984d0a55da611dabe35ceddba09a93cf": {
+          "id": "af1621780446a5ad937532abfe4546d9984d0a55da611dabe35ceddba09a93cf",
+          "canonical_url": "https://fixture.example.org/ai/110",
+          "title": "Fixture AI article 110",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "285a90c4c2a1056de5102be787aef362a6be4c6dfc52e727d91a399311a04599": {
+          "id": "285a90c4c2a1056de5102be787aef362a6be4c6dfc52e727d91a399311a04599",
+          "canonical_url": "https://fixture.example.org/ai/111",
+          "title": "Fixture AI article 111",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c8ade507f8144cf832d205bc98c116c82cffa0b6a6e5f6d8983bb319a81313c2": {
+          "id": "c8ade507f8144cf832d205bc98c116c82cffa0b6a6e5f6d8983bb319a81313c2",
+          "canonical_url": "https://fixture.example.org/ai/112",
+          "title": "Fixture AI article 112",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b62775a9411ffe54f1bb69a81d07148f9c54e8e1ee2bda78c4affa9715ff1e91": {
+          "id": "b62775a9411ffe54f1bb69a81d07148f9c54e8e1ee2bda78c4affa9715ff1e91",
+          "canonical_url": "https://fixture.example.org/ai/113",
+          "title": "Fixture AI article 113",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "024f0b802b10cd70ba98047a4695339b72458368f780673dc3c45c149fdb7396": {
+          "id": "024f0b802b10cd70ba98047a4695339b72458368f780673dc3c45c149fdb7396",
+          "canonical_url": "https://fixture.example.org/ai/114",
+          "title": "Fixture AI article 114",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "50d0313459bc8b5a4caf442f8962bdffe3aea0559987b24b0d689c16eb059a4f": {
+          "id": "50d0313459bc8b5a4caf442f8962bdffe3aea0559987b24b0d689c16eb059a4f",
+          "canonical_url": "https://fixture.example.org/ai/115",
+          "title": "Fixture AI article 115",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "bdc3d08b300207b0bd88f84ee4f21e9f881eebcd1f8cb0c7d7b5c83f62017aa5": {
+          "id": "bdc3d08b300207b0bd88f84ee4f21e9f881eebcd1f8cb0c7d7b5c83f62017aa5",
+          "canonical_url": "https://fixture.example.org/ai/116",
+          "title": "Fixture AI article 116",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "734939378149fb9037e93d091f2b6080b498773be679b6ceb458ba30093ca423": {
+          "id": "734939378149fb9037e93d091f2b6080b498773be679b6ceb458ba30093ca423",
+          "canonical_url": "https://fixture.example.org/ai/117",
+          "title": "Fixture AI article 117",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "75782789c863ddda33dc2392d1711ca4f4fcb1671eaecf3eea3026334f9fd6d4": {
+          "id": "75782789c863ddda33dc2392d1711ca4f4fcb1671eaecf3eea3026334f9fd6d4",
+          "canonical_url": "https://fixture.example.org/ai/118",
+          "title": "Fixture AI article 118",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "500ba48bf52c74493af9e2f817d18fa5a8318ef6970245fc31f293bbf34ee23f": {
+          "id": "500ba48bf52c74493af9e2f817d18fa5a8318ef6970245fc31f293bbf34ee23f",
+          "canonical_url": "https://fixture.example.org/ai/119",
+          "title": "Fixture AI article 119",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "304519ef3ef6ec175dc50005a07275593eb214053d545c93fe93043cd6ad7ca3": {
+          "id": "304519ef3ef6ec175dc50005a07275593eb214053d545c93fe93043cd6ad7ca3",
+          "canonical_url": "https://fixture.example.org/ai/120",
+          "title": "Fixture AI article 120",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "48d737a686105501e08d4dc0340ce6b5cfc3a6f814fa94916d6caa3197291841": {
+          "id": "48d737a686105501e08d4dc0340ce6b5cfc3a6f814fa94916d6caa3197291841",
+          "canonical_url": "https://fixture.example.org/ai/121",
+          "title": "Fixture AI article 121",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1c64de9bfc834560546f6afa2985ec054e5f27685a8877fa01966285bbc75432": {
+          "id": "1c64de9bfc834560546f6afa2985ec054e5f27685a8877fa01966285bbc75432",
+          "canonical_url": "https://fixture.example.org/ai/122",
+          "title": "Fixture AI article 122",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1f7ba23c07bba254914d92c771c16d8d0793bdd648ecbfde6d7a167f921fb75e": {
+          "id": "1f7ba23c07bba254914d92c771c16d8d0793bdd648ecbfde6d7a167f921fb75e",
+          "canonical_url": "https://fixture.example.org/ai/123",
+          "title": "Fixture AI article 123",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0007a457695bb7e474728719dfc7b68ab61a2b69687d182516360570134cf16c": {
+          "id": "0007a457695bb7e474728719dfc7b68ab61a2b69687d182516360570134cf16c",
+          "canonical_url": "https://fixture.example.org/ai/124",
+          "title": "Fixture AI article 124",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3f56c7164c2ca211fea6bd2bf43a9f795ce7ac8f5959c84e9369ada4498e9155": {
+          "id": "3f56c7164c2ca211fea6bd2bf43a9f795ce7ac8f5959c84e9369ada4498e9155",
+          "canonical_url": "https://fixture.example.org/ai/125",
+          "title": "Fixture AI article 125",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b067d5c4ea12223103379130b7465054d16587beb447cd805474799b8e994563": {
+          "id": "b067d5c4ea12223103379130b7465054d16587beb447cd805474799b8e994563",
+          "canonical_url": "https://fixture.example.org/ai/126",
+          "title": "Fixture AI article 126",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "52af59569cf86eb67c50ca7776ee8d00ed253b807f29ef959aedba010ec92c3a": {
+          "id": "52af59569cf86eb67c50ca7776ee8d00ed253b807f29ef959aedba010ec92c3a",
+          "canonical_url": "https://fixture.example.org/ai/127",
+          "title": "Fixture AI article 127",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1f7d976bb87fa7fdb30a0554504b710b9609e86caf263f83c011a8938f095868": {
+          "id": "1f7d976bb87fa7fdb30a0554504b710b9609e86caf263f83c011a8938f095868",
+          "canonical_url": "https://fixture.example.org/ai/128",
+          "title": "Fixture AI article 128",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "830d686915140a3783eb6047d0ec1ec3afcd424c9ececd2424f1c19e6ea81230": {
+          "id": "830d686915140a3783eb6047d0ec1ec3afcd424c9ececd2424f1c19e6ea81230",
+          "canonical_url": "https://fixture.example.org/ai/129",
+          "title": "Fixture AI article 129",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0d5feaa486ebb7d9a0d817d73e47931052e3cd850ccabf4764f3ae5b74f5bf92": {
+          "id": "0d5feaa486ebb7d9a0d817d73e47931052e3cd850ccabf4764f3ae5b74f5bf92",
+          "canonical_url": "https://fixture.example.org/ai/130",
+          "title": "Fixture AI article 130",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "10c2ff800684c3c7ab28c5b7dbdbe62fd82e3aadb551fde09d366dc8777e7456": {
+          "id": "10c2ff800684c3c7ab28c5b7dbdbe62fd82e3aadb551fde09d366dc8777e7456",
+          "canonical_url": "https://fixture.example.org/ai/131",
+          "title": "Fixture AI article 131",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "aff4a953b07fb8b30e74f2ea90ab6ade48382659091b8da32b90b8cf7ba105b1": {
+          "id": "aff4a953b07fb8b30e74f2ea90ab6ade48382659091b8da32b90b8cf7ba105b1",
+          "canonical_url": "https://fixture.example.org/ai/132",
+          "title": "Fixture AI article 132",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "331449969d28bf1739d89537b9c21592f644555633701f87ff754dadf3150489": {
+          "id": "331449969d28bf1739d89537b9c21592f644555633701f87ff754dadf3150489",
+          "canonical_url": "https://fixture.example.org/ai/133",
+          "title": "Fixture AI article 133",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c02d954b98aadefa68482356cdf7b3da01aeecda1457fabfec46f36af65c9575": {
+          "id": "c02d954b98aadefa68482356cdf7b3da01aeecda1457fabfec46f36af65c9575",
+          "canonical_url": "https://fixture.example.org/ai/134",
+          "title": "Fixture AI article 134",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "5ecaaab9fefd5dc04934b1e60c3ea107787e76b901d0936d338806701547484c": {
+          "id": "5ecaaab9fefd5dc04934b1e60c3ea107787e76b901d0936d338806701547484c",
+          "canonical_url": "https://fixture.example.org/ai/135",
+          "title": "Fixture AI article 135",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1f341b0c5a54c01352dc698b8fd026431c0eeeb4c7560b89d36ae8f063432908": {
+          "id": "1f341b0c5a54c01352dc698b8fd026431c0eeeb4c7560b89d36ae8f063432908",
+          "canonical_url": "https://fixture.example.org/ai/136",
+          "title": "Fixture AI article 136",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d40b2682842a424f6cf07c653a5ec9d1a6ce7683d6e044785811678b3b618967": {
+          "id": "d40b2682842a424f6cf07c653a5ec9d1a6ce7683d6e044785811678b3b618967",
+          "canonical_url": "https://fixture.example.org/ai/137",
+          "title": "Fixture AI article 137",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "44a2833bc1b068787067a692b644a1e7bea9eec3b324294b2b8e97ac2506a3ea": {
+          "id": "44a2833bc1b068787067a692b644a1e7bea9eec3b324294b2b8e97ac2506a3ea",
+          "canonical_url": "https://fixture.example.org/ai/138",
+          "title": "Fixture AI article 138",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "eda483d565f92f726175f56a9fcdb0a6a55fb7968555c9020d393dc7307c13ab": {
+          "id": "eda483d565f92f726175f56a9fcdb0a6a55fb7968555c9020d393dc7307c13ab",
+          "canonical_url": "https://fixture.example.org/ai/139",
+          "title": "Fixture AI article 139",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "106f921a239c7ce877f288b3ea90771d79a0a6caffad6912242738ca97422256": {
+          "id": "106f921a239c7ce877f288b3ea90771d79a0a6caffad6912242738ca97422256",
+          "canonical_url": "https://fixture.example.org/ai/140",
+          "title": "Fixture AI article 140",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "30e653d71e1f2a4d32be2d68726d4b440fb5b3ba09090fd9640515139adf3b06": {
+          "id": "30e653d71e1f2a4d32be2d68726d4b440fb5b3ba09090fd9640515139adf3b06",
+          "canonical_url": "https://fixture.example.org/ai/141",
+          "title": "Fixture AI article 141",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "afb2be0ee6897ce4fd9cc6355ba761d44780ad063f276d0f5c5832b62820f23b": {
+          "id": "afb2be0ee6897ce4fd9cc6355ba761d44780ad063f276d0f5c5832b62820f23b",
+          "canonical_url": "https://fixture.example.org/ai/142",
+          "title": "Fixture AI article 142",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f6d13889c411689008454bade0d92ca1dfefdc82bb9980f353d6a6c42b681c6e": {
+          "id": "f6d13889c411689008454bade0d92ca1dfefdc82bb9980f353d6a6c42b681c6e",
+          "canonical_url": "https://fixture.example.org/ai/143",
+          "title": "Fixture AI article 143",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "10d7e9e42bfa39e116c49b43b7411c993f061e331445fc383dff2a676778346f": {
+          "id": "10d7e9e42bfa39e116c49b43b7411c993f061e331445fc383dff2a676778346f",
+          "canonical_url": "https://fixture.example.org/ai/144",
+          "title": "Fixture AI article 144",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6153f4e1c667eb96262845ef16861134a6a4c3cfe1e30b5a3c280230907aceb3": {
+          "id": "6153f4e1c667eb96262845ef16861134a6a4c3cfe1e30b5a3c280230907aceb3",
+          "canonical_url": "https://fixture.example.org/ai/145",
+          "title": "Fixture AI article 145",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9f704831c52e4da0f2571c54312be3ce2ec67ad0da62e4b63c9d519526238127": {
+          "id": "9f704831c52e4da0f2571c54312be3ce2ec67ad0da62e4b63c9d519526238127",
+          "canonical_url": "https://fixture.example.org/ai/146",
+          "title": "Fixture AI article 146",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7754b46ea1350d4be5fe28a033299c07c071c5146f28b813c91d669f4f100666": {
+          "id": "7754b46ea1350d4be5fe28a033299c07c071c5146f28b813c91d669f4f100666",
+          "canonical_url": "https://fixture.example.org/ai/147",
+          "title": "Fixture AI article 147",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a3d1a3c3126d49c2627ba2bc3bc635189766ca8e407804380173208d9a87ba59": {
+          "id": "a3d1a3c3126d49c2627ba2bc3bc635189766ca8e407804380173208d9a87ba59",
+          "canonical_url": "https://fixture.example.org/ai/148",
+          "title": "Fixture AI article 148",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "e4335841c2e27481a78b839f5c8ceb5c16cea4fc8038c10267cd1e5738907660": {
+          "id": "e4335841c2e27481a78b839f5c8ceb5c16cea4fc8038c10267cd1e5738907660",
+          "canonical_url": "https://fixture.example.org/ai/149",
+          "title": "Fixture AI article 149",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "67f12b7b4a25a50e79892e86de3ac137b5b24416ccc4d1dca8faacd21dace709": {
+          "id": "67f12b7b4a25a50e79892e86de3ac137b5b24416ccc4d1dca8faacd21dace709",
+          "canonical_url": "https://fixture.example.org/ai/150",
+          "title": "Fixture AI article 150",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f500260b6c77d571c282366b08db225bc0bdb7589d0c3bc20c52d23c5046b15c": {
+          "id": "f500260b6c77d571c282366b08db225bc0bdb7589d0c3bc20c52d23c5046b15c",
+          "canonical_url": "https://fixture.example.org/ai/151",
+          "title": "Fixture AI article 151",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7399e7cc58d7369cf5daeb2af49bff8d494df8c409cb1f96f712e224dba17cb8": {
+          "id": "7399e7cc58d7369cf5daeb2af49bff8d494df8c409cb1f96f712e224dba17cb8",
+          "canonical_url": "https://fixture.example.org/ai/152",
+          "title": "Fixture AI article 152",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "bf67aee6e69b93e4144fd7d00d2ac4bf0a748e1f6d53febf090c3b0fb939b86a": {
+          "id": "bf67aee6e69b93e4144fd7d00d2ac4bf0a748e1f6d53febf090c3b0fb939b86a",
+          "canonical_url": "https://fixture.example.org/ai/153",
+          "title": "Fixture AI article 153",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f0f4dada16b05b82f20c6cd8618ccd3fa4d695cba88cd43e449cc44a9ee4937f": {
+          "id": "f0f4dada16b05b82f20c6cd8618ccd3fa4d695cba88cd43e449cc44a9ee4937f",
+          "canonical_url": "https://fixture.example.org/ai/154",
+          "title": "Fixture AI article 154",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "da44e1ea2da2a38084b91315a37139b53eea8ef90f4bbf493fe4838a249e835f": {
+          "id": "da44e1ea2da2a38084b91315a37139b53eea8ef90f4bbf493fe4838a249e835f",
+          "canonical_url": "https://fixture.example.org/ai/155",
+          "title": "Fixture AI article 155",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "651295edd99b3506b2473d788c2993d0dc28de60097f04c0f4e3faa7184d7e42": {
+          "id": "651295edd99b3506b2473d788c2993d0dc28de60097f04c0f4e3faa7184d7e42",
+          "canonical_url": "https://fixture.example.org/ai/156",
+          "title": "Fixture AI article 156",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a0ca2df83cb6f2c53d800ceee8778ea26b6b2651e7366477aa9245674552b035": {
+          "id": "a0ca2df83cb6f2c53d800ceee8778ea26b6b2651e7366477aa9245674552b035",
+          "canonical_url": "https://fixture.example.org/ai/157",
+          "title": "Fixture AI article 157",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0385a01e3bbd1fbb512748ab4b94d39a722be2a27d92414b850aae5b5823aaa1": {
+          "id": "0385a01e3bbd1fbb512748ab4b94d39a722be2a27d92414b850aae5b5823aaa1",
+          "canonical_url": "https://fixture.example.org/ai/158",
+          "title": "Fixture AI article 158",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "2783fb5bd72674c7b3f1797ee912a9e591cb3ea36dc8f227b7d91dc57d77ffdc": {
+          "id": "2783fb5bd72674c7b3f1797ee912a9e591cb3ea36dc8f227b7d91dc57d77ffdc",
+          "canonical_url": "https://fixture.example.org/ai/159",
+          "title": "Fixture AI article 159",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6bfb35cd23b6970e2b2785caefeec758d1a20867e4e33fba0bc16f9816d44b85": {
+          "id": "6bfb35cd23b6970e2b2785caefeec758d1a20867e4e33fba0bc16f9816d44b85",
+          "canonical_url": "https://fixture.example.org/ai/160",
+          "title": "Fixture AI article 160",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "afc66f31931011ac05483e2d070618d45bb50d0177c8cdf75cd53615157ca75d": {
+          "id": "afc66f31931011ac05483e2d070618d45bb50d0177c8cdf75cd53615157ca75d",
+          "canonical_url": "https://fixture.example.org/ai/161",
+          "title": "Fixture AI article 161",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "71650cd85cdf1316190974a3c0231ed08eaa3da760b82ba6bc2384fdb5f13f57": {
+          "id": "71650cd85cdf1316190974a3c0231ed08eaa3da760b82ba6bc2384fdb5f13f57",
+          "canonical_url": "https://fixture.example.org/ai/162",
+          "title": "Fixture AI article 162",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f2089c9aedc4fd1284f749a9304a773e5a9efb6cefcd49649e12c57e97a27252": {
+          "id": "f2089c9aedc4fd1284f749a9304a773e5a9efb6cefcd49649e12c57e97a27252",
+          "canonical_url": "https://fixture.example.org/ai/163",
+          "title": "Fixture AI article 163",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "180c2f510b76905f8df8b825a19b931023a1371d907405c6630195497fcb4649": {
+          "id": "180c2f510b76905f8df8b825a19b931023a1371d907405c6630195497fcb4649",
+          "canonical_url": "https://fixture.example.org/ai/164",
+          "title": "Fixture AI article 164",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "84286be12b725f892bc9721d54d1dac7a0a07f0888441fd29687de3b52f404a9": {
+          "id": "84286be12b725f892bc9721d54d1dac7a0a07f0888441fd29687de3b52f404a9",
+          "canonical_url": "https://fixture.example.org/ai/165",
+          "title": "Fixture AI article 165",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3ccb4790d32104a01828289e143e25d96191d6eaedf6408126d257ef61ae5f6a": {
+          "id": "3ccb4790d32104a01828289e143e25d96191d6eaedf6408126d257ef61ae5f6a",
+          "canonical_url": "https://fixture.example.org/ai/166",
+          "title": "Fixture AI article 166",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9011f1ebd29ff0660eac12e931929d924ab59cfcb6f118c8ff19e5b529cd0c7b": {
+          "id": "9011f1ebd29ff0660eac12e931929d924ab59cfcb6f118c8ff19e5b529cd0c7b",
+          "canonical_url": "https://fixture.example.org/ai/167",
+          "title": "Fixture AI article 167",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d3c24cbcc35b17e88859c49f02dae3e85675c2726cce117941f50869b9e0be3e": {
+          "id": "d3c24cbcc35b17e88859c49f02dae3e85675c2726cce117941f50869b9e0be3e",
+          "canonical_url": "https://fixture.example.org/ai/168",
+          "title": "Fixture AI article 168",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "69aa1020e504bd1a9ea04d4f111b31b30c1c17a15dadf25e8e2b288c4a48ffa3": {
+          "id": "69aa1020e504bd1a9ea04d4f111b31b30c1c17a15dadf25e8e2b288c4a48ffa3",
+          "canonical_url": "https://fixture.example.org/ai/169",
+          "title": "Fixture AI article 169",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "76365106a55a8d9df1e2715c028efc3da26889c8ccc2eea2707394ab985cbeaa": {
+          "id": "76365106a55a8d9df1e2715c028efc3da26889c8ccc2eea2707394ab985cbeaa",
+          "canonical_url": "https://fixture.example.org/ai/170",
+          "title": "Fixture AI article 170",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3863cea398807e3ad57a8ae49494fbd8cd2aa87fa3991dec2cf232b967447797": {
+          "id": "3863cea398807e3ad57a8ae49494fbd8cd2aa87fa3991dec2cf232b967447797",
+          "canonical_url": "https://fixture.example.org/ai/171",
+          "title": "Fixture AI article 171",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "aa3a0c45e8a3cadf2cd0fda8218ee3b2a539edc609bfc851242f2da13cdd5cff": {
+          "id": "aa3a0c45e8a3cadf2cd0fda8218ee3b2a539edc609bfc851242f2da13cdd5cff",
+          "canonical_url": "https://fixture.example.org/ai/172",
+          "title": "Fixture AI article 172",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b59a531e812e6a54f7b80a096fe6ffddef1acd520a2b767110b84ba18beb8aa1": {
+          "id": "b59a531e812e6a54f7b80a096fe6ffddef1acd520a2b767110b84ba18beb8aa1",
+          "canonical_url": "https://fixture.example.org/ai/173",
+          "title": "Fixture AI article 173",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9260bb2ee70d7decf06c10ecee98f8dad89d76a8fda2d929ba79b702e744af17": {
+          "id": "9260bb2ee70d7decf06c10ecee98f8dad89d76a8fda2d929ba79b702e744af17",
+          "canonical_url": "https://fixture.example.org/ai/174",
+          "title": "Fixture AI article 174",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7654a9d1e1c47ffb72945b14efb05625c44b6036042d6ed19ff9a1680eedff69": {
+          "id": "7654a9d1e1c47ffb72945b14efb05625c44b6036042d6ed19ff9a1680eedff69",
+          "canonical_url": "https://fixture.example.org/ai/175",
+          "title": "Fixture AI article 175",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3c686accf384f9681a42a8042bef5c069fe9cb677b694f181fd02bf57fe8cb7f": {
+          "id": "3c686accf384f9681a42a8042bef5c069fe9cb677b694f181fd02bf57fe8cb7f",
+          "canonical_url": "https://fixture.example.org/ai/176",
+          "title": "Fixture AI article 176",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f8ea8c9b759fae0698d59ad0667aad2f26fe1221852dc27bf90464c8f4d9025d": {
+          "id": "f8ea8c9b759fae0698d59ad0667aad2f26fe1221852dc27bf90464c8f4d9025d",
+          "canonical_url": "https://fixture.example.org/ai/177",
+          "title": "Fixture AI article 177",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a0912b10704bce262a4504111cc3f25b7281aac4ff7cd3ded839e2295d24875f": {
+          "id": "a0912b10704bce262a4504111cc3f25b7281aac4ff7cd3ded839e2295d24875f",
+          "canonical_url": "https://fixture.example.org/ai/178",
+          "title": "Fixture AI article 178",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f095c3720b0ba0195a38c7fa8fee6a87c130b1d8af3714e6b15164e130490706": {
+          "id": "f095c3720b0ba0195a38c7fa8fee6a87c130b1d8af3714e6b15164e130490706",
+          "canonical_url": "https://fixture.example.org/ai/179",
+          "title": "Fixture AI article 179",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d2e349812f55e790a5b1471472caab5363098172fe01b6b2211569286dd1e902": {
+          "id": "d2e349812f55e790a5b1471472caab5363098172fe01b6b2211569286dd1e902",
+          "canonical_url": "https://fixture.example.org/ai/180",
+          "title": "Fixture AI article 180",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "4321338537e872b75d8043cb74064069deecd6dae0cfd1cf713cc2291538670d": {
+          "id": "4321338537e872b75d8043cb74064069deecd6dae0cfd1cf713cc2291538670d",
+          "canonical_url": "https://fixture.example.org/ai/181",
+          "title": "Fixture AI article 181",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0376b419261edf4bbd48075b4973f79378a06b5caf1eeb84a5ac4ec30eaaf7f6": {
+          "id": "0376b419261edf4bbd48075b4973f79378a06b5caf1eeb84a5ac4ec30eaaf7f6",
+          "canonical_url": "https://fixture.example.org/ai/182",
+          "title": "Fixture AI article 182",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a0dd9a0ff6f51f7ab43769e383b6dcf5f1e2343c8c1bb3312ae81850f7cb04f9": {
+          "id": "a0dd9a0ff6f51f7ab43769e383b6dcf5f1e2343c8c1bb3312ae81850f7cb04f9",
+          "canonical_url": "https://fixture.example.org/ai/183",
+          "title": "Fixture AI article 183",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "be0fc6b55b7409ade38bbf50021982ec7687381126cd0cc4f1cdaa203bbe6499": {
+          "id": "be0fc6b55b7409ade38bbf50021982ec7687381126cd0cc4f1cdaa203bbe6499",
+          "canonical_url": "https://fixture.example.org/ai/184",
+          "title": "Fixture AI article 184",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "796f6277b8b11f0d9c87aca744c8f2d42f33c8ce0deb38532fe5a0945a02d8e8": {
+          "id": "796f6277b8b11f0d9c87aca744c8f2d42f33c8ce0deb38532fe5a0945a02d8e8",
+          "canonical_url": "https://fixture.example.org/ai/185",
+          "title": "Fixture AI article 185",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "4bf820fa2c2ea60c6727dd86c50541ba6d622ed519379809c8bc64cc701ab14e": {
+          "id": "4bf820fa2c2ea60c6727dd86c50541ba6d622ed519379809c8bc64cc701ab14e",
+          "canonical_url": "https://fixture.example.org/ai/186",
+          "title": "Fixture AI article 186",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c13c11147339744a5a45bd84c591969139cb4cbb040bf76359116df0f8f60b14": {
+          "id": "c13c11147339744a5a45bd84c591969139cb4cbb040bf76359116df0f8f60b14",
+          "canonical_url": "https://fixture.example.org/ai/187",
+          "title": "Fixture AI article 187",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1688a2d4511274951b6c9836bc99fe72b7b5652c54cc51bfe49b8013da5e9612": {
+          "id": "1688a2d4511274951b6c9836bc99fe72b7b5652c54cc51bfe49b8013da5e9612",
+          "canonical_url": "https://fixture.example.org/ai/188",
+          "title": "Fixture AI article 188",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3d44242948a11ce6dc4d97f9e22b2d0ad1add5cfd6c40f651b152b252c39d88c": {
+          "id": "3d44242948a11ce6dc4d97f9e22b2d0ad1add5cfd6c40f651b152b252c39d88c",
+          "canonical_url": "https://fixture.example.org/ai/189",
+          "title": "Fixture AI article 189",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "5514cea1b597c604340cd1b36c8ccf2bd14ed092d3516554a1f236f58b2a9508": {
+          "id": "5514cea1b597c604340cd1b36c8ccf2bd14ed092d3516554a1f236f58b2a9508",
+          "canonical_url": "https://fixture.example.org/ai/190",
+          "title": "Fixture AI article 190",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "508dc5df11e8579266cd7246cc9f5bafbe0ea27f32e8f8bd56ef5a32d58f1288": {
+          "id": "508dc5df11e8579266cd7246cc9f5bafbe0ea27f32e8f8bd56ef5a32d58f1288",
+          "canonical_url": "https://fixture.example.org/ai/191",
+          "title": "Fixture AI article 191",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "2beb0687805c12b54740e60fc2f0c83cdc67e6eedbc3916ec859e716a3903846": {
+          "id": "2beb0687805c12b54740e60fc2f0c83cdc67e6eedbc3916ec859e716a3903846",
+          "canonical_url": "https://fixture.example.org/ai/192",
+          "title": "Fixture AI article 192",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a2132a42d22d2ff794bd48197dbe8420c7c6c1046352a3510a6e894e7d355775": {
+          "id": "a2132a42d22d2ff794bd48197dbe8420c7c6c1046352a3510a6e894e7d355775",
+          "canonical_url": "https://fixture.example.org/ai/193",
+          "title": "Fixture AI article 193",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "63be8642b865c205571b90dee5fe9e47fdc90afb906a56934b4ecf53d86ed04f": {
+          "id": "63be8642b865c205571b90dee5fe9e47fdc90afb906a56934b4ecf53d86ed04f",
+          "canonical_url": "https://fixture.example.org/ai/194",
+          "title": "Fixture AI article 194",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "bb81c0f1d5e789c221bc05c2061d8371086b3d243a65c4e00ef095593a7d99a7": {
+          "id": "bb81c0f1d5e789c221bc05c2061d8371086b3d243a65c4e00ef095593a7d99a7",
+          "canonical_url": "https://fixture.example.org/ai/195",
+          "title": "Fixture AI article 195",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "433cffa96d1899bffee89522ed8cb84f94ffb12908806c139740e55fad5b025e": {
+          "id": "433cffa96d1899bffee89522ed8cb84f94ffb12908806c139740e55fad5b025e",
+          "canonical_url": "https://fixture.example.org/ai/196",
+          "title": "Fixture AI article 196",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "35bb3d9cacd37a54e3e5bec580d0d1ca129ade9b1cea1047cb43d392d2920789": {
+          "id": "35bb3d9cacd37a54e3e5bec580d0d1ca129ade9b1cea1047cb43d392d2920789",
+          "canonical_url": "https://fixture.example.org/ai/197",
+          "title": "Fixture AI article 197",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "532d0eb45e2aa703b63568284c88c27f3c5e6b6dafe035a8d42c2cb08216dea3": {
+          "id": "532d0eb45e2aa703b63568284c88c27f3c5e6b6dafe035a8d42c2cb08216dea3",
+          "canonical_url": "https://fixture.example.org/ai/198",
+          "title": "Fixture AI article 198",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "586090272d3f58452f5b7131d60f107fbf84eb79f41e224d23f14dc4388b82c7": {
+          "id": "586090272d3f58452f5b7131d60f107fbf84eb79f41e224d23f14dc4388b82c7",
+          "canonical_url": "https://fixture.example.org/ai/199",
+          "title": "Fixture AI article 199",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "73786c6305be78c5ae9e57f43202b00127222225cb0c926dfcdf86a4cbca7971": {
+          "id": "73786c6305be78c5ae9e57f43202b00127222225cb0c926dfcdf86a4cbca7971",
+          "canonical_url": "https://fixture.example.org/ai/200",
+          "title": "Fixture AI article 200",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "83b359ec6fc2508d21a0d850771399ffb9f9c8e18f9651d7841a433944c5f9e4": {
+          "id": "83b359ec6fc2508d21a0d850771399ffb9f9c8e18f9651d7841a433944c5f9e4",
+          "canonical_url": "https://fixture.example.org/ai/201",
+          "title": "Fixture AI article 201",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "8be2adb429131bcf446392686fe241591a7cefc03dfdea27adea4c7e6f9bbe31": {
+          "id": "8be2adb429131bcf446392686fe241591a7cefc03dfdea27adea4c7e6f9bbe31",
+          "canonical_url": "https://fixture.example.org/ai/202",
+          "title": "Fixture AI article 202",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c4f5692beb281e5d0cc035412ec4f72c54c23dfdb365b8a2e361e64c1e65ad72": {
+          "id": "c4f5692beb281e5d0cc035412ec4f72c54c23dfdb365b8a2e361e64c1e65ad72",
+          "canonical_url": "https://fixture.example.org/ai/203",
+          "title": "Fixture AI article 203",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9af62a2cb6e0ef387c749aa699e30c1fa43cc2edd7259f28c6f3cd932ea3f668": {
+          "id": "9af62a2cb6e0ef387c749aa699e30c1fa43cc2edd7259f28c6f3cd932ea3f668",
+          "canonical_url": "https://fixture.example.org/ai/204",
+          "title": "Fixture AI article 204",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "55113d2e3948d36d0b1a4be06f52833615ef3cb46bd483b81c7b313c41918622": {
+          "id": "55113d2e3948d36d0b1a4be06f52833615ef3cb46bd483b81c7b313c41918622",
+          "canonical_url": "https://fixture.example.org/ai/205",
+          "title": "Fixture AI article 205",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "902caaddceea6d953987dc500cfc0112ac52e814673ab072fea7479bb2edb564": {
+          "id": "902caaddceea6d953987dc500cfc0112ac52e814673ab072fea7479bb2edb564",
+          "canonical_url": "https://fixture.example.org/ai/206",
+          "title": "Fixture AI article 206",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1fc25f85cc62f0d05d6162882bd5d81c40a5bb05ce74853ba550b26ff04a0ed2": {
+          "id": "1fc25f85cc62f0d05d6162882bd5d81c40a5bb05ce74853ba550b26ff04a0ed2",
+          "canonical_url": "https://fixture.example.org/ai/207",
+          "title": "Fixture AI article 207",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6b70bfc136c4883b5ba3c4e2785c9bbb2b54a9dd849a5ab46f95eea26b1e41b3": {
+          "id": "6b70bfc136c4883b5ba3c4e2785c9bbb2b54a9dd849a5ab46f95eea26b1e41b3",
+          "canonical_url": "https://fixture.example.org/ai/208",
+          "title": "Fixture AI article 208",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a4940756cd6b4f5955553b70da1ca36aa51e11d15295c5d6aa4c636776c527f6": {
+          "id": "a4940756cd6b4f5955553b70da1ca36aa51e11d15295c5d6aa4c636776c527f6",
+          "canonical_url": "https://fixture.example.org/ai/209",
+          "title": "Fixture AI article 209",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "680d21cec99dc5759d167317c609191cce5f3ff2d4140271c95cca390a263862": {
+          "id": "680d21cec99dc5759d167317c609191cce5f3ff2d4140271c95cca390a263862",
+          "canonical_url": "https://fixture.example.org/ai/210",
+          "title": "Fixture AI article 210",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d581c781a630a10e97244c08a9c520a947174b0b09a3f9a2c12ad986e684cfe7": {
+          "id": "d581c781a630a10e97244c08a9c520a947174b0b09a3f9a2c12ad986e684cfe7",
+          "canonical_url": "https://fixture.example.org/ai/211",
+          "title": "Fixture AI article 211",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "be6c26084e56724932b956d1137c8ff3cf4b737728e387ae43c0961f3ffd8c7f": {
+          "id": "be6c26084e56724932b956d1137c8ff3cf4b737728e387ae43c0961f3ffd8c7f",
+          "canonical_url": "https://fixture.example.org/ai/212",
+          "title": "Fixture AI article 212",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1a82dd5ccf220c1d91832ddf5cbe125fe001fd02fc6e2df9054e510d24395754": {
+          "id": "1a82dd5ccf220c1d91832ddf5cbe125fe001fd02fc6e2df9054e510d24395754",
+          "canonical_url": "https://fixture.example.org/ai/213",
+          "title": "Fixture AI article 213",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0413b9b3ce4916f778eccb0e361996376e54cab657a724bd3ebfdcf4c6fa45cc": {
+          "id": "0413b9b3ce4916f778eccb0e361996376e54cab657a724bd3ebfdcf4c6fa45cc",
+          "canonical_url": "https://fixture.example.org/ai/214",
+          "title": "Fixture AI article 214",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f0d1df24afeb670b1231fd509ca07f74d80c15f5115e0a55c9c5d088d6e711fe": {
+          "id": "f0d1df24afeb670b1231fd509ca07f74d80c15f5115e0a55c9c5d088d6e711fe",
+          "canonical_url": "https://fixture.example.org/ai/215",
+          "title": "Fixture AI article 215",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "348d05c694c7e2e65f74db42a8c82f97e146d775c0580d7f02aef271dbd5719e": {
+          "id": "348d05c694c7e2e65f74db42a8c82f97e146d775c0580d7f02aef271dbd5719e",
+          "canonical_url": "https://fixture.example.org/ai/216",
+          "title": "Fixture AI article 216",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "053deacba177d3484f17f5cc8d7f071c6fe0cd188b84ce8c48cbad27e5384141": {
+          "id": "053deacba177d3484f17f5cc8d7f071c6fe0cd188b84ce8c48cbad27e5384141",
+          "canonical_url": "https://fixture.example.org/ai/217",
+          "title": "Fixture AI article 217",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "97c70771fa3add2eab044c5b0c568651aec768f7682cd315150b7b69250321c9": {
+          "id": "97c70771fa3add2eab044c5b0c568651aec768f7682cd315150b7b69250321c9",
+          "canonical_url": "https://fixture.example.org/ai/218",
+          "title": "Fixture AI article 218",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c79c3c63c74031c6101a37a42c39033b2cec9073917a0fbb6c114c6ab092fef8": {
+          "id": "c79c3c63c74031c6101a37a42c39033b2cec9073917a0fbb6c114c6ab092fef8",
+          "canonical_url": "https://fixture.example.org/ai/219",
+          "title": "Fixture AI article 219",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "dc7813abeeffaa2a9648475dd8aa23af61f99c16714c6ccc18ab3088852c0954": {
+          "id": "dc7813abeeffaa2a9648475dd8aa23af61f99c16714c6ccc18ab3088852c0954",
+          "canonical_url": "https://fixture.example.org/ai/220",
+          "title": "Fixture AI article 220",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7fb7ba0c7b2a34c272f6f43b13c8874708ead31683c78ed69ff96870cacd3169": {
+          "id": "7fb7ba0c7b2a34c272f6f43b13c8874708ead31683c78ed69ff96870cacd3169",
+          "canonical_url": "https://fixture.example.org/ai/221",
+          "title": "Fixture AI article 221",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "651fbcc0956f1d6d260f165485a1f5e52598890f6b71f02583614bd5881aa832": {
+          "id": "651fbcc0956f1d6d260f165485a1f5e52598890f6b71f02583614bd5881aa832",
+          "canonical_url": "https://fixture.example.org/ai/222",
+          "title": "Fixture AI article 222",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "8fedc62010d8d4f0ba4917c45f74d0f137e06b23088588731fcd7a7e0e76578e": {
+          "id": "8fedc62010d8d4f0ba4917c45f74d0f137e06b23088588731fcd7a7e0e76578e",
+          "canonical_url": "https://fixture.example.org/ai/223",
+          "title": "Fixture AI article 223",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "4d8bdad03a974132b945d5d12f20de55d7b82132fdfb1dce6cfb7cbaf6f97f77": {
+          "id": "4d8bdad03a974132b945d5d12f20de55d7b82132fdfb1dce6cfb7cbaf6f97f77",
+          "canonical_url": "https://fixture.example.org/ai/224",
+          "title": "Fixture AI article 224",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "710c7c6b1ec73e5509edd0d8050a8ff3dd52ff91930c117ff71ecc4f20d45e72": {
+          "id": "710c7c6b1ec73e5509edd0d8050a8ff3dd52ff91930c117ff71ecc4f20d45e72",
+          "canonical_url": "https://fixture.example.org/ai/225",
+          "title": "Fixture AI article 225",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "06d97da14b5abd899463c25b51526fe5601de6eecf5d82c7180ee41f8cbaa94f": {
+          "id": "06d97da14b5abd899463c25b51526fe5601de6eecf5d82c7180ee41f8cbaa94f",
+          "canonical_url": "https://fixture.example.org/ai/226",
+          "title": "Fixture AI article 226",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "ea369db31a602525943244390a565ff503f70e9abe034c9e65676bc838635043": {
+          "id": "ea369db31a602525943244390a565ff503f70e9abe034c9e65676bc838635043",
+          "canonical_url": "https://fixture.example.org/ai/227",
+          "title": "Fixture AI article 227",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "4051fcfda6839773033fae4bc35de2251afb9fe395835474b303a999ca4de87a": {
+          "id": "4051fcfda6839773033fae4bc35de2251afb9fe395835474b303a999ca4de87a",
+          "canonical_url": "https://fixture.example.org/ai/228",
+          "title": "Fixture AI article 228",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a8ce00a78b7cbb28f4b45f1778d7e1300edb5f991945f07a72d1e1a983cfbdb7": {
+          "id": "a8ce00a78b7cbb28f4b45f1778d7e1300edb5f991945f07a72d1e1a983cfbdb7",
+          "canonical_url": "https://fixture.example.org/ai/229",
+          "title": "Fixture AI article 229",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0c93cbb9fc7786b4e2389c91320388cac28481ba99940e801f8b497f3fc4aa46": {
+          "id": "0c93cbb9fc7786b4e2389c91320388cac28481ba99940e801f8b497f3fc4aa46",
+          "canonical_url": "https://fixture.example.org/ai/230",
+          "title": "Fixture AI article 230",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0a08a56755d5a86812680616c1dc18d69414ea98e10d62e0b4e6fd25d06f4e03": {
+          "id": "0a08a56755d5a86812680616c1dc18d69414ea98e10d62e0b4e6fd25d06f4e03",
+          "canonical_url": "https://fixture.example.org/ai/231",
+          "title": "Fixture AI article 231",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "061e5f3199d3cea289a2ad926fcb184cf0f32fe1a39c7124344c6af7045d7c94": {
+          "id": "061e5f3199d3cea289a2ad926fcb184cf0f32fe1a39c7124344c6af7045d7c94",
+          "canonical_url": "https://fixture.example.org/ai/232",
+          "title": "Fixture AI article 232",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "4c587d62fbe7fb63b4ed5edb676f515a50ba04e8fa2a71608efc2b242680f028": {
+          "id": "4c587d62fbe7fb63b4ed5edb676f515a50ba04e8fa2a71608efc2b242680f028",
+          "canonical_url": "https://fixture.example.org/ai/233",
+          "title": "Fixture AI article 233",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f498b46906ed745b1896408160fd4602e5789215cdbf7973ec9dfcac17e50daf": {
+          "id": "f498b46906ed745b1896408160fd4602e5789215cdbf7973ec9dfcac17e50daf",
+          "canonical_url": "https://fixture.example.org/ai/234",
+          "title": "Fixture AI article 234",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "fef7bb1e9df1a5bd747038181ad1cf5f504a04bbd19ec216e166cd2bccd0c3ca": {
+          "id": "fef7bb1e9df1a5bd747038181ad1cf5f504a04bbd19ec216e166cd2bccd0c3ca",
+          "canonical_url": "https://fixture.example.org/ai/235",
+          "title": "Fixture AI article 235",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b7d2ea1a2249ec022cab763e22311395ce056d152c9147dd0afdb01179ee51c9": {
+          "id": "b7d2ea1a2249ec022cab763e22311395ce056d152c9147dd0afdb01179ee51c9",
+          "canonical_url": "https://fixture.example.org/ai/236",
+          "title": "Fixture AI article 236",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7d54099aa6b4670ea5bfe3d023e62d9f93cb5962435e483a56140d460ead3591": {
+          "id": "7d54099aa6b4670ea5bfe3d023e62d9f93cb5962435e483a56140d460ead3591",
+          "canonical_url": "https://fixture.example.org/ai/237",
+          "title": "Fixture AI article 237",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0c1ececd43012949cf45963671f02aab22ccd5bec450277251cb05f026926d64": {
+          "id": "0c1ececd43012949cf45963671f02aab22ccd5bec450277251cb05f026926d64",
+          "canonical_url": "https://fixture.example.org/ai/238",
+          "title": "Fixture AI article 238",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "bb0629680e628ac1bb24572673f23f6b1dc56a37dafe38406b39cead4389c727": {
+          "id": "bb0629680e628ac1bb24572673f23f6b1dc56a37dafe38406b39cead4389c727",
+          "canonical_url": "https://fixture.example.org/ai/239",
+          "title": "Fixture AI article 239",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "ce69b487f6e72303a0ff071ab78d1f0b6aad99b0cd446fee27ce62700afb77b0": {
+          "id": "ce69b487f6e72303a0ff071ab78d1f0b6aad99b0cd446fee27ce62700afb77b0",
+          "canonical_url": "https://fixture.example.org/ai/240",
+          "title": "Fixture AI article 240",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "5ba0a6eec1821ab4f379090a4fabd5e72ca8507a8dfd47078860dc86891bac9d": {
+          "id": "5ba0a6eec1821ab4f379090a4fabd5e72ca8507a8dfd47078860dc86891bac9d",
+          "canonical_url": "https://fixture.example.org/ai/241",
+          "title": "Fixture AI article 241",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1a900d7d8cb5ec2fd7418181eb1631a6b27ac715966376617935f4a48de3099f": {
+          "id": "1a900d7d8cb5ec2fd7418181eb1631a6b27ac715966376617935f4a48de3099f",
+          "canonical_url": "https://fixture.example.org/ai/242",
+          "title": "Fixture AI article 242",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "15aa43fb45bc7e567510952ee51c49fb6883169771c970e052953705e5dd9ae4": {
+          "id": "15aa43fb45bc7e567510952ee51c49fb6883169771c970e052953705e5dd9ae4",
+          "canonical_url": "https://fixture.example.org/ai/243",
+          "title": "Fixture AI article 243",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "8476e8c78fb44aeae827b396800296e571e381b5e10dca3f5bd896ff1f67bfca": {
+          "id": "8476e8c78fb44aeae827b396800296e571e381b5e10dca3f5bd896ff1f67bfca",
+          "canonical_url": "https://fixture.example.org/ai/244",
+          "title": "Fixture AI article 244",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "e7b0757ac8a308c14de457083ab4dc6fba3066a31b37f1cd6abcbd4235323f5a": {
+          "id": "e7b0757ac8a308c14de457083ab4dc6fba3066a31b37f1cd6abcbd4235323f5a",
+          "canonical_url": "https://fixture.example.org/ai/245",
+          "title": "Fixture AI article 245",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6c64d3cc8514110781b9380fc649609bf31b91cb9739ffdb9f9e550d21d53557": {
+          "id": "6c64d3cc8514110781b9380fc649609bf31b91cb9739ffdb9f9e550d21d53557",
+          "canonical_url": "https://fixture.example.org/ai/246",
+          "title": "Fixture AI article 246",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "60962a80565e35c974f593659b350ff6d6895c546473af69b4008a014095683b": {
+          "id": "60962a80565e35c974f593659b350ff6d6895c546473af69b4008a014095683b",
+          "canonical_url": "https://fixture.example.org/ai/247",
+          "title": "Fixture AI article 247",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1c42a1dad168ead374a3b9a2077196fa9591599d7014d76e815a35d8c08828f2": {
+          "id": "1c42a1dad168ead374a3b9a2077196fa9591599d7014d76e815a35d8c08828f2",
+          "canonical_url": "https://fixture.example.org/ai/248",
+          "title": "Fixture AI article 248",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "15c09966c7f8b8b6e32c475a351fa41f166c9eb8b1a473a73fe8d4ee36a5e0e8": {
+          "id": "15c09966c7f8b8b6e32c475a351fa41f166c9eb8b1a473a73fe8d4ee36a5e0e8",
+          "canonical_url": "https://fixture.example.org/ai/249",
+          "title": "Fixture AI article 249",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a9611c3f9b9153a172f642c93c67400e275d38b866b5a572c31bfdb76d1ea506": {
+          "id": "a9611c3f9b9153a172f642c93c67400e275d38b866b5a572c31bfdb76d1ea506",
+          "canonical_url": "https://fixture.example.org/ai/250",
+          "title": "Fixture AI article 250",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "323b7e80a7311493437d8b3779eac2cbd731ddc0c46f71d0897f74fbc4b0ecc8": {
+          "id": "323b7e80a7311493437d8b3779eac2cbd731ddc0c46f71d0897f74fbc4b0ecc8",
+          "canonical_url": "https://fixture.example.org/ai/251",
+          "title": "Fixture AI article 251",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7a86555d2b2fc4c87a05d5ee21f76d276ad90676f0442ddae55bd937f5e0d8e8": {
+          "id": "7a86555d2b2fc4c87a05d5ee21f76d276ad90676f0442ddae55bd937f5e0d8e8",
+          "canonical_url": "https://fixture.example.org/ai/252",
+          "title": "Fixture AI article 252",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "ceec3f99215d4f577c7b13466603698a8d35f7624f13c04303872501c57647e2": {
+          "id": "ceec3f99215d4f577c7b13466603698a8d35f7624f13c04303872501c57647e2",
+          "canonical_url": "https://fixture.example.org/ai/253",
+          "title": "Fixture AI article 253",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "46072167225abcd13ebd9b25ca2760797d6e91b2db1685ef8858553e11ed1996": {
+          "id": "46072167225abcd13ebd9b25ca2760797d6e91b2db1685ef8858553e11ed1996",
+          "canonical_url": "https://fixture.example.org/ai/254",
+          "title": "Fixture AI article 254",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a7afc688e973855361d1f6716f02f66a5fd73d8c4841592cfa1450a00a8b22ac": {
+          "id": "a7afc688e973855361d1f6716f02f66a5fd73d8c4841592cfa1450a00a8b22ac",
+          "canonical_url": "https://fixture.example.org/ai/255",
+          "title": "Fixture AI article 255",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "85ac8fc36bbf01a54a773272559647e56357fb6d3a8c1b01da31c7a8741b15cc": {
+          "id": "85ac8fc36bbf01a54a773272559647e56357fb6d3a8c1b01da31c7a8741b15cc",
+          "canonical_url": "https://fixture.example.org/ai/256",
+          "title": "Fixture AI article 256",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "db933a12e994151afb0e2848865a92d9b0fb14e08e6b2d9d0af087a53a39fe84": {
+          "id": "db933a12e994151afb0e2848865a92d9b0fb14e08e6b2d9d0af087a53a39fe84",
+          "canonical_url": "https://fixture.example.org/ai/257",
+          "title": "Fixture AI article 257",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9bda2a8e1821ab1f44ee8ee18d82cc21f849ccb1c6432865fe6deb2963655976": {
+          "id": "9bda2a8e1821ab1f44ee8ee18d82cc21f849ccb1c6432865fe6deb2963655976",
+          "canonical_url": "https://fixture.example.org/ai/258",
+          "title": "Fixture AI article 258",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3242076ce31e1651889560fa9dba4abd2d227222a034d32c15c23be0e924f77b": {
+          "id": "3242076ce31e1651889560fa9dba4abd2d227222a034d32c15c23be0e924f77b",
+          "canonical_url": "https://fixture.example.org/ai/259",
+          "title": "Fixture AI article 259",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c3ac0fb253ed54147ffdd3e2f70dfac9d5f3885b193f1aff4705dc0f412e18c0": {
+          "id": "c3ac0fb253ed54147ffdd3e2f70dfac9d5f3885b193f1aff4705dc0f412e18c0",
+          "canonical_url": "https://fixture.example.org/ai/260",
+          "title": "Fixture AI article 260",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9b0f994b90c573096d631583301fd92a4ccc00eef7cb4fd8dfa65719c20e9765": {
+          "id": "9b0f994b90c573096d631583301fd92a4ccc00eef7cb4fd8dfa65719c20e9765",
+          "canonical_url": "https://fixture.example.org/ai/261",
+          "title": "Fixture AI article 261",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0130fb2d6455e7b868f0bfd4a7776a0c2703770ed8a5564e9456af1b6ccd8fcf": {
+          "id": "0130fb2d6455e7b868f0bfd4a7776a0c2703770ed8a5564e9456af1b6ccd8fcf",
+          "canonical_url": "https://fixture.example.org/ai/262",
+          "title": "Fixture AI article 262",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "82642e5472443c32ca72bc25b84c1422aea714d1009512ce383c4cb7826253da": {
+          "id": "82642e5472443c32ca72bc25b84c1422aea714d1009512ce383c4cb7826253da",
+          "canonical_url": "https://fixture.example.org/ai/263",
+          "title": "Fixture AI article 263",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "2d11f5d42cc0a81612c68921efbd125002246cc27fcd97e94a0902b0bc9dea05": {
+          "id": "2d11f5d42cc0a81612c68921efbd125002246cc27fcd97e94a0902b0bc9dea05",
+          "canonical_url": "https://fixture.example.org/ai/264",
+          "title": "Fixture AI article 264",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7e9b14a7b23e0c3eb603220ba6267ec92b8927b48d8477d5545da77798995e0f": {
+          "id": "7e9b14a7b23e0c3eb603220ba6267ec92b8927b48d8477d5545da77798995e0f",
+          "canonical_url": "https://fixture.example.org/ai/265",
+          "title": "Fixture AI article 265",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "71c76bab331cf53bcb2868b1ebadf07b20171e7e45d37c2e1a0e9cc394beb6f5": {
+          "id": "71c76bab331cf53bcb2868b1ebadf07b20171e7e45d37c2e1a0e9cc394beb6f5",
+          "canonical_url": "https://fixture.example.org/ai/266",
+          "title": "Fixture AI article 266",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d00b80b3f936cb9cdf40e4382b12c3bae888f661b372af137dd0bfa6acff316e": {
+          "id": "d00b80b3f936cb9cdf40e4382b12c3bae888f661b372af137dd0bfa6acff316e",
+          "canonical_url": "https://fixture.example.org/ai/267",
+          "title": "Fixture AI article 267",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6103e4e9a2333c80fdbd6fc73118de49e64a8316682f29346b209e0b6139e621": {
+          "id": "6103e4e9a2333c80fdbd6fc73118de49e64a8316682f29346b209e0b6139e621",
+          "canonical_url": "https://fixture.example.org/ai/268",
+          "title": "Fixture AI article 268",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f206bb81a04598b3a09e4e2beb1bdec28ae226ce93fd5a62581e52f9794adc94": {
+          "id": "f206bb81a04598b3a09e4e2beb1bdec28ae226ce93fd5a62581e52f9794adc94",
+          "canonical_url": "https://fixture.example.org/ai/269",
+          "title": "Fixture AI article 269",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3f0d5bc8eb9c6cd464c893589a9c961e7bce317fe7bed1869edfdf89b453ee7b": {
+          "id": "3f0d5bc8eb9c6cd464c893589a9c961e7bce317fe7bed1869edfdf89b453ee7b",
+          "canonical_url": "https://fixture.example.org/ai/270",
+          "title": "Fixture AI article 270",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0a953b65e8e169ea95b516a2e2f7c1d97b1d73a6e3887f943b013753cb5e9bdc": {
+          "id": "0a953b65e8e169ea95b516a2e2f7c1d97b1d73a6e3887f943b013753cb5e9bdc",
+          "canonical_url": "https://fixture.example.org/ai/271",
+          "title": "Fixture AI article 271",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "09750586e7adc4701be7f7598eaa460e48dcb59d8cce67e80c2c2b0cfdcb0d26": {
+          "id": "09750586e7adc4701be7f7598eaa460e48dcb59d8cce67e80c2c2b0cfdcb0d26",
+          "canonical_url": "https://fixture.example.org/ai/272",
+          "title": "Fixture AI article 272",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "57e006a5afca369b9a0aa3e59abb67c074eda832e2eece270fd4d59a9d023e4c": {
+          "id": "57e006a5afca369b9a0aa3e59abb67c074eda832e2eece270fd4d59a9d023e4c",
+          "canonical_url": "https://fixture.example.org/ai/273",
+          "title": "Fixture AI article 273",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "020ab57859bf5c68f91c8db172a102dbce5db5cf0bebfb644f614ab51ba08b22": {
+          "id": "020ab57859bf5c68f91c8db172a102dbce5db5cf0bebfb644f614ab51ba08b22",
+          "canonical_url": "https://fixture.example.org/ai/274",
+          "title": "Fixture AI article 274",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "190475278462366d83f9d565c4f06a60077ee851306bfd693b685920608aaaf9": {
+          "id": "190475278462366d83f9d565c4f06a60077ee851306bfd693b685920608aaaf9",
+          "canonical_url": "https://fixture.example.org/ai/275",
+          "title": "Fixture AI article 275",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "e141ea5fb13bb85d8ffcef79489b785903794dba1670aa5d7d93fdeb16d63684": {
+          "id": "e141ea5fb13bb85d8ffcef79489b785903794dba1670aa5d7d93fdeb16d63684",
+          "canonical_url": "https://fixture.example.org/ai/276",
+          "title": "Fixture AI article 276",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "18692182337314ebc97d22d3aed130a6ffbecf26ae0399d46edb4c3d2bb83f3a": {
+          "id": "18692182337314ebc97d22d3aed130a6ffbecf26ae0399d46edb4c3d2bb83f3a",
+          "canonical_url": "https://fixture.example.org/ai/277",
+          "title": "Fixture AI article 277",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "59e89a4734259db8342e076a84889a1c7c6572ed9e566d6374fd0f2a6d4177da": {
+          "id": "59e89a4734259db8342e076a84889a1c7c6572ed9e566d6374fd0f2a6d4177da",
+          "canonical_url": "https://fixture.example.org/ai/278",
+          "title": "Fixture AI article 278",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6d0dc36c835995c33d888ff4932e8cfc9e0df09868af058726513163348cea48": {
+          "id": "6d0dc36c835995c33d888ff4932e8cfc9e0df09868af058726513163348cea48",
+          "canonical_url": "https://fixture.example.org/ai/279",
+          "title": "Fixture AI article 279",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "6f32f176a1d3c29461b236545270ddc83b35f63751e0f46465af6109730f8e28": {
+          "id": "6f32f176a1d3c29461b236545270ddc83b35f63751e0f46465af6109730f8e28",
+          "canonical_url": "https://fixture.example.org/ai/280",
+          "title": "Fixture AI article 280",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "353544547e443942808a478449391db1a265b9db988d4f545a794f13f210bd1a": {
+          "id": "353544547e443942808a478449391db1a265b9db988d4f545a794f13f210bd1a",
+          "canonical_url": "https://fixture.example.org/ai/281",
+          "title": "Fixture AI article 281",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "dfed295af3d1f1af96c779e0328a8e9a0dd2c0df39d5e106a0d4468848e1061c": {
+          "id": "dfed295af3d1f1af96c779e0328a8e9a0dd2c0df39d5e106a0d4468848e1061c",
+          "canonical_url": "https://fixture.example.org/ai/282",
+          "title": "Fixture AI article 282",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "7bec0baf613186b2430a08e0569a2fc30523d4d9ad67ed19789fa942fea60cd2": {
+          "id": "7bec0baf613186b2430a08e0569a2fc30523d4d9ad67ed19789fa942fea60cd2",
+          "canonical_url": "https://fixture.example.org/ai/283",
+          "title": "Fixture AI article 283",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "5126fc37d9458786d6480d7cbf645c0ccb6f3899e46cb89482922e0a665db834": {
+          "id": "5126fc37d9458786d6480d7cbf645c0ccb6f3899e46cb89482922e0a665db834",
+          "canonical_url": "https://fixture.example.org/ai/284",
+          "title": "Fixture AI article 284",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "77b0736feb808ed275bf8f5373e1b554d28420d17369b8e37aaf3e14395d746d": {
+          "id": "77b0736feb808ed275bf8f5373e1b554d28420d17369b8e37aaf3e14395d746d",
+          "canonical_url": "https://fixture.example.org/ai/285",
+          "title": "Fixture AI article 285",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "4c577c4f9eb19df34c35b120c6d4ce2ae9ab52a60d86e3c0fb9feabeecf17096": {
+          "id": "4c577c4f9eb19df34c35b120c6d4ce2ae9ab52a60d86e3c0fb9feabeecf17096",
+          "canonical_url": "https://fixture.example.org/ai/286",
+          "title": "Fixture AI article 286",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "2612903c6b99470c8846ffd7573c97ef5f2699cfa28662b77c4cd948fc32b027": {
+          "id": "2612903c6b99470c8846ffd7573c97ef5f2699cfa28662b77c4cd948fc32b027",
+          "canonical_url": "https://fixture.example.org/ai/287",
+          "title": "Fixture AI article 287",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "01e48928dfc538f5fc9eea5c481132ec8c41f0cf8fba83af0315be8a5c03059e": {
+          "id": "01e48928dfc538f5fc9eea5c481132ec8c41f0cf8fba83af0315be8a5c03059e",
+          "canonical_url": "https://fixture.example.org/ai/288",
+          "title": "Fixture AI article 288",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "94c0dfbf10f3a1c51056cc46cead46e41f092b32b843008e2e20fd7f81bb0c1c": {
+          "id": "94c0dfbf10f3a1c51056cc46cead46e41f092b32b843008e2e20fd7f81bb0c1c",
+          "canonical_url": "https://fixture.example.org/ai/289",
+          "title": "Fixture AI article 289",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b799c209980756232522dde120106c0dc1b3bbc1fabe4bb87f6b009390a7156b": {
+          "id": "b799c209980756232522dde120106c0dc1b3bbc1fabe4bb87f6b009390a7156b",
+          "canonical_url": "https://fixture.example.org/ai/290",
+          "title": "Fixture AI article 290",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0b050f00e6c3bef8b1ed5021720e422aad7436ef403e109ea7ce79e2c65be495": {
+          "id": "0b050f00e6c3bef8b1ed5021720e422aad7436ef403e109ea7ce79e2c65be495",
+          "canonical_url": "https://fixture.example.org/ai/291",
+          "title": "Fixture AI article 291",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "866540b2deac75dcec101017468d807a620f8317bf81aa04fa026d03678cdddf": {
+          "id": "866540b2deac75dcec101017468d807a620f8317bf81aa04fa026d03678cdddf",
+          "canonical_url": "https://fixture.example.org/ai/292",
+          "title": "Fixture AI article 292",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3a449452150a20d7ea285a6fe7ca75dd3b980a2b99208b1f5aab09f81f08eb18": {
+          "id": "3a449452150a20d7ea285a6fe7ca75dd3b980a2b99208b1f5aab09f81f08eb18",
+          "canonical_url": "https://fixture.example.org/ai/293",
+          "title": "Fixture AI article 293",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "73a1a9b1c3132c15b14f6d9c2f1b759a78a8169e45ab69b477dd2d42dd2a5779": {
+          "id": "73a1a9b1c3132c15b14f6d9c2f1b759a78a8169e45ab69b477dd2d42dd2a5779",
+          "canonical_url": "https://fixture.example.org/ai/294",
+          "title": "Fixture AI article 294",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "8ba1d543f67eaa1c072921993b5003a6c1139b066245e6847aa61be6a32a48e0": {
+          "id": "8ba1d543f67eaa1c072921993b5003a6c1139b066245e6847aa61be6a32a48e0",
+          "canonical_url": "https://fixture.example.org/ai/295",
+          "title": "Fixture AI article 295",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "22b7d46f28d4a279ac9b2304c0ad03e5c35dac3c80ae78092a9e3efcb4026161": {
+          "id": "22b7d46f28d4a279ac9b2304c0ad03e5c35dac3c80ae78092a9e3efcb4026161",
+          "canonical_url": "https://fixture.example.org/ai/296",
+          "title": "Fixture AI article 296",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "58d03378a7af06b34c6531701a586a4630dfc72d94bd72fddc75ca2f40a00d26": {
+          "id": "58d03378a7af06b34c6531701a586a4630dfc72d94bd72fddc75ca2f40a00d26",
+          "canonical_url": "https://fixture.example.org/ai/297",
+          "title": "Fixture AI article 297",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "46104b31acc775a535e8897a9bf0cbf63405c773ce5494859feab3746d300225": {
+          "id": "46104b31acc775a535e8897a9bf0cbf63405c773ce5494859feab3746d300225",
+          "canonical_url": "https://fixture.example.org/ai/298",
+          "title": "Fixture AI article 298",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "90e7e504ee690cd43265114c06ec9fe37a995719c2498be243b290f00f67dc9d": {
+          "id": "90e7e504ee690cd43265114c06ec9fe37a995719c2498be243b290f00f67dc9d",
+          "canonical_url": "https://fixture.example.org/ai/299",
+          "title": "Fixture AI article 299",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "37e1c880e2da14abf13aab6f9e207f27a813fcb5fe2456ee35fda47cf5afc9e2": {
+          "id": "37e1c880e2da14abf13aab6f9e207f27a813fcb5fe2456ee35fda47cf5afc9e2",
+          "canonical_url": "https://fixture.example.org/ai/300",
+          "title": "Fixture AI article 300",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a646ebf401d6bda59872a1dad682deae95712d53e8da222a3691e1908f95218a": {
+          "id": "a646ebf401d6bda59872a1dad682deae95712d53e8da222a3691e1908f95218a",
+          "canonical_url": "https://fixture.example.org/ai/301",
+          "title": "Fixture AI article 301",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c1a509ad183cb7fbad209bf5e952f132db16a62c44e2afe2b7a94bc4d8a40aa4": {
+          "id": "c1a509ad183cb7fbad209bf5e952f132db16a62c44e2afe2b7a94bc4d8a40aa4",
+          "canonical_url": "https://fixture.example.org/ai/302",
+          "title": "Fixture AI article 302",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "af9687e12ec06fdb2bd957db51a35e733b63844e2f88d18be1122471d7bdad9f": {
+          "id": "af9687e12ec06fdb2bd957db51a35e733b63844e2f88d18be1122471d7bdad9f",
+          "canonical_url": "https://fixture.example.org/ai/303",
+          "title": "Fixture AI article 303",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "a520ed8e6b798b0b623f14f3fbf98131b22ce2f8ec59bb7f38797ef8deed5457": {
+          "id": "a520ed8e6b798b0b623f14f3fbf98131b22ce2f8ec59bb7f38797ef8deed5457",
+          "canonical_url": "https://fixture.example.org/ai/304",
+          "title": "Fixture AI article 304",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "e047ee92e012c21e52d1bc30e5003a9586b42c98aac6e72ad1f002043a6b34b3": {
+          "id": "e047ee92e012c21e52d1bc30e5003a9586b42c98aac6e72ad1f002043a6b34b3",
+          "canonical_url": "https://fixture.example.org/ai/305",
+          "title": "Fixture AI article 305",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "b0d7f4fd29ebd86404d8b93a0d298009de7ed0cf50126e264c33474ff8281fbd": {
+          "id": "b0d7f4fd29ebd86404d8b93a0d298009de7ed0cf50126e264c33474ff8281fbd",
+          "canonical_url": "https://fixture.example.org/ai/306",
+          "title": "Fixture AI article 306",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "061c7dd4a03918409a9829394ae23cd56ab08031fdbe1fe56e1719ff7c5852b1": {
+          "id": "061c7dd4a03918409a9829394ae23cd56ab08031fdbe1fe56e1719ff7c5852b1",
+          "canonical_url": "https://fixture.example.org/ai/307",
+          "title": "Fixture AI article 307",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "c9a3c3390f4df7e6b622bac8b3ebd0b3105973201a07f1ee9d8b8d74259c746d": {
+          "id": "c9a3c3390f4df7e6b622bac8b3ebd0b3105973201a07f1ee9d8b8d74259c746d",
+          "canonical_url": "https://fixture.example.org/ai/308",
+          "title": "Fixture AI article 308",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "f7cd0ea26c5b843a7df0b0cb7abcdb3f7d98df31f35d7d6b7b97729bc75c9758": {
+          "id": "f7cd0ea26c5b843a7df0b0cb7abcdb3f7d98df31f35d7d6b7b97729bc75c9758",
+          "canonical_url": "https://fixture.example.org/ai/309",
+          "title": "Fixture AI article 309",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "0df9f0c9e516c0e8a707bc5a87e84fd0055bad42b230c55ac8c01bca7d86ba46": {
+          "id": "0df9f0c9e516c0e8a707bc5a87e84fd0055bad42b230c55ac8c01bca7d86ba46",
+          "canonical_url": "https://fixture.example.org/ai/310",
+          "title": "Fixture AI article 310",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d18d289ea5d1fc726481ed2ecbdf4f9a6c8437d76de3fddab89e186de2b634f3": {
+          "id": "d18d289ea5d1fc726481ed2ecbdf4f9a6c8437d76de3fddab89e186de2b634f3",
+          "canonical_url": "https://fixture.example.org/ai/311",
+          "title": "Fixture AI article 311",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "1537801fbbf1fbfccbb7df6542fe6b75aab63a40c7f9f1119c30ea47e6160b8d": {
+          "id": "1537801fbbf1fbfccbb7df6542fe6b75aab63a40c7f9f1119c30ea47e6160b8d",
+          "canonical_url": "https://fixture.example.org/ai/312",
+          "title": "Fixture AI article 312",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "e01507f00a6608e0e5ecdb02d15e1cd2ea864de2d3a2ce2a8f8a749398026b8f": {
+          "id": "e01507f00a6608e0e5ecdb02d15e1cd2ea864de2d3a2ce2a8f8a749398026b8f",
+          "canonical_url": "https://fixture.example.org/ai/313",
+          "title": "Fixture AI article 313",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "3a3780b9f3c7ba009a24b4e81c8bb17aea6969ee6cda14237f5c8d97c328f531": {
+          "id": "3a3780b9f3c7ba009a24b4e81c8bb17aea6969ee6cda14237f5c8d97c328f531",
+          "canonical_url": "https://fixture.example.org/ai/314",
+          "title": "Fixture AI article 314",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "88ddcd0d47565b40f230e8e1e5f8142d61d4731d35cb9ce133890390be8041a8": {
+          "id": "88ddcd0d47565b40f230e8e1e5f8142d61d4731d35cb9ce133890390be8041a8",
+          "canonical_url": "https://fixture.example.org/ai/315",
+          "title": "Fixture AI article 315",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "af1edc030659fb88cefee6d0733d825373c5515e913abb8381c572878fd9512c": {
+          "id": "af1edc030659fb88cefee6d0733d825373c5515e913abb8381c572878fd9512c",
+          "canonical_url": "https://fixture.example.org/ai/316",
+          "title": "Fixture AI article 316",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "9b37b9b9d442093b7d95317fc095a8d6df0f3238ada37ac4488c70ea931c2ed1": {
+          "id": "9b37b9b9d442093b7d95317fc095a8d6df0f3238ada37ac4488c70ea931c2ed1",
+          "canonical_url": "https://fixture.example.org/ai/317",
+          "title": "Fixture AI article 317",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "d27666034fbdb5bf3dffcb16cf1688f28f43825c8a860767350701c082ed826d": {
+          "id": "d27666034fbdb5bf3dffcb16cf1688f28f43825c8a860767350701c082ed826d",
+          "canonical_url": "https://fixture.example.org/ai/318",
+          "title": "Fixture AI article 318",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "43faf5a48b62912c14e02f4c91b986607bae9ccd35f6b30d31d7952dd3f2f171": {
+          "id": "43faf5a48b62912c14e02f4c91b986607bae9ccd35f6b30d31d7952dd3f2f171",
+          "canonical_url": "https://fixture.example.org/ai/319",
+          "title": "Fixture AI article 319",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        },
+        "cece3d1b065a7b6c438db812ed2e9fe6a7f96dea0b24e7b5ca5cf3b5ab05df55": {
+          "id": "cece3d1b065a7b6c438db812ed2e9fe6a7f96dea0b24e7b5ca5cf3b5ab05df55",
+          "canonical_url": "https://fixture.example.org/ai/320",
+          "title": "Fixture AI article 320",
+          "description": "Immutable synthetic article used only by the verifier regression suite.",
+          "published_at": "2026-11-06T12:00:00+00:00",
+          "source_feed": "https://fixture.example.org/feed.xml",
+          "discovered_at": "2026-11-06T13:00:09+00:00",
+          "date_inferred": false
+        }
+      },
+      "pending_metrics": {
+        "overflow_total": 0,
+        "expired_total": 0,
+        "overflow_unresolved": false
+      }
+    },
+    "gold_price": {
+      "posts": {},
+      "briefings": {}
+    }
+  }
+}
