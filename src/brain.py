@@ -62,12 +62,18 @@ def _token_usage(response) -> dict[str, int]:
     return values
 
 
-def _provider_category(exc: Exception) -> str:
+def _status_code(exc: Exception) -> int | None:
     code = getattr(exc, "code", getattr(exc, "status_code", None))
+    if code is None and isinstance(exc, httpx.HTTPStatusError):
+        code = exc.response.status_code
     try:
-        code = int(code)
+        return int(code)
     except (TypeError, ValueError):
-        code = None
+        return None
+
+
+def _provider_category(exc: Exception) -> str:
+    code = _status_code(exc)
     if code == 429:
         return "RATE_LIMIT"
     if code is not None and 500 <= code < 600:
@@ -219,7 +225,7 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
                                  finish_reason=str(finish), attempt=request_attempt,
                                  token_usage=usage)
             response_text = response.text
-            if not response_text or not response_text.strip():
+            if not isinstance(response_text, str) or not response_text.strip():
                 raise BrainError("AI response text missing after STOP",
                                  error_category="SCHEMA_VALIDATION_ERROR",
                                  finish_reason="STOP", attempt=request_attempt,
@@ -356,7 +362,7 @@ def analyze_topic(topic, posts, *, api_key: str | None = None, client=None,
             raise
         except Exception as exc:
             category = _provider_category(exc)
-            status = getattr(exc, "code", getattr(exc, "status_code", None))
+            status = _status_code(exc)
             retryable = category in {"RATE_LIMIT", "TIMEOUT"} or status in (500, 502, 503, 504)
             if retryable and attempt < max_retries:
                 response = getattr(exc, "response", None)

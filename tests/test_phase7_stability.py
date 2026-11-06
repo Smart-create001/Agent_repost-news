@@ -3,7 +3,6 @@
 import json
 import subprocess
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
 from types import SimpleNamespace
 
 import httpx
@@ -106,6 +105,15 @@ def test_server_error_classified_without_response_text():
     assert caught.value.error_category == "SERVER_ERROR"
 
 
+def test_http_status_error_rate_limit_is_classified():
+    request = httpx.Request("POST", "https://example.org/generate")
+    response = httpx.Response(429, request=request)
+    limited = httpx.HTTPStatusError("rate limited", request=request, response=response)
+    with pytest.raises(BrainError) as caught:
+        analyze_topic(topic(), [POST], client=ai_client(limited), max_retries=0)
+    assert caught.value.error_category == "RATE_LIMIT"
+
+
 def make_post(identifier, published):
     return Post(id=identifier, url=f"https://news.example.org/{identifier}",
                 title=identifier, published_at=published,
@@ -169,6 +177,29 @@ def test_tc7_b04_backlog_over_three_resumes_without_duplicate(tmp_path, monkeypa
     assert len(sent) == 5
     assert state["alert_checkpoint_at"] == later.isoformat()
     assert run(cfg, **args) == 0 and len(sent) == 5
+
+
+def test_known_limitation_feed_eviction_discards_unstored_backlog(tmp_path, monkeypatch):
+    """Document the current failure case; this is not a passing recovery gate."""
+    cfg = settings(False)
+    path = tmp_path / "state.json"
+    posts = [make_post(f"old-{i}", NOW + timedelta(hours=i)) for i in range(1, 6)]
+    assert run(cfg, mode="alert", state_path=path,
+               fetch=live_like_fetch([]), now=NOW) == 0
+    sent = []
+    monkeypatch.setattr("src.main.deliver", lambda *a, **k:
+                        (sent.append(1) or DeliveryResult(text_message_ids=[len(sent)])))
+    later = NOW + timedelta(days=3)
+    assert run(cfg, mode="alert", state_path=path, fetch=live_like_fetch(posts),
+               analyze=selected_analyses, notifier=object(), now=later) == 0
+    assert len(sent) == 3
+    # The provider removes the remaining two items before the next run.
+    assert run(cfg, mode="alert", state_path=path, fetch=live_like_fetch([]),
+               analyze=selected_analyses, notifier=object(), now=later) == 0
+    state = load_state(path)["topics"]["ai_tech"]
+    assert len(sent) == 3
+    assert all(post.id not in state["posts"] for post in posts[3:])
+    assert state["alert_checkpoint_at"] == later.isoformat()
 
 
 def test_tc7_b05_gemini_failure_retries_pending_post(tmp_path, monkeypatch):

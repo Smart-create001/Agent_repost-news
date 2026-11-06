@@ -1,0 +1,7 @@
+# Phase 7 recovery limitation and proposed policy
+
+Current recovery re-reads RSS using `alert_checkpoint_at`. It can resume more than three older articles across runs while the feed retains them. `seen_posts.json` does not store the full article metadata for entries that are discovered but not selected. A controlled fixture demonstrates that if the feed removes two queued entries before the next run, the bot cannot reconstruct them and the checkpoint advances. This fails durable backlog acceptance despite the bounded recovery tests passing with a stable feed.
+
+Proposed change, requiring approval before production: store a bounded, topic-scoped `pending_posts` queue in the existing versioned JSON state with canonical URL, title, bounded description, publication timestamp, source feed, and discovery timestamp. Persist the queue atomically before Gemini calls, replay oldest eligible entries within the existing seven-day ceiling and three-old-posts-per-run limit, and remove entries only after explicit irrelevance or confirmed delivery. Quarantine uncertain deliveries. Report entries evicted by the retention ceiling or queue-size limit. Add schema migration and tests for corrupt entries, Git push conflicts, state growth, and source feed disappearance. Do not backfill items that were never observed by the bot.
+
+This changes the production persistence and replay policy, including Git state size. It is not implemented in the current branch.
