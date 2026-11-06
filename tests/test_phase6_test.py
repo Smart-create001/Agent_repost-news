@@ -11,6 +11,7 @@ def test_bounded_notifier_refuses_second_text_and_audio(tmp_path):
     try:
         with patch.object(TelegramNotifier, "send_text", return_value=[123]) as send:
             assert notifier.send_text(5, "ข่าวทดสอบ") == [123]
+            assert send.call_args.args == (5, "[TEST]\nข่าวทดสอบ")
             with pytest.raises(DeliveryError, match="limit"):
                 notifier.send_text(5, "ข่าวซ้ำ")
             assert send.call_count == 1

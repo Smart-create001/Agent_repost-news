@@ -1,6 +1,7 @@
 """Phase 6 workflow and local Git persistence checks."""
 
 from pathlib import Path
+import os
 import subprocess
 
 import yaml
@@ -116,3 +117,81 @@ def test_rejected_push_preserves_local_and_remote_state(tmp_path):
     check = tmp_path / "remote-check"
     git(tmp_path, "clone", "-b", "main", str(remote), str(check))
     assert '"local"' not in (check / "seen_posts.json").read_text()
+
+
+def test_pending_capture_is_pushed_before_normal_alert_processing():
+    config = workflow()
+    steps = config["jobs"]["run"]["steps"]
+    names = [step.get("name") for step in steps]
+    assert names.index("Capture alert candidates before processing") < names.index("Persist captured candidates")
+    assert names.index("Persist captured candidates") < names.index("Run agent")
+    capture = next(step for step in steps if step.get("id") == "capture")
+    assert "--capture-pending" in capture["run"]
+    assert "inputs.phase6_test != true" in capture["if"]
+    persist = next(step for step in steps if step.get("id") == "persist_capture")
+    assert "steps.capture.outcome == 'success'" in persist["if"]
+    assert "scripts/persist_state.sh" in persist["run"]
+    verify = next(step for step in steps if step.get("id") == "verify_capture")
+    assert "steps.persist_capture.outcome == 'success'" in verify["if"]
+    assert "verify_remote_state" in verify["run"]
+    partial = next(step for step in steps if step.get("id") == "persist_partial")
+    assert "failure()" in partial["if"] and "steps.capture.outcome == 'failure'" in partial["if"]
+    assert "load_state" in partial["run"] and "scripts/persist_state.sh" in partial["run"]
+    agent = next(step for step in steps if step.get("id") == "agent")
+    assert "steps.verify_capture.outcome == 'success'" in agent["if"]
+    assert "steps.capture.outcome == 'skipped'" in agent["if"]
+    assert "--process-pending --persisted-commit" in agent["run"]
+    assert "steps.persist_capture.outputs.commit" in agent["env"]["PERSISTED_COMMIT"]
+
+
+def test_capture_shell_propagates_exit_code_instead_of_reporting_success(tmp_path):
+    capture = next(step for step in workflow()["jobs"]["run"]["steps"] if step.get("id") == "capture")
+    fake_bin = tmp_path / "bin"
+    fake_bin.mkdir()
+    fake_python = fake_bin / "python"
+    fake_python.write_text('#!/bin/sh\nexit "$FAKE_CAPTURE_EXIT"\n')
+    fake_python.chmod(0o755)
+    for code in (0, 1, 2):
+        output = tmp_path / f"output-{code}"
+        env = {**os.environ, "PATH": f"{fake_bin}:{os.environ['PATH']}",
+               "RUNNER_TEMP": str(tmp_path), "GITHUB_OUTPUT": str(output),
+               "FAKE_CAPTURE_EXIT": str(code)}
+        result = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", capture["run"]],
+                                cwd=ROOT, env=env, capture_output=True, text=True)
+        assert result.returncode == code
+        assert f"exit_code={code}" in output.read_text()
+
+
+def test_capture_only_mode_persists_then_verifies_on_fresh_read_only_job():
+    config = workflow()
+    jobs = config["jobs"]
+    steps = jobs["run"]["steps"]
+    assert "capture_only" in config["on"]["workflow_dispatch"]["inputs"]
+    assert "vars.PENDING_QUEUE_CAPTURE_ONLY == 'true'" in next(
+        step for step in steps if step.get("id") == "capture")["if"]
+    capture = next(step for step in steps if step.get("id") == "capture")
+    assert "inputs.capture_only == true" in capture["if"]
+    assert "vars.PENDING_QUEUE_CAPTURE_ONLY == 'true'" in capture["if"]
+    assert all(secret not in capture.get("env", {}) for secret in
+               ("GEMINI_API_KEY", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"))
+    agent = next(step for step in steps if step.get("id") == "agent")
+    assert "inputs.capture_only != true" in agent["if"]
+    assert "vars.PENDING_QUEUE_CAPTURE_ONLY != 'true'" in agent["if"]
+    verify = jobs["verify-capture-only"]
+    assert verify["permissions"] == {"contents": "read"}
+    assert "needs.run.result == 'success'" in verify["if"]
+    assert all("TELEGRAM" not in step.get("env", {}) for step in verify["steps"])
+    readback = verify["steps"][-1]["run"]
+    assert "verify_pending_snapshot" in readback
+    assert "--expected-commit" in readback and "--expected-sha256" in readback
+    assert "--processing-outcome" in readback
+    outputs = jobs["run"]["outputs"]
+    assert "steps.verify_capture.outputs.persisted_commit" in outputs["persisted_commit"]
+    assert "steps.verify_capture.outputs.state_sha256" in outputs["state_sha256"]
+    assert "steps.agent.outcome" in outputs["processing_outcome"]
+    assert "needs.run.outputs.processing_outcome" in verify["steps"][-1].get("env", {}).get("PROCESSING_OUTCOME", "")
+    assert "PENDING_QUEUE_CAPTURE_ONLY == 'true'" in verify["if"]
+    assert "PENDING_QUEUE_CAPTURE_ONLY != 'true'" in next(step for step in steps if step.get("id") == "agent")["if"]
+    verifier = (ROOT / "scripts/verify_pending_snapshot.py").read_text()
+    assert '"show", f"{expected_commit}:seen_posts.json"' in verifier
+    assert "SHA-256 mismatch" in verifier and "validate_state(state)" in verifier

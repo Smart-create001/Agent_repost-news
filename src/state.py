@@ -6,6 +6,61 @@ import json
 import os
 from pathlib import Path
 import tempfile
+from urllib.parse import urlsplit
+
+PENDING_CAPACITY = 600
+PENDING_TITLE_LIMIT = 500
+PENDING_DESCRIPTION_LIMIT = 3000
+
+
+def _utc_timestamp(value: str, field: str) -> datetime:
+    try:
+        parsed = datetime.fromisoformat(value)
+        if parsed.utcoffset() is None:
+            raise ValueError("timezone required")
+        return parsed.astimezone(timezone.utc)
+    except (TypeError, ValueError) as exc:
+        raise StateError(f"Malformed {field}") from exc
+
+
+def _http_url(value: str, field: str) -> None:
+    if not isinstance(value, str) or len(value) > 4096:
+        raise StateError(f"Malformed {field}")
+    parts = urlsplit(value)
+    if parts.scheme not in {"http", "https"} or not parts.hostname:
+        raise StateError(f"Malformed {field}")
+
+
+def _validate_pending(topic: dict) -> None:
+    from src.scraper import canonical_url
+
+    pending = topic.get("pending_posts", {})
+    if not isinstance(pending, dict) or len(pending) > PENDING_CAPACITY:
+        raise StateError("Malformed or oversized pending_posts")
+    for post_id, item in pending.items():
+        if not isinstance(post_id, str) or not post_id or not isinstance(item, dict) or item.get("id") != post_id:
+            raise StateError("Malformed pending entry identity")
+        _http_url(item.get("canonical_url"), "pending canonical_url")
+        try:
+            if canonical_url(item["canonical_url"]) != item["canonical_url"]:
+                raise StateError("Noncanonical pending URL")
+        except ValueError as exc:
+            raise StateError("Malformed pending canonical URL") from exc
+        _http_url(item.get("source_feed"), "pending source_feed")
+        if not isinstance(item.get("title"), str) or not item["title"].strip() or len(item["title"]) > PENDING_TITLE_LIMIT:
+            raise StateError("Malformed pending title")
+        if not isinstance(item.get("description"), str) or len(item["description"]) > PENDING_DESCRIPTION_LIMIT:
+            raise StateError("Malformed pending description")
+        if type(item.get("date_inferred")) is not bool:
+            raise StateError("Malformed pending date_inferred")
+        _utc_timestamp(item.get("published_at"), "pending published_at")
+        _utc_timestamp(item.get("discovered_at"), "pending discovered_at")
+    metrics = topic.get("pending_metrics", {"overflow_total": 0, "expired_total": 0})
+    if not isinstance(metrics, dict) or any(type(metrics.get(key)) is not int or metrics[key] < 0
+                                             for key in ("overflow_total", "expired_total")):
+        raise StateError("Malformed pending metrics")
+    if type(metrics.get("overflow_unresolved", False)) is not bool:
+        raise StateError("Malformed pending overflow flag")
 
 
 class StateError(ValueError):
@@ -23,6 +78,7 @@ def validate_state(state: dict) -> None:
     for topic in state["topics"].values():
         if not isinstance(topic, dict) or not isinstance(topic.get("posts"), dict) or not isinstance(topic.get("briefings"), dict):
             raise StateError("Malformed topic state")
+        _validate_pending(topic)
         alert_checkpoint = topic.get("alert_checkpoint_at")
         if alert_checkpoint is not None:
             try:
@@ -70,6 +126,78 @@ def save_state(path: str | Path, state: dict, *, dry_run: bool = False) -> None:
 
 def ensure_topic(state: dict, topic_id: str) -> dict:
     return state["topics"].setdefault(topic_id, {"posts": {}, "briefings": {}})
+
+
+def queue_post(state: dict, topic_id: str, post, *, now: datetime,
+               capacity: int = PENDING_CAPACITY) -> str:
+    """Capture a bounded article without changing its delivery history."""
+    if capacity < 1 or capacity > PENDING_CAPACITY:
+        raise ValueError("invalid pending capacity")
+    topic = ensure_topic(state, topic_id)
+    topic.setdefault("pending_metrics", {"overflow_total": 0, "expired_total": 0})
+    history = topic["posts"].get(post.id, {})
+    if (history.get("status") in {"processed", "expired"}
+            or history.get("alert", {}).get("delivered")):
+        return "settled"
+    pending = topic.setdefault("pending_posts", {})
+    if post.id in pending:
+        return "existing"
+    if len(pending) >= capacity:
+        metrics = topic.setdefault("pending_metrics", {"overflow_total": 0, "expired_total": 0})
+        metrics["overflow_total"] += 1
+        metrics["overflow_unresolved"] = True
+        return "overflow"
+    item = {
+        "id": post.id, "canonical_url": post.url,
+        "title": post.title.strip()[:PENDING_TITLE_LIMIT],
+        "description": post.description[:PENDING_DESCRIPTION_LIMIT],
+        "published_at": post.published_at.astimezone(timezone.utc).isoformat(),
+        "source_feed": post.source_url,
+        "discovered_at": now.astimezone(timezone.utc).isoformat(),
+        "date_inferred": post.date_inferred,
+    }
+    _validate_pending({"pending_posts": {post.id: item}})
+    pending[post.id] = item
+    return "added"
+
+
+def pending_as_posts(state: dict, topic_id: str, *, now: datetime,
+                     window: timedelta) -> tuple[list, int]:
+    """Return replayable articles; expire old items with an auditable status."""
+    from src.scraper import Post
+
+    topic = ensure_topic(state, topic_id)
+    pending = topic.setdefault("pending_posts", {})
+    metrics = topic.setdefault("pending_metrics", {"overflow_total": 0, "expired_total": 0})
+    posts = []
+    expired = 0
+    for post_id, item in list(pending.items()):
+        history = topic["posts"].get(post_id, {})
+        alert = history.get("alert", {})
+        if history.get("status") == "processed" or alert.get("delivered"):
+            del pending[post_id]
+            continue
+        if alert.get("uncertain"):
+            continue  # Quarantined until manually reconciled.
+        published = _utc_timestamp(item["published_at"], "pending published_at")
+        if published < now - window:
+            history = topic["posts"].setdefault(post_id, {
+                "id": post_id, "source_url": item["canonical_url"],
+                "first_seen_at": item["discovered_at"], "last_attempt_at": None,
+                "status": "expired", "retry_count": 0,
+                "alert": {"delivered": False, "message_id": None},
+                "last_error": "pending recovery window expired", "title": item["title"],
+            })
+            history["status"] = "expired"
+            del pending[post_id]
+            expired += 1
+            continue
+        posts.append(Post(id=post_id, url=item["canonical_url"], title=item["title"],
+                          description=item["description"], published_at=published,
+                          source_url=item["source_feed"], date_inferred=item["date_inferred"],
+                          retrieved_at=_utc_timestamp(item["discovered_at"], "pending discovered_at")))
+    metrics["expired_total"] += expired
+    return posts, expired
 
 
 def record_post(state: dict, topic_id: str, post, *, now: datetime | None = None) -> dict:

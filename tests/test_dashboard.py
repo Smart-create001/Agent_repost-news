@@ -31,3 +31,20 @@ def test_verify_state_run_does_not_claim_to_check_providers(tmp_path):
     report = build_report('state verified', tmp_path / 'missing.json', {'RUN_MODE': 'verify_state', 'AGENT_EXIT': '0'})
     assert report['agent'] == 'ผ่าน'
     assert report['feed'] == report['gemini'] == report['telegram'] == 'ไม่ได้ตรวจ'
+
+
+def test_capture_failure_and_pending_metrics_are_visible_without_raw_news(tmp_path):
+    path = tmp_path / 'state.json'
+    path.write_text(json.dumps({'schema_version': 1, 'topics': {
+        'ai': {'posts': {}, 'briefings': {}, 'pending_posts': {'x': {}},
+               'pending_metrics': {'overflow_total': 1, 'expired_total': 2,
+                                   'overflow_unresolved': True}}}}))
+    log = 'INFO topic=ai pending_capture=300 overflow=1 feed_errors=0\nWARNING topic=ai pending_expired=2\nsecret-news-text'
+    report = build_report(log, path, {'RUN_MODE': 'alert', 'CAPTURE_OUTCOME': 'failure',
+                                      'PARTIAL_PERSIST_OUTCOME': 'success', 'PERSIST_OUTCOME': 'skipped'})
+    assert report['capture'] == 'ล้มเหลว'
+    assert report['partial_persist'] == 'ผ่าน' and report['agent'] == 'ไม่มีข้อมูล'
+    assert report['overflow'] == '1' and report['pending_expired'] == '2'
+    assert report['pending'] == '1' and report['overflow_unresolved'] == '1'
+    summary, page = render(report)
+    assert 'secret-news-text' not in summary + page

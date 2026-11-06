@@ -22,7 +22,7 @@ class BoundedNotifier(TelegramNotifier):
         self.audio_attempted = set()
 
     def send_text(self, thread_id, text):
-        text = "[TEST — ทดสอบ Phase 6]\n" + text
+        text = "[TEST]\n" + text
         if thread_id in self.text_attempted or len(split_telegram(text)) != 1:
             raise DeliveryError("Phase 6 test text delivery limit exceeded")
         self.text_attempted.add(thread_id)
