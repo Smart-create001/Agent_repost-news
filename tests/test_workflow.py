@@ -160,3 +160,22 @@ def test_capture_shell_propagates_exit_code_instead_of_reporting_success(tmp_pat
                                 cwd=ROOT, env=env, capture_output=True, text=True)
         assert result.returncode == code
         assert f"exit_code={code}" in output.read_text()
+
+
+def test_capture_only_mode_persists_then_verifies_on_fresh_read_only_job():
+    config = workflow()
+    jobs = config["jobs"]
+    steps = jobs["run"]["steps"]
+    assert "capture_only" in config["on"]["workflow_dispatch"]["inputs"]
+    assert "vars.PENDING_QUEUE_CAPTURE_ONLY == 'true'" in next(
+        step for step in steps if step.get("id") == "capture")["if"]
+    agent = next(step for step in steps if step.get("id") == "agent")
+    assert "inputs.capture_only != true" in agent["if"]
+    assert "vars.PENDING_QUEUE_CAPTURE_ONLY != 'true'" in agent["if"]
+    verify = jobs["verify-capture-only"]
+    assert verify["permissions"] == {"contents": "read"}
+    assert "needs.run.result == 'success'" in verify["if"]
+    assert all("TELEGRAM" not in step.get("env", {}) for step in verify["steps"])
+    readback = verify["steps"][-1]["run"]
+    assert "load_state" in readback and "state_sha256" in readback
+    assert "telegram_called=false" in readback

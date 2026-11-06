@@ -24,11 +24,12 @@ The branch merge base is `88ff08a`. Its `seen_posts.json` bytes are identical to
 
 ## Deployment gate
 
-1. Obtain separate approval to merge the branch. Recheck `main`, branch diff, workflow YAML, 15 feeds, model, thread 5, and disabled gold/audio settings.
-2. Back up the current Git-tracked state without changing it. Confirm there are no unresolved `uncertain` AI deliveries.
-3. Merge without force push. On the first alert run, inspect `pending_capture`, `overflow`, and `invalid` metrics and the state commit pushed by the capture step. A capture error stops processing; a validated partial capture may be pushed solely for reconciliation, while the workflow remains failed.
-4. Verify the remote `main` commit and its `seen_posts.json` bytes before processing. The process rejects a missing/mismatched commit. Before each Telegram request, it pushes an `uncertain` intent; after a confirmed result, it pushes the result. A failed push stops processing. The workflow's final state push handles checkpoint and irrelevant/expiry updates.
-5. Read the committed queue and delivery record in the next workflow run. Do not call the queue durable based only on a local file or an artifact.
+1. Obtain separate approval to merge the branch. Before merge, set repository variable `PENDING_QUEUE_CAPTURE_ONLY=true`. The workflow will capture and persist during scheduled alert and briefing runs while skipping Gemini and Telegram processing. Manual `capture_only` does the same.
+2. Recheck `main`, branch diff, workflow YAML, 15 feeds, model, thread 5, and disabled gold/audio settings. Back up the current Git-tracked state from the latest `main` commit without changing it. Confirm no unresolved `uncertain` AI deliveries and preserve message ID 171.
+3. Merge without force push. Keep `PENDING_QUEUE_CAPTURE_ONLY=true` for the entire capture validation period. On capture error, processing is skipped; a valid partial queue may be pushed for reconciliation and the workflow remains failed.
+4. Gate 2 verifies the remote commit and state bytes in the capture runner, then a separate fresh runner checks out `main`, validates the state, reports queue/overflow/expiry metrics, and prints the state hash. The capture-only verification job has read-only permissions and does not receive Telegram secrets or Gemini credentials.
+5. After Gate 2 passes, request separate approval for controlled processing. Only then set `PENDING_QUEUE_CAPTURE_ONLY=false` and dispatch the explicitly approved bounded processing run. Before each Telegram request, it pushes an `uncertain` intent; after a confirmed result, it pushes the result. A failed push or mismatched remote commit stops processing. Never blind retry `uncertain` items.
+6. Read the committed queue and delivery record in a subsequent workflow run. Do not call the queue durable based only on a local file or artifact.
 
 ## Rollback
 
@@ -37,3 +38,5 @@ Do not reset `seen_posts.json` or discard `pending_posts`. If the new workflow f
 ## Current verification boundary
 
 Offline tests use a local bare Git remote to exercise capture push, remote readback, conflict rejection, runner interruption, replay, expiry, overflow, and quarantine. They do not prove GitHub token permission or production persistence. The authorized bounded live Telegram test uses the current production workflow; it does not test this undeployed queue.
+
+Capture-only validation has been added to the branch but has not been run on GitHub Actions. Gate 1 backup and merge are not performed; Gate 2 has not been run; Gate 3 has not been run. Do not treat the previous single-message Telegram test or offline regression as proof of durable queue deployment.
