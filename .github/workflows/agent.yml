@@ -42,6 +42,10 @@ jobs:
       persisted_commit: ${{ steps.verify_capture.outputs.persisted_commit }}
       state_sha256: ${{ steps.verify_capture.outputs.state_sha256 }}
       processing_outcome: ${{ steps.agent.outcome }}
+      capture_only: ${{ steps.resolve_mode.outputs.capture_only }}
+      capture_outcome: ${{ steps.capture.outcome }}
+      persist_capture_outcome: ${{ steps.persist_capture.outcome }}
+      remote_verification_outcome: ${{ steps.verify_capture.outcome }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -58,8 +62,14 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Validate state before run
         run: python -c 'from src.state import load_state; load_state("seen_posts.json")'
+      - name: Resolve capture-only mode
+        id: resolve_mode
+        env:
+          CAPTURE_ONLY_INPUT: ${{ inputs.capture_only }}
+          PENDING_QUEUE_CAPTURE_ONLY: ${{ vars.PENDING_QUEUE_CAPTURE_ONLY }}
+        run: python -m scripts.gate2_mode
       - name: Capture alert candidates before processing
-        if: (github.event_name == 'schedule' && (github.event.schedule != '25 0 * * *' || vars.PENDING_QUEUE_CAPTURE_ONLY == 'true')) || (github.event_name == 'workflow_dispatch' && ((inputs.mode == 'alert' && inputs.phase6_test != true) || inputs.capture_only == true))
+        if: success() && (steps.resolve_mode.outputs.capture_only == 'true' || (github.event_name == 'schedule' && github.event.schedule != '25 0 * * *') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'alert' && inputs.phase6_test != true))
         id: capture
         shell: bash
         run: |
@@ -94,7 +104,7 @@ jobs:
           python -c 'from src.state import load_state; load_state("seen_posts.json")'
           bash scripts/persist_state.sh
       - name: Run agent
-        if: success() && inputs.capture_only != true && vars.PENDING_QUEUE_CAPTURE_ONLY != 'true' && (steps.capture.outcome == 'skipped' || steps.verify_capture.outcome == 'success')
+        if: success() && steps.resolve_mode.outputs.capture_only == 'false' && (steps.capture.outcome == 'skipped' || steps.verify_capture.outcome == 'success')
         id: agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -184,7 +194,7 @@ jobs:
           echo "Capture exited with status $CAPTURE_EXIT; processing was skipped" >&2
           exit 1
   verify-capture-only:
-    if: (github.event_name == 'workflow_dispatch' && inputs.capture_only == true || github.event_name == 'schedule' && vars.PENDING_QUEUE_CAPTURE_ONLY == 'true') && needs.run.result == 'success'
+    if: needs.run.result == 'success' && needs.run.outputs.capture_only == 'true' && needs.run.outputs.capture_outcome == 'success' && needs.run.outputs.persist_capture_outcome == 'success' && needs.run.outputs.remote_verification_outcome == 'success' && needs.run.outputs.processing_outcome == 'skipped'
     needs: run
     runs-on: ubuntu-latest
     timeout-minutes: 10

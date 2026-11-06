@@ -2,7 +2,6 @@
 
 from hashlib import sha256
 import json
-import subprocess
 
 import pytest
 
@@ -14,6 +13,7 @@ from tests.test_workflow import git, setup_git
 
 ROOT = __import__("pathlib").Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "config.yaml"
+PENDING_FIXTURE = ROOT / "tests/fixtures/pending_queue_321.json"
 
 
 def commit_state(work, state):
@@ -60,6 +60,13 @@ def test_hash_mismatch_fails_before_reporting_validated(tmp_path):
         verify_snapshot(work, commit, "0" * 64, processing_outcome="skipped", config_path=CONFIG)
 
 
+@pytest.mark.parametrize("commit,digest", [("", ""), ("a" * 40, "")])
+def test_missing_expected_commit_or_sha_fails_closed(tmp_path, commit, digest):
+    work, _ = setup_git(tmp_path)
+    with pytest.raises(StateError, match="required"):
+        verify_snapshot(work, commit, digest, processing_outcome="skipped", config_path=CONFIG)
+
+
 @pytest.mark.parametrize("commit,digest", [("", "a" * 64), ("f" * 40, "a" * 64)])
 def test_missing_or_unavailable_expected_commit_fails(tmp_path, commit, digest):
     work, _ = setup_git(tmp_path)
@@ -81,6 +88,27 @@ def test_fresh_runner_reads_expected_commit_when_main_has_advanced(tmp_path):
     assert report["main_moved"] is True
     assert report["main_state_matches_expected"] is False
     assert report["expected_commit"] == expected
+
+
+def test_immutable_321_item_fixture_verifies_from_expected_git_object(tmp_path):
+    work, _ = setup_git(tmp_path)
+    state_bytes = PENDING_FIXTURE.read_bytes()
+    state = json.loads(state_bytes)
+    assert len(state["topics"]["ai_tech"]["pending_posts"]) == 321
+    assert not state["topics"]["gold_price"].get("pending_posts", {})
+    state_path = work / "seen_posts.json"
+    state_path.write_bytes(state_bytes)
+    git(work, "add", "seen_posts.json")
+    git(work, "commit", "-m", "add immutable pending fixture")
+    git(work, "push", "origin", "main")
+    git(work, "fetch", "origin", "main")
+    expected = git(work, "rev-parse", "HEAD")
+    digest = sha256(state_bytes).hexdigest()
+
+    report = verify_snapshot(work, expected, digest, processing_outcome="skipped", config_path=CONFIG)
+    assert report["ai_pending"] == 321
+    assert report["state_schema"] == report["pending_queue"] == report["topic_isolation"] == "validated"
+    assert report["main_state_matches_expected"] is True
 
 
 def test_invalid_state_from_expected_commit_fails(tmp_path):

@@ -167,19 +167,19 @@ def test_capture_only_mode_persists_then_verifies_on_fresh_read_only_job():
     jobs = config["jobs"]
     steps = jobs["run"]["steps"]
     assert "capture_only" in config["on"]["workflow_dispatch"]["inputs"]
-    assert "vars.PENDING_QUEUE_CAPTURE_ONLY == 'true'" in next(
-        step for step in steps if step.get("id") == "capture")["if"]
     capture = next(step for step in steps if step.get("id") == "capture")
-    assert "inputs.capture_only == true" in capture["if"]
-    assert "vars.PENDING_QUEUE_CAPTURE_ONLY == 'true'" in capture["if"]
+    assert "steps.resolve_mode.outputs.capture_only == 'true'" in capture["if"]
     assert all(secret not in capture.get("env", {}) for secret in
                ("GEMINI_API_KEY", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"))
     agent = next(step for step in steps if step.get("id") == "agent")
-    assert "inputs.capture_only != true" in agent["if"]
-    assert "vars.PENDING_QUEUE_CAPTURE_ONLY != 'true'" in agent["if"]
+    assert "steps.resolve_mode.outputs.capture_only == 'false'" in agent["if"]
     verify = jobs["verify-capture-only"]
     assert verify["permissions"] == {"contents": "read"}
-    assert "needs.run.result == 'success'" in verify["if"]
+    for output, expected in [("capture_only", "'true'"), ("capture_outcome", "'success'"),
+                             ("persist_capture_outcome", "'success'"),
+                             ("remote_verification_outcome", "'success'"),
+                             ("processing_outcome", "'skipped'")]:
+        assert f"needs.run.outputs.{output} == {expected}" in verify["if"]
     assert all("TELEGRAM" not in step.get("env", {}) for step in verify["steps"])
     readback = verify["steps"][-1]["run"]
     assert "verify_pending_snapshot" in readback
@@ -189,9 +189,8 @@ def test_capture_only_mode_persists_then_verifies_on_fresh_read_only_job():
     assert "steps.verify_capture.outputs.persisted_commit" in outputs["persisted_commit"]
     assert "steps.verify_capture.outputs.state_sha256" in outputs["state_sha256"]
     assert "steps.agent.outcome" in outputs["processing_outcome"]
+    assert "steps.resolve_mode.outputs.capture_only" in outputs["capture_only"]
     assert "needs.run.outputs.processing_outcome" in verify["steps"][-1].get("env", {}).get("PROCESSING_OUTCOME", "")
-    assert "PENDING_QUEUE_CAPTURE_ONLY == 'true'" in verify["if"]
-    assert "PENDING_QUEUE_CAPTURE_ONLY != 'true'" in next(step for step in steps if step.get("id") == "agent")["if"]
     verifier = (ROOT / "scripts/verify_pending_snapshot.py").read_text()
     assert '"show", f"{expected_commit}:seen_posts.json"' in verifier
     assert "SHA-256 mismatch" in verifier and "validate_state(state)" in verifier
