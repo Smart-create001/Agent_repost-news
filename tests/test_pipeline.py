@@ -57,6 +57,21 @@ def test_tc5_01_sequential_and_tc5_10_isolation(tmp_path, monkeypatch):
                       ("gold_price", "fetch"), ("gold_price", "analyze"), (102, "send")]
 
 
+def test_repository_gold_topic_disabled_without_changing_its_state(tmp_path, monkeypatch):
+    cfg = load_config(ROOT / "config.yaml")
+    path = tmp_path / "state.json"
+    original = {"schema_version": 1, "topics": {"gold_price": {"posts": {}, "briefings": {}}}}
+    from src.state import save_state
+    save_state(path, original)
+    visited = []
+    def fetch(topic, **kwargs):
+        visited.append(topic.id)
+        return [], []
+    assert run(cfg, mode="alert", state_path=path, fetch=fetch, now=NOW) == 0
+    assert visited == ["ai_tech"]
+    assert load_state(path)["topics"]["gold_price"] == original["topics"]["gold_price"]
+
+
 def test_three_topics_isolate_sources_and_route_sequentially(tmp_path, monkeypatch):
     cfg = settings()
     third = cfg.topics[0].model_copy(update={"id": "third", "name": "Third", "telegram": cfg.topics[0].telegram.model_copy(update={"message_thread_id": 103})})

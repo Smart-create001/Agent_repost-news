@@ -87,3 +87,29 @@ def test_feeds_are_interleaved_before_pipeline_limit():
     assert not errors
     assert [post.title for post in posts[:4]] == ["first0", "second0", "first1", "second1"]
     assert sum(post.title.startswith("second") for post in posts[:20]) == 10
+
+
+def test_same_headline_with_different_urls_is_collapsed_within_fetch():
+    def handler(request):
+        suffix = request.url.path.strip("/")
+        return httpx.Response(200, text=f'<rss version="2.0"><channel><title>x</title>'
+                              f'<item><title>Same &amp; headline</title>'
+                              f'<link>https://news.example.org/{suffix}</link></item></channel></rss>')
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        posts, errors = fetch_topic(SimpleNamespace(rss_urls=["https://feeds.example.org/first",
+                                                             "https://feeds.example.org/second"]),
+                                   client=client, now=NOW)
+    assert not errors and len(posts) == 1
+
+
+def test_different_headlines_keep_both_articles():
+    def handler(request):
+        suffix = request.url.path.strip("/")
+        return httpx.Response(200, text=f'<rss version="2.0"><channel><title>x</title>'
+                              f'<item><title>{suffix} announcement</title>'
+                              f'<link>https://news.example.org/{suffix}</link></item></channel></rss>')
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        posts, errors = fetch_topic(SimpleNamespace(rss_urls=["https://feeds.example.org/first",
+                                                             "https://feeds.example.org/second"]),
+                                   client=client, now=NOW)
+    assert not errors and len(posts) == 2

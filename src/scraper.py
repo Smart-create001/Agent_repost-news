@@ -4,7 +4,9 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 from html.parser import HTMLParser
+from html import unescape
 import logging
+import re
 import time
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
@@ -62,6 +64,12 @@ def canonical_url(url: str) -> str:
     return urlunsplit((parts.scheme.lower(), parts.netloc.lower(), parts.path or "/", query, ""))
 
 
+def headline_key(title: str) -> str:
+    """Conservative duplicate key for the same headline under different RSS URLs."""
+    headline = unescape(title)
+    return re.sub(r"[\W_]+", " ", headline.casefold(), flags=re.UNICODE).strip()
+
+
 def parse_feed(data: bytes, source_url: str, *, now: datetime | None = None,
                max_age: timedelta | None = None) -> list[Post]:
     now = now or datetime.now(timezone.utc)
@@ -100,6 +108,7 @@ def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
     own_client = client is None
     client = client or httpx.Client(timeout=timeout, follow_redirects=True)
     posts: dict[str, Post] = {}
+    seen_headlines: set[str] = set()
     feed_posts: list[list[Post]] = []
     errors: list[str] = []
     try:
@@ -112,9 +121,12 @@ def fetch_topic(topic, *, timeout: float = 20, max_retries: int = 3,
                     response = client.get(url, timeout=timeout)
                     response.raise_for_status()
                     for post in parse_feed(response.content, url, now=now, max_age=max_age):
-                        if post.id not in posts:
+                        key = headline_key(post.title)
+                        if post.id not in posts and (not key or key not in seen_headlines):
                             posts[post.id] = post
                             current_feed.append(post)
+                            if key:
+                                seen_headlines.add(key)
                     break
                 except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
                     status = exc.response.status_code if isinstance(exc, httpx.HTTPStatusError) else None

@@ -28,29 +28,27 @@ tts:
   rate: '+0%'
 topics:
   - id: ai_tech
-    name: AI Models and Policy
+    name: AI Ecosystem
     enabled: true
     keywords:
-      - AI model launch
-      - ChatGPT image generation updates
-      - OpenAI
-      - Google Gemini
-      - Google DeepMind Genie world model
-      - Gemini Omni video generation
-      - Anthropic Claude
-      - AI policy
-      - API token quota reset
-      - Tibo
-      - Logan Kilpatrick
+      - AI model releases and research
+      - open-source AI and open-weight models
+      - AI agents and developer tools
+      - AI inference and hardware
+      - multimodal AI for image audio video and robotics
+      - AI safety policy and licensing
+      - API limits and product changes
+      - Tibo and Logan Kilpatrick
     context: >
-      ติดตามการเปิดตัวโมเดล AI ใหม่ การเปลี่ยนนโยบายของผู้ให้บริการ
-      และการอัปเดตผลิตภัณฑ์สร้างภาพของ ChatGPT และ OpenAI
-      รวมถึง Genie และ world model ของ Google DeepMind
-      และการเปิดตัวโมเดล Gemini Omni สำหรับสร้างหรือแก้ไขวิดีโอ
-      และข่าวหรือโพสต์เกี่ยวกับการรีเซ็ตโควตา token หรือ API โดยเฉพาะ
-      ข้อมูลจาก Tibo และ Logan Kilpatrick หากแหล่งข่าวระบุตัวบุคคลชัดเจน
-      ระบุชื่อโมเดล ผู้ให้บริการ วันที่ประกาศ และแหล่งข่าวตามข้อมูลที่พบจริง
-      หากคำว่า reset หมายถึงเรื่องอื่นหรือข้อมูลยังไม่ยืนยัน ให้ระบุความไม่แน่นอน
+      ติดตามข่าว AI ที่มีสาระต่อผู้ใช้และนักพัฒนาจากทุกผู้ให้บริการและชุมชน
+      ครอบคลุมการเปิดตัวโมเดลและงานวิจัย โมเดล open-weight และ open-source
+      เอเจนต์และเครื่องมือนักพัฒนา การรันโมเดล ชิปและโครงสร้างพื้นฐาน
+      ภาพ เสียง วิดีโอ หุ่นยนต์ ความปลอดภัย ลิขสิทธิ์ และนโยบาย
+      แยก open-weight จาก open-source ตามหลักฐานเรื่องโค้ดและใบอนุญาต
+      ติดตามการเปลี่ยนผลิตภัณฑ์ API และโควตา รวมข่าวจาก Tibo และ
+      Logan Kilpatrick เมื่อแหล่งข่าวระบุตัวบุคคลชัดเจน
+      คัดข่าวซ้ำหรือข่าวที่เป็นเพียงโฆษณาออกเมื่อหลักฐานไม่พอ
+      ระบุชื่อโมเดล ผู้ให้บริการ วันที่ และแหล่งข่าวตามข้อมูลที่พบจริง
     telegram:
       message_thread_id: 5
     rss_urls:
@@ -60,9 +58,18 @@ topics:
       - 'https://news.google.com/rss/search?q=%22ChatGPT%22%20%22Images%22&hl=en-US&gl=US&ceid=US:en'
       - 'https://news.google.com/rss/search?q=%22Google%20DeepMind%22%20%22Genie%22&hl=en-US&gl=US&ceid=US:en'
       - 'https://news.google.com/rss/search?q=site%3Ablog.google%20%22Gemini%20Omni%22&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=%22open%20weight%22%20AI&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=%22open%20source%22%20AI%20model&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=site%3Ahuggingface.co%2Fblog%20model&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=%22AI%20agent%22&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=%22AI%20model%22%20research&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=AI%20safety%20policy&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=AI%20chips%20inference&hl=en-US&gl=US&ceid=US:en'
+      - 'https://github.com/huggingface/transformers/releases.atom'
+      - 'https://github.com/vllm-project/vllm/releases.atom'
   - id: gold_price
     name: Gold Price
-    enabled: true
+    enabled: false
     keywords:
       - ราคาทอง
       - gold price

@@ -55,6 +55,8 @@ def main():
     config = load_config().model_copy(deep=True)
     config.app.max_posts_per_topic = 1
     if args.text_only:
+        if not any(topic.id == args.topic and topic.enabled for topic in config.topics):
+            raise ValueError(f"Topic {args.topic} is disabled in config")
         for topic in config.topics:
             topic.enabled = topic.enabled and topic.id == args.topic
     validate_live_config(config)

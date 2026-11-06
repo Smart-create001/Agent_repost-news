@@ -84,7 +84,9 @@ Catch-up is bounded: RSS items that disappear from a provider, items older than 
 
 ### ตั้งค่าสำหรับรันจริงเมื่อพร้อม
 
-`config.yaml` ตั้งหัวข้อ `ai_tech` สำหรับข่าวเปิดตัวโมเดล นโยบาย และข่าวเกี่ยวกับ token/quota reset โดยติดตามชื่อ Tibo กับ Logan Kilpatrick และหัวข้อ `gold_price` สำหรับข่าวราคาทองโลก/ไทยแล้ว RSS ที่ใส่เป็น Google News search feed ซึ่งเคยตรวจ endpoint แล้ว ทั้งสองหัวข้อเปิดใช้งาน โดยตั้ง thread ID ของ AI เป็น `5` และทองเป็น `6`. ข้อมูลราคาทองจากข่าวอาจไม่ใช่ราคา ณ เวลาปัจจุบัน.
+`config.yaml` เปิดเฉพาะ `ai_tech` (Telegram thread `5`) และพัก `gold_price` (thread `6`) ชั่วคราวตามความต้องการของผู้ใช้ การพักหัวข้อทองไม่ลบ state หรือเลข thread เดิม จึงเปิดกลับได้ด้วย `enabled: true` หลังตรวจแหล่งข่าวและความต้องการอีกครั้ง
+
+หัวข้อ AI ใช้ Google News RSS ที่ค้นทั้งประกาศเฉพาะและประเด็นกว้าง ได้แก่ โมเดล open-weight/open-source งานวิจัย เอเจนต์ นโยบาย และชิป พร้อม Atom feed ของ GitHub releases สำหรับ `transformers` และ `vLLM` ซึ่งตรวจแล้วว่าเปิดและ parse ได้จริง คำใน `keywords` เป็นบริบทให้ Gemini ไม่ใช่ตัวกำหนดผลค้นหา RSS; ดู URL จริงใน `config.yaml` ระบบตัด URL ซ้ำและพาดหัวที่ตรงกันภายในรอบดึงข้อมูล แต่ข่าวเหตุการณ์เดียวกันที่คนละสำนักเขียนพาดหัวต่างกันยังอาจถูกส่งซ้ำ Google News ไม่รับประกันว่าจะพบทุกบทความ และ GitHub releases อาจมีรุ่นย่อยที่ Gemini ต้องคัดออก
 
 1. แก้ `config.yaml` ใน repository: สำหรับแต่ละ topic ที่ต้องการใช้ เปลี่ยน `rss_urls` เป็น HTTPS RSS/Atom endpoint ที่เปิดได้จริง, เปลี่ยน `telegram.message_thread_id` เป็นเลข forum topic ของปลายทาง และตั้ง `enabled: true` เฉพาะ topic นั้น ห้ามใช้ URL `example.com` และเลข thread ตัวอย่างสำหรับ live run. ตรวจ feed แต่ละ URL ว่าคืน RSS/Atom จริงก่อนเปิดใช้. Bot ต้องเป็นสมาชิกกลุ่มและส่งข้อความใน topic นั้นได้.
 2. ที่ GitHub repository ไปที่ **Settings → Secrets and variables → Actions → Repository secrets → New repository secret** เพิ่ม `GEMINI_API_KEY` (จาก Google AI Studio), `TELEGRAM_BOT_TOKEN` (จาก BotFather) และ `TELEGRAM_CHAT_ID` (เลข chat ID ของกลุ่ม forum ซึ่งมักเป็นเลขลบ). `TELEGRAM_CHAT_ID` เป็นคนละค่ากับ `message_thread_id`; ใช้ chat ID เดียวใน secrets และกำหนด thread ID แยกใน `config.yaml`. อย่าใส่ค่าเหล่านี้ใน Git, README, issue หรือ chat.

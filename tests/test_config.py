@@ -90,6 +90,13 @@ def test_repository_config_is_valid_offline():
     assert {topic.id: topic.telegram.message_thread_id for topic in config.topics} == {
         "ai_tech": 5, "gold_price": 6}
     ai = next(topic for topic in config.topics if topic.id == "ai_tech")
+    gold = next(topic for topic in config.topics if topic.id == "gold_price")
+    assert ai.enabled and not gold.enabled
+    assert len(ai.rss_urls) == 15
+    assert any(str(url) == 'https://github.com/huggingface/transformers/releases.atom' for url in ai.rss_urls)
+    assert any(str(url) == 'https://github.com/vllm-project/vllm/releases.atom' for url in ai.rss_urls)
+    queries = {parse_qs(urlsplit(str(url)).query).get("q", [""])[0] for url in ai.rss_urls}
+    assert {'"open weight" AI', '"AI agent"', '"AI model" research', 'AI safety policy'} <= queries
     assert any(parse_qs(urlsplit(str(url)).query).get("q") == ['"ChatGPT" "Images"'] for url in ai.rss_urls)
     assert any(parse_qs(urlsplit(str(url)).query).get("q") == ['"Google DeepMind" "Genie"'] for url in ai.rss_urls)
     assert any(parse_qs(urlsplit(str(url)).query).get("q") == ['site:blog.google "Gemini Omni"'] for url in ai.rss_urls)
