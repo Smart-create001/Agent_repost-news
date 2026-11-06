@@ -91,6 +91,7 @@ def test_repository_config_is_valid_offline():
         "ai_tech": 5, "gold_price": 6}
     ai = next(topic for topic in config.topics if topic.id == "ai_tech")
     assert any(parse_qs(urlsplit(str(url)).query).get("q") == ['"ChatGPT" "Images"'] for url in ai.rss_urls)
+    assert any(parse_qs(urlsplit(str(url)).query).get("q") == ['"Google DeepMind" "Genie"'] for url in ai.rss_urls)
 
 
 def test_model_configuration_is_overridable(tmp_path):
