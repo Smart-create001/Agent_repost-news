@@ -34,6 +34,7 @@ topics:
       - OpenAI
       - Google Gemini
       - Google DeepMind Genie world model
+      - Gemini Omni video generation
       - Anthropic Claude
       - AI policy
       - API token quota reset
@@ -43,6 +44,7 @@ topics:
       ติดตามการเปิดตัวโมเดล AI ใหม่ การเปลี่ยนนโยบายของผู้ให้บริการ
       และการอัปเดตผลิตภัณฑ์สร้างภาพของ ChatGPT และ OpenAI
       รวมถึง Genie และ world model ของ Google DeepMind
+      และการเปิดตัวโมเดล Gemini Omni สำหรับสร้างหรือแก้ไขวิดีโอ
       และข่าวหรือโพสต์เกี่ยวกับการรีเซ็ตโควตา token หรือ API โดยเฉพาะ
       ข้อมูลจาก Tibo และ Logan Kilpatrick หากแหล่งข่าวระบุตัวบุคคลชัดเจน
       ระบุชื่อโมเดล ผู้ให้บริการ วันที่ประกาศ และแหล่งข่าวตามข้อมูลที่พบจริง
@@ -55,6 +57,7 @@ topics:
       - 'https://news.google.com/rss/search?q=%22thsottiaux%22&hl=en-US&gl=US&ceid=US:en'
       - 'https://news.google.com/rss/search?q=%22ChatGPT%22%20%22Images%22&hl=en-US&gl=US&ceid=US:en'
       - 'https://news.google.com/rss/search?q=%22Google%20DeepMind%22%20%22Genie%22&hl=en-US&gl=US&ceid=US:en'
+      - 'https://news.google.com/rss/search?q=site%3Ablog.google%20%22Gemini%20Omni%22&hl=en-US&gl=US&ceid=US:en'
   - id: gold_price
     name: Gold Price
     enabled: true
