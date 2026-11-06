@@ -129,3 +129,5 @@ Gemini batch logs now record a bounded `error_category` (`MAX_TOKENS`, `JSON_DEC
 `.github/workflows/phase7-probe.yml` is a manual, read-only RSS and Gemini probe for one article and one batch of up to four articles. It uses only `GEMINI_API_KEY` and `contents: read`, checks that gold and audio are disabled, and verifies the state file hash is unchanged. It does not send Telegram. Recovery tests use controlled fixtures in `tests/test_phase7_stability.py`. The offline duplicate candidate design is documented in `docs/phase7_semantic_dedup.md` and is not used in production. `docs/phase7_recovery_limitations.md` describes the known feed-eviction gap and the proposed durable backlog policy, which has not been enabled.
 
 The bounded live-delivery procedure and approval boundary are in `docs/phase7_live_test_plan.md`.
+
+The proposed Phase 7 durable pending queue is documented in `docs/phase7_pending_queue_deploy.md`. It is staged on a separate branch and requires separate approval before deployment to `main`.

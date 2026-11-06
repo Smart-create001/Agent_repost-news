@@ -11,10 +11,11 @@ from src.brain import Analysis, BrainError, SourceNotice, analyze_topic
 from src.config import ConfigError, load_config, validate_live_config
 from src.editorial import render_news
 from src.notifier import TelegramNotifier, deliver
+from src.persistence import persist_remote_state, verify_remote_state
 from src.scraper import fetch_topic
 from src.state import (cleanup_state, ensure_topic, load_state, mark_processed,
-                       mark_uncertain, record_briefing, record_delivery, record_post,
-                       save_state)
+                       mark_uncertain, pending_as_posts, queue_post, record_briefing,
+                       record_delivery, record_post, save_state)
 
 
 LOG = logging.getLogger(__name__)
@@ -36,9 +37,51 @@ def _save(state_path: Path, state: dict, dry_run: bool) -> None:
     save_state(state_path, state, dry_run=dry_run)
 
 
+def capture_pending(config, *, state_path: str | Path = "seen_posts.json",
+                    fetch=fetch_topic, now: datetime | None = None) -> int:
+    """Capture eligible alert candidates; workflow must push before processing."""
+    now = now or datetime.now(timezone.utc)
+    state_path = Path(state_path)
+    state = load_state(state_path)
+    failures = 0
+    for topic in config.topics:
+        if not topic.enabled:
+            continue
+        try:
+            feed_stats = {}
+            posts, errors = fetch(topic, timeout=config.app.request_timeout_seconds,
+                                  max_retries=config.app.max_retries,
+                                  max_age=timedelta(hours=config.alert.catchup_hours),
+                                  expiry_age=timedelta(hours=config.alert.catchup_hours),
+                                  now=now, stats=feed_stats)
+            counts = {"added": 0, "existing": 0, "settled": 0, "overflow": 0, "invalid": 0}
+            for post in posts:
+                try:
+                    counts[queue_post(state, topic.id, post, now=now)] += 1
+                except (TypeError, ValueError, AttributeError):
+                    counts["invalid"] += 1
+                    LOG.warning("topic=%s pending_entry_invalid=1", topic.id)
+            _save(state_path, state, False)
+            expired_ids = feed_stats.get("expired_ids", set())
+            untracked = sum(post_id not in ensure_topic(state, topic.id)["posts"]
+                            for post_id in expired_ids)
+            overflow_unresolved = ensure_topic(state, topic.id).get("pending_metrics", {}).get("overflow_unresolved", False)
+            LOG.info("topic=%s pending_capture=%d existing=%d settled=%d overflow=%d invalid=%d "
+                     "feed_errors=%d expired_feed_entries=%d expired_untracked=%d overflow_unresolved=%s",
+                     topic.id, counts["added"], counts["existing"], counts["settled"],
+                     counts["overflow"], counts["invalid"], len(errors), len(expired_ids), untracked,
+                     str(overflow_unresolved).lower())
+            failures += len(errors) + counts["overflow"] + counts["invalid"] + int(overflow_unresolved)
+        except Exception as exc:
+            failures += 1
+            LOG.error("topic=%s pending_capture_failed=%s", topic.id, type(exc).__name__)
+    return 1 if failures else 0
+
+
 def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
         dry_run: bool = False, fetch=fetch_topic, analyze=analyze_topic,
-        notifier=None, now: datetime | None = None) -> int:
+        notifier=None, now: datetime | None = None, durable_pending: bool = False,
+        persisted_commit: str | None = None, git_repo: str | Path = ".") -> int:
     """Return 0 on clean processing, 1 for topic errors, 2 for config/state errors."""
     if mode not in {"alert", "briefing"}:
         raise ValueError("mode must be alert or briefing")
@@ -48,6 +91,10 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
         raise ValueError("audio alerts require delivery state support; disable alert.generate_audio")
     now = now or datetime.now(timezone.utc)
     state_path = Path(state_path)
+    if durable_pending:
+        if mode != "alert" or dry_run or persisted_commit is None:
+            raise ValueError("Durable pending processing requires alert mode and verified commit")
+        verify_remote_state(state_path, persisted_commit, repo=git_repo)
     state = load_state(state_path)
     initial_state = deepcopy(state)
     failures = 0
@@ -61,27 +108,37 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
             current = state["topics"].get(topic.id, {"posts": {}, "briefings": {}})
             alert_checkpoint = None
             if mode == "alert":
-                alert_checkpoint = datetime.fromisoformat(
-                    current.get("alert_checkpoint_at", (now - timedelta(days=2)).isoformat()))
-                if not dry_run and "alert_checkpoint_at" not in current:
-                    ensure_topic(state, topic.id)["alert_checkpoint_at"] = alert_checkpoint.isoformat()
-                    _save(state_path, state, dry_run)
-                lookback = min(config.alert.catchup_hours,
-                               max(48, (now - alert_checkpoint).total_seconds() / 3600))
-                if lookback >= config.alert.catchup_hours and now - alert_checkpoint > timedelta(hours=lookback):
-                    LOG.warning("topic=%s catchup_window_capped_hours=%d", topic.id, config.alert.catchup_hours)
+                if durable_pending:
+                    lookback = config.alert.catchup_hours
+                else:
+                    alert_checkpoint = datetime.fromisoformat(
+                        current.get("alert_checkpoint_at", (now - timedelta(days=2)).isoformat()))
+                    if not dry_run and "alert_checkpoint_at" not in current:
+                        ensure_topic(state, topic.id)["alert_checkpoint_at"] = alert_checkpoint.isoformat()
+                        _save(state_path, state, dry_run)
+                    lookback = min(config.alert.catchup_hours,
+                                   max(48, (now - alert_checkpoint).total_seconds() / 3600))
+                    if lookback >= config.alert.catchup_hours and now - alert_checkpoint > timedelta(hours=lookback):
+                        LOG.warning("topic=%s catchup_window_capped_hours=%d", topic.id, config.alert.catchup_hours)
             existing_briefing_id = f"{topic.id}:briefing:{start.isoformat()}"
             existing_briefing = current["briefings"].get(existing_briefing_id)
             # Preserve existing delivered text and historical audio state; never retry audio.
             if mode == "briefing" and existing_briefing and existing_briefing["text"]["delivered"]:
                 continue
             feed_stats: dict = {}
-            posts, errors = fetch(topic, timeout=config.app.request_timeout_seconds,
-                                  max_retries=config.app.max_retries,
-                                  max_age=timedelta(hours=hours if mode == "briefing" else lookback),
-                                  now=now,
-                                  expiry_age=timedelta(hours=config.alert.catchup_hours) if mode == "alert" else None,
-                                  stats=feed_stats)
+            if durable_pending:
+                posts, expired_count = pending_as_posts(state, topic.id, now=now,
+                    window=timedelta(hours=config.alert.catchup_hours))
+                errors = []
+                if expired_count:
+                    LOG.warning("topic=%s pending_expired=%d", topic.id, expired_count)
+            else:
+                posts, errors = fetch(topic, timeout=config.app.request_timeout_seconds,
+                                      max_retries=config.app.max_retries,
+                                      max_age=timedelta(hours=hours if mode == "briefing" else lookback),
+                                      now=now,
+                                      expiry_age=timedelta(hours=config.alert.catchup_hours) if mode == "alert" else None,
+                                      stats=feed_stats)
             if mode == "alert":
                 expired_ids = feed_stats.get("expired_ids", set())
                 expired_untracked = sum(
@@ -97,7 +154,7 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                 posts = [p for p in posts if not current["posts"].get(p.id, {}).get("alert", {}).get("delivered")
                          and not current["posts"].get(p.id, {}).get("alert", {}).get("uncertain")
                          and current["posts"].get(p.id, {}).get("status") != "processed"]
-                pending_posts = posts
+                candidate_posts = posts
                 older = [p for p in posts if p.published_at < now - timedelta(days=2)]
                 fresh = [p for p in posts if p.published_at >= now - timedelta(days=2)]
                 older_limit = min(config.alert.catchup_posts_per_run, config.app.max_posts_per_topic)
@@ -112,8 +169,12 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                 posts = posts[:config.app.max_posts_per_topic]
             if not posts:
                 if mode == "alert" and not dry_run and failures == topic_failures:
-                    ensure_topic(state, topic.id)["alert_checkpoint_at"] = now.isoformat()
-                    _save(state_path, state, dry_run)
+                    current_topic = ensure_topic(state, topic.id)
+                    if (not durable_pending or
+                            (not current_topic.get("pending_posts") and
+                             not current_topic.get("pending_metrics", {}).get("overflow_unresolved"))):
+                        ensure_topic(state, topic.id)["alert_checkpoint_at"] = now.isoformat()
+                        _save(state_path, state, dry_run)
                 continue
             if dry_run:
                 LOG.info("topic=%s mode=%s dry_run_candidates=%d", topic.id, mode, len(posts))
@@ -143,6 +204,8 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                         for post in batch:
                             if post.url in irrelevant_sources:
                                 mark_processed(state, topic.id, post, now=now)
+                                if durable_pending:
+                                    ensure_topic(state, topic.id)["pending_posts"].pop(post.id, None)
                         if any(post.url in irrelevant_sources for post in batch):
                             _save(state_path, state, dry_run)
                     if getattr(batch_results, "rejected_count", 0):
@@ -178,6 +241,8 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                     record_post(state, topic.id, post, now=now)
                     mark_uncertain(state, topic.id, post.id, mode="alert")
                     _save(state_path, state, dry_run)
+                    if durable_pending:
+                        persist_remote_state(state_path, repo=git_repo)
                     outcome = deliver(notifier, topic.telegram.message_thread_id, _text(analysis),
                                       audio=False,
                                       voice=config.tts.voice, rate=config.tts.rate)
@@ -191,13 +256,19 @@ def run(config, *, mode: str, state_path: str | Path = "seen_posts.json",
                                         success=outcome.text_delivered,
                                         message_id=outcome.text_message_ids[-1] if outcome.text_delivered else None,
                                         error=outcome.text_error, now=now)
+                    if durable_pending and outcome.text_delivered:
+                        ensure_topic(state, topic.id)["pending_posts"].pop(post.id, None)
                     _save(state_path, state, dry_run)
+                    if durable_pending:
+                        persist_remote_state(state_path, repo=git_repo)
                     failures += not outcome.text_delivered
                 if failures == topic_failures and all(
                     state["topics"][topic.id]["posts"].get(p.id, {}).get("status") == "processed"
                     or state["topics"][topic.id]["posts"].get(p.id, {}).get("alert", {}).get("delivered")
-                    for p in pending_posts
-                ):
+                    for p in candidate_posts
+                ) and (not durable_pending or
+                       (not ensure_topic(state, topic.id).get("pending_posts") and
+                        not ensure_topic(state, topic.id).get("pending_metrics", {}).get("overflow_unresolved"))):
                     ensure_topic(state, topic.id)["alert_checkpoint_at"] = now.isoformat()
                     _save(state_path, state, dry_run)
             else:
@@ -241,6 +312,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--config", default="config.yaml")
     parser.add_argument("--state", default="seen_posts.json")
+    parser.add_argument("--capture-pending", action="store_true")
+    parser.add_argument("--process-pending", action="store_true")
+    parser.add_argument("--persisted-commit")
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     # HTTP request URLs can contain Telegram bot credentials.
@@ -248,12 +322,22 @@ def main(argv: list[str] | None = None) -> int:
     notifier = None
     try:
         config = load_config(args.config)
+        if args.capture_pending:
+            if args.mode != "alert" or args.dry_run or args.process_pending or args.persisted_commit:
+                raise ValueError("Pending capture requires live alert mode only")
+            return capture_pending(config, state_path=args.state)
+        if args.process_pending:
+            if args.mode != "alert" or args.dry_run or not args.persisted_commit:
+                raise ValueError("Pending processing requires live alert mode and persisted commit")
+        elif args.persisted_commit:
+            raise ValueError("Persisted commit requires pending processing")
         if not args.dry_run:
             validate_live_config(config)
             notifier = TelegramNotifier(token=os.environ["TELEGRAM_BOT_TOKEN"],
                                         chat_id=os.environ["TELEGRAM_CHAT_ID"])
         return run(config, mode=args.mode, state_path=args.state,
-                   dry_run=args.dry_run, notifier=notifier)
+                   dry_run=args.dry_run, notifier=notifier,
+                   durable_pending=args.process_pending, persisted_commit=args.persisted_commit)
     except (ConfigError, ValueError) as exc:
         LOG.error("configuration or state error: %s", exc)
         return 2

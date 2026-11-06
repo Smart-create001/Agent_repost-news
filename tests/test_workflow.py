@@ -116,3 +116,19 @@ def test_rejected_push_preserves_local_and_remote_state(tmp_path):
     check = tmp_path / "remote-check"
     git(tmp_path, "clone", "-b", "main", str(remote), str(check))
     assert '"local"' not in (check / "seen_posts.json").read_text()
+
+
+def test_pending_capture_is_pushed_before_normal_alert_processing():
+    config = workflow()
+    steps = config["jobs"]["run"]["steps"]
+    names = [step.get("name") for step in steps]
+    assert names.index("Capture alert candidates before processing") < names.index("Persist captured candidates")
+    assert names.index("Persist captured candidates") < names.index("Run agent")
+    capture = next(step for step in steps if step.get("id") == "capture")
+    assert "--capture-pending" in capture["run"]
+    assert "inputs.phase6_test != true" in capture["if"]
+    persist = next(step for step in steps if step.get("id") == "persist_capture")
+    assert "scripts/persist_state.sh" in persist["run"]
+    agent = next(step for step in steps if step.get("id") == "agent")
+    assert "--process-pending --persisted-commit" in agent["run"]
+    assert "steps.persist_capture.outputs.commit" in agent["env"]["PERSISTED_COMMIT"]

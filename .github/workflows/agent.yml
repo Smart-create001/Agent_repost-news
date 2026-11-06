@@ -49,6 +49,23 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Validate state before run
         run: python -c 'from src.state import load_state; load_state("seen_posts.json")'
+      - name: Capture alert candidates before processing
+        if: (github.event_name == 'schedule' && github.event.schedule != '25 0 * * *') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'alert' && inputs.phase6_test != true)
+        id: capture
+        shell: bash
+        run: |
+          set +e
+          python -m src.main --mode alert --capture-pending 2>&1 | tee "$RUNNER_TEMP/agent-capture.log"
+          capture_exit=${PIPESTATUS[0]}
+          echo "exit_code=$capture_exit" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Persist captured candidates
+        if: steps.capture.outcome == 'success'
+        id: persist_capture
+        shell: bash
+        run: |
+          bash scripts/persist_state.sh
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Run agent
         id: agent
         env:
@@ -58,6 +75,7 @@ jobs:
           RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '25 0 * * *' && 'briefing' || 'alert') }}
           PHASE6_TEST: ${{ github.event_name == 'workflow_dispatch' && inputs.phase6_test || false }}
           PHASE6_TOPIC: ${{ inputs.phase6_topic || 'ai_tech' }}
+          PERSISTED_COMMIT: ${{ steps.persist_capture.outputs.commit }}
         shell: bash
         run: |
           set +e
@@ -76,7 +94,11 @@ jobs:
               agent_exit=2
             fi
           else
-            python -m src.main --mode "$RUN_MODE" 2>&1 | tee "$RUNNER_TEMP/agent-dashboard.log"
+            if [[ "$RUN_MODE" == "alert" ]]; then
+              python -m src.main --mode alert --process-pending --persisted-commit "$PERSISTED_COMMIT" 2>&1 | tee "$RUNNER_TEMP/agent-dashboard.log"
+            else
+              python -m src.main --mode "$RUN_MODE" 2>&1 | tee "$RUNNER_TEMP/agent-dashboard.log"
+            fi
             agent_exit=${PIPESTATUS[0]}
           fi
           echo "exit_code=$agent_exit" >> "$GITHUB_OUTPUT"
@@ -116,5 +138,15 @@ jobs:
         run: |
           if [[ "$AGENT_EXIT" != "0" ]]; then
             echo "Agent exited with status $AGENT_EXIT" >&2
+            exit 1
+          fi
+      - name: Report capture failure
+        if: always() && steps.capture.outcome == 'success'
+        env:
+          CAPTURE_EXIT: ${{ steps.capture.outputs.exit_code }}
+        shell: bash
+        run: |
+          if [[ "$CAPTURE_EXIT" != "0" ]]; then
+            echo "Capture exited with status $CAPTURE_EXIT; see agent-capture.log" >&2
             exit 1
           fi
