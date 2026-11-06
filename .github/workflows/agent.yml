@@ -38,6 +38,10 @@ concurrency:
 jobs:
   run:
     if: vars.AGENT_ENABLED == 'true'
+    outputs:
+      persisted_commit: ${{ steps.verify_capture.outputs.persisted_commit }}
+      state_sha256: ${{ steps.verify_capture.outputs.state_sha256 }}
+      processing_outcome: ${{ steps.agent.outcome }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -76,7 +80,13 @@ jobs:
         id: verify_capture
         env:
           PERSISTED_COMMIT: ${{ steps.persist_capture.outputs.commit }}
-        run: python -c 'import os; from src.persistence import verify_remote_state; verify_remote_state("seen_posts.json", os.environ["PERSISTED_COMMIT"])'
+        shell: bash
+        run: |
+          python -c 'import os; from src.persistence import verify_remote_state; verify_remote_state("seen_posts.json", os.environ["PERSISTED_COMMIT"])'
+          state_hash=$(git show "$PERSISTED_COMMIT:seen_posts.json" | sha256sum | cut -d ' ' -f 1)
+          test -n "$state_hash"
+          echo "persisted_commit=$PERSISTED_COMMIT" >> "$GITHUB_OUTPUT"
+          echo "state_sha256=$state_hash" >> "$GITHUB_OUTPUT"
       - name: Persist validated partial capture for reconciliation
         if: failure() && steps.capture.outcome == 'failure'
         id: persist_partial
@@ -192,21 +202,12 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
       - name: Read persisted pending queue on a fresh runner
+        env:
+          EXPECTED_COMMIT: ${{ needs.run.outputs.persisted_commit }}
+          EXPECTED_SHA256: ${{ needs.run.outputs.state_sha256 }}
+          PROCESSING_OUTCOME: ${{ needs.run.outputs.processing_outcome }}
         run: |
-          python - <<'PY'
-          import hashlib
-          import json
-          from pathlib import Path
-          from src.state import load_state
-
-          state_path = Path("seen_posts.json")
-          state = load_state(state_path)
-          digest = hashlib.sha256(state_path.read_bytes()).hexdigest()
-          topics = state["topics"]
-          for topic_id, topic in topics.items():
-              pending = topic.get("pending_posts", {})
-              metrics = topic.get("pending_metrics", {})
-              print(f"topic={topic_id} pending={len(pending)} overflow_total={metrics.get('overflow_total', 0)} expired_total={metrics.get('expired_total', 0)} overflow_unresolved={metrics.get('overflow_unresolved', False)}")
-          ai = topics.get("ai_tech", {})
-          print(f"capture_only_readback=PASS state_sha256={digest} ai_pending={len(ai.get('pending_posts', {}))} gold_processed=false audio_called=false telegram_called=false")
-          PY
+          python -m scripts.verify_pending_snapshot \
+            --expected-commit "$EXPECTED_COMMIT" \
+            --expected-sha256 "$EXPECTED_SHA256" \
+            --processing-outcome "$PROCESSING_OUTCOME"

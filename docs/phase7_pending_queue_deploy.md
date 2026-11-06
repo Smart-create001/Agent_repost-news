@@ -39,4 +39,6 @@ Do not reset `seen_posts.json` or discard `pending_posts`. If the new workflow f
 
 Offline tests use a local bare Git remote to exercise capture push, remote readback, conflict rejection, runner interruption, replay, expiry, overflow, and quarantine. They do not prove GitHub token permission or production persistence. The authorized bounded live Telegram test uses the current production workflow; it does not test this undeployed queue.
 
+Capture-only validation passes its expected commit and verified state SHA-256 as job outputs. A fresh runner reads `seen_posts.json` from that exact Git object, checks the hash before JSON parsing, validates state schema, pending entry IDs, topic ownership, and disabled-topic isolation, and separately reports whether current `main` moved and whether its state bytes still match. The report says `validated` only for checks it runs; it says `not_invoked` only when the processing step outcome is `skipped` and code/config confirm no Gemini, Telegram, audio, or disabled-gold path ran. Live delivery remains `not_verified`.
+
 Capture-only validation has been added to the branch but has not been run on GitHub Actions. Gate 1 backup and merge are not performed; Gate 2 has not been run; Gate 3 has not been run. Do not treat the previous single-message Telegram test or offline regression as proof of durable queue deployment.
